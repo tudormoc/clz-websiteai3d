@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -116,8 +115,8 @@ const AtelierPage: React.FC = () => {
   const { t } = useTranslation();
   return (
   <div className="animate-fade-in">
-    {/* Atelier Header - Enhanced Dark Theme */}
-    <div className="relative pt-48 pb-24 bg-[#111] text-stone-200 text-center overflow-hidden">
+    {/* Atelier Header - Enhanced Dark Theme - Left Aligned */}
+    <div className="relative pt-48 pb-24 bg-[#111] text-stone-200 overflow-hidden">
         {/* Noise Texture */}
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
         {/* Radial Light */}
@@ -126,7 +125,7 @@ const AtelierPage: React.FC = () => {
         <div className="relative container mx-auto px-6 z-10">
             <div className="inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-widest text-nobel-gold shadow-lg">{t('atelier.label')}</div>
             <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white mb-6 drop-shadow-2xl">{t('atelier.headline')}</h1>
-            <p className="max-w-3xl mx-auto text-stone-400 text-xl font-serif italic leading-relaxed">
+            <p className="max-w-3xl text-stone-400 text-xl font-serif italic leading-relaxed">
                 {t('atelier.sub')}
             </p>
         </div>

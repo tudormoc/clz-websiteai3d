@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -183,17 +182,17 @@ const CameraRig = ({ selectedPart }: { selectedPart: string | null }) => {
     const { camera } = useThree();
     const controlsRef = useRef<any>(null);
     const isUserInteracting = useRef(false);
-    const targetPos = useRef(new THREE.Vector3(0, 0, 7.5)); // Increased default distance
+    const targetPos = useRef(new THREE.Vector3(0, 0, 10)); // Default distance set to 10 for full view
     
     useEffect(() => {
-        let x = 0, y = 0, z = 7.5; // Default
+        let x = 0, y = 0, z = 10; // Base "Wide Shot"
 
         switch (selectedPart) {
-            case 'headband': x = 0; y = 2.2; z = 2.5; break; // Zoomed in top
-            case 'spine': x = -3; y = 0; z = 4; break; // Zoomed in side
-            case 'endpapers': x = 2; y = 0; z = 5; break; // Front open
-            case 'block': x = 2; y = -1.5; z = 4; break; // Bottom corner
-            default: x = 0; y = 0; z = 7.5; break; // Wide shot
+            case 'headband': x = 0; y = 1.2; z = 7; break; // Closer but not macro
+            case 'spine': x = -2; y = 0; z = 8; break; // Side view with context
+            case 'endpapers': x = 1; y = 0; z = 9; break; // Front view
+            case 'block': x = 1; y = -1; z = 9; break; // Corner view
+            default: x = 0; y = 0; z = 10; break; // Wide shot
         }
 
         targetPos.current.set(x, y, z);
@@ -214,9 +213,7 @@ const CameraRig = ({ selectedPart }: { selectedPart: string | null }) => {
         <OrbitControls 
             ref={controlsRef}
             makeDefault
-            enableZoom={true} // Enable zoom
-            minDistance={3} // Prevent going inside the book
-            maxDistance={12} // Prevent going too far
+            enableZoom={false} // Disabled Zoom for fixed view
             enablePan={false}
             rotateSpeed={0.5}
             minPolarAngle={0.2}
@@ -318,7 +315,7 @@ export const BookAnatomyDiagram: React.FC = () => {
         className="order-1 lg:order-2 lg:col-span-8 h-[350px] lg:h-[550px] bg-[#F5F4F0] rounded-sm relative border border-stone-200 shadow-inner overflow-hidden group"
         style={{ touchAction: 'none' }} // Prevents scroll capture on mobile while dragging
       >
-        <Canvas shadows camera={{ position: [0, 0, 7.5], fov: 35 }}>
+        <Canvas shadows camera={{ position: [0, 0, 10], fov: 35 }}>
             <ambientLight intensity={0.7} />
             <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} castShadow intensity={1.5} />
             <pointLight position={[-10, -5, -5]} color="#C5A059" intensity={1} />
@@ -348,7 +345,8 @@ export const BookAnatomyDiagram: React.FC = () => {
              <h3 className="font-serif text-3xl text-stone-900 mt-2">
                 {selectedPart ? parts.find(p => p.id === selectedPart)?.label : t('anatomy.default_title')}
              </h3>
-             <p className="text-base text-stone-500 mt-3 h-16 leading-relaxed">
+             {/* Updated paragraph to use min-height instead of fixed height to prevent text overlap */}
+             <p className="text-base text-stone-500 mt-3 min-h-[4rem] leading-relaxed pb-4">
                 {selectedPart ? parts.find(p => p.id === selectedPart)?.desc : t('anatomy.default_desc')}
              </p>
          </div>
