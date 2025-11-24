@@ -1,3 +1,4 @@
+
 export const it = {
   translation: {
     brand: {
@@ -145,6 +146,34 @@ export const it = {
         weight: { label: "Peso Max", sub: "Integrità del Blocco" },
         caliper: { label: "Spessore Cartone", sub: "Cartone Grigio Alta Densità" },
         min: { label: "Formato Min", sub: "Gamma Versatile" }
+      }
+    },
+    contact: {
+      label: "Richieste",
+      headline: "Inizia un Progetto",
+      sub: "Consulta il nostro dipartimento tecnico per tirature industriali su misura.",
+      info: {
+        address_label: "Sede Centrale",
+        address: "Via Venezuela, 3\n35127 Padova PD, Italia",
+        hours_label: "Orari",
+        hours: "Lun-Ven: 08:30 - 17:30",
+        phone: "Telefono",
+        email: "Email"
+      },
+      form: {
+        name: "Nome Completo",
+        company: "Azienda / Istituzione",
+        email: "Indirizzo Email",
+        type: "Tipo di Progetto",
+        types: {
+          art: "Catalogo d'Arte",
+          photo: "Monografia Fotografica",
+          arch: "Folio Architettonico",
+          other: "Altro"
+        },
+        run: "Tiratura Stimata",
+        specs: "Specifiche Tecniche / Messaggio",
+        submit: "Invia Richiesta"
       }
     }
   }

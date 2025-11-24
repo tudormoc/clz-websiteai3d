@@ -1,3 +1,4 @@
+
 export const en = {
   translation: {
     brand: {
@@ -145,6 +146,34 @@ export const en = {
         weight: { label: "Max Weight", sub: "Block Integrity" },
         caliper: { label: "Board Caliper", sub: "High Density Greyboard" },
         min: { label: "Min Format", sub: "Versatile Range" }
+      }
+    },
+    contact: {
+      label: "Inquiries",
+      headline: "Start a Project",
+      sub: "Consult our technical department for bespoke industrial runs.",
+      info: {
+        address_label: "Headquarters",
+        address: "Via Venezuela, 3\n35127 Padova PD, Italy",
+        hours_label: "Hours",
+        hours: "Mon-Fri: 08:30 - 17:30",
+        phone: "Phone",
+        email: "Email"
+      },
+      form: {
+        name: "Full Name",
+        company: "Company / Institution",
+        email: "Email Address",
+        type: "Project Type",
+        types: {
+          art: "Art Catalogue",
+          photo: "Photography Monograph",
+          arch: "Architectural Folio",
+          other: "Other"
+        },
+        run: "Estimated Run",
+        specs: "Technical Specifications / Message",
+        submit: "Submit Inquiry"
       }
     }
   }

@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { en } from './locales/en';
 import { it } from './locales/it';
+import { fr } from './locales/fr';
 
 i18n
   .use(LanguageDetector)
@@ -10,7 +11,8 @@ i18n
   .init({
     resources: {
       en,
-      it
+      it,
+      fr
     },
     fallbackLng: 'it', // Default to Italian
     debug: false,

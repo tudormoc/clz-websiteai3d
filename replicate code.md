@@ -56,6 +56,12 @@ Create a single-page, high-performance "Industrial Luxury" website for **Coopera
 8.  **Global Reach:**
     -   Logos/Typography emphasizing international presence.
 
+9.  **Contact Scene (Architectural Landscape):**
+    -   **Concept:** "The Greyboard City". A stylized landscape of dark grey blocks representing material/industry.
+    -   **Focal Point:** A single Gold Monolith representing the HQ.
+    -   **Atmosphere:** Slow auto-rotation, soft fog, sparse floating particles.
+    -   **Goal:** Calming, immersive, high-end look. No flashing lights or rapid movement.
+
 **Design Philosophy:**
 -   **Industrial Luxury:** Gold (#C5A059), Dark Grey (#1a1a1a), Cream (#F9F8F4).
 -   **Typography:** Playfair Display (Headings), Inter (Technical).

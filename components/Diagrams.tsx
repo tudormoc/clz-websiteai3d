@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -33,9 +34,9 @@ export const BindingLayersDiagram: React.FC = () => {
       {/* Controls */}
       <div className="w-full lg:w-1/3 flex flex-col gap-2">
          <div className="mb-4">
-             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">{t('process.cycle')}</span>
-             <h3 className="font-serif text-2xl text-stone-900 mt-1">{steps[activeStep].label}</h3>
-             <p className="text-sm text-stone-500 mt-2 h-10">{steps[activeStep].desc}</p>
+             <span className="text-sm font-bold text-nobel-gold uppercase tracking-widest">{t('process.cycle')}</span>
+             <h3 className="font-serif text-3xl text-stone-900 mt-2">{steps[activeStep].label}</h3>
+             <p className="text-base text-stone-500 mt-3 h-12 leading-relaxed">{steps[activeStep].desc}</p>
          </div>
 
          <div className="space-y-1 relative">
@@ -44,10 +45,10 @@ export const BindingLayersDiagram: React.FC = () => {
                  <button
                     key={step.id}
                     onClick={() => setActiveStep(idx)}
-                    className={`relative w-full flex items-center gap-4 p-3 rounded-sm transition-all duration-300 group ${activeStep === idx ? 'bg-stone-50' : 'hover:bg-stone-50'}`}
+                    className={`relative w-full flex items-center gap-4 p-4 rounded-sm transition-all duration-300 group ${activeStep === idx ? 'bg-stone-50' : 'hover:bg-stone-50'}`}
                  >
-                     <div className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border-2 transition-colors ${activeStep === idx ? 'border-nobel-gold bg-nobel-gold text-white' : activeStep > idx ? 'border-nobel-gold bg-white text-nobel-gold' : 'border-stone-200 bg-white text-stone-300'}`}>
-                         {activeStep > idx ? <CheckCircle2 size={12} /> : idx + 1}
+                     <div className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors ${activeStep === idx ? 'border-nobel-gold bg-nobel-gold text-white' : activeStep > idx ? 'border-nobel-gold bg-white text-nobel-gold' : 'border-stone-200 bg-white text-stone-300'}`}>
+                         {activeStep > idx ? <CheckCircle2 size={14} /> : idx + 1}
                      </div>
                      <span className={`text-sm font-bold uppercase tracking-wider ${activeStep === idx ? 'text-stone-900' : 'text-stone-400 group-hover:text-stone-600'}`}>
                          {step.label}
@@ -58,7 +59,7 @@ export const BindingLayersDiagram: React.FC = () => {
       </div>
 
       {/* Visualizer */}
-      <div className="w-full lg:w-2/3 h-[350px] bg-[#F5F4F0] border border-stone-200 relative flex items-center justify-center overflow-hidden perspective-1000 rounded-sm">
+      <div className="w-full lg:w-2/3 h-[400px] bg-[#F5F4F0] border border-stone-200 relative flex items-center justify-center overflow-hidden perspective-1000 rounded-sm">
          <AnimatePresence mode="wait">
             {/* 1. PRINTED SHEETS */}
             {activeStep === 0 && (
@@ -68,7 +69,7 @@ export const BindingLayersDiagram: React.FC = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.4 }}
-                    className="w-72 h-56 bg-white shadow-lg border border-stone-200 relative flex items-center justify-center"
+                    className="w-80 h-60 bg-white shadow-lg border border-stone-200 relative flex items-center justify-center"
                 >
                     <div className="grid grid-cols-4 grid-rows-2 gap-2 w-full h-full p-4 opacity-20">
                         {[...Array(8)].map((_, i) => <div key={i} className="bg-stone-800 w-full h-full"></div>)}
@@ -86,9 +87,9 @@ export const BindingLayersDiagram: React.FC = () => {
                             initial={{ width: '18rem', opacity: 0 }}
                             animate={{ width: '9rem', opacity: 1 }}
                             transition={{ duration: 0.5 }}
-                            className="h-56 bg-white shadow-md border border-stone-200 relative"
+                            className="h-60 bg-white shadow-md border border-stone-200 relative"
                         >
-                            <div className="absolute top-0 right-0 p-2 text-[10px] text-stone-400">{steps[1].visual}</div>
+                            <div className="absolute top-0 right-0 p-2 text-xs text-stone-400">{steps[1].visual}</div>
                         </motion.div>
                      ))}
                 </motion.div>
@@ -101,12 +102,12 @@ export const BindingLayersDiagram: React.FC = () => {
                         initial={{ rotateY: 0 }}
                         animate={{ rotateY: -160 }}
                         transition={{ duration: 0.8, ease: "easeInOut" }}
-                        className="w-32 h-48 bg-white shadow-xl border-l border-stone-300 origin-left relative"
+                        className="w-36 h-56 bg-white shadow-xl border-l border-stone-300 origin-left relative"
                         style={{ transformStyle: 'preserve-3d' }}
                     >
-                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-xl">{steps[2].visual}</div>
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-2xl">{steps[2].visual}</div>
                     </motion.div>
-                    <div className="w-32 h-48 bg-stone-50 border border-stone-200 shadow-sm"></div>
+                    <div className="w-36 h-56 bg-stone-50 border border-stone-200 shadow-sm"></div>
                 </motion.div>
             )}
 
@@ -119,7 +120,7 @@ export const BindingLayersDiagram: React.FC = () => {
                             initial={{ y: -50, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: i * 0.1 }}
-                            className="w-32 h-6 bg-white border border-stone-300 shadow-sm relative z-10"
+                            className="w-36 h-8 bg-white border border-stone-300 shadow-sm relative z-10"
                         >
                             {/* Thread */}
                             <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-nobel-gold/50"></div>
@@ -134,19 +135,19 @@ export const BindingLayersDiagram: React.FC = () => {
                     key="block"
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1, rotateY: -30, rotateX: 10 }}
-                    className="w-32 h-48 bg-[#EBE9E4] relative shadow-2xl"
+                    className="w-36 h-56 bg-[#EBE9E4] relative shadow-2xl"
                     style={{ transformStyle: 'preserve-3d' }}
                  >
                      {/* Spine Glue/Mull */}
-                     <div className="absolute left-0 top-0 bottom-0 w-3 bg-stone-200/80 backdrop-blur-sm transform -translate-x-3 rotate-y-90 origin-right border-l border-stone-300 flex flex-col justify-center items-center gap-1">
+                     <div className="absolute left-0 top-0 bottom-0 w-4 bg-stone-200/80 backdrop-blur-sm transform -translate-x-4 rotate-y-90 origin-right border-l border-stone-300 flex flex-col justify-center items-center gap-1">
                         <div className="w-full h-px bg-stone-300"></div>
                         <div className="w-full h-px bg-stone-300"></div>
                      </div>
                      {/* Top */}
-                     <div className="absolute top-0 left-0 w-full h-6 bg-[#F0EFE9] transform -translate-y-6 rotate-x-90 origin-bottom border border-stone-200"></div>
+                     <div className="absolute top-0 left-0 w-full h-8 bg-[#F0EFE9] transform -translate-y-8 rotate-x-90 origin-bottom border border-stone-200"></div>
                      {/* Front */}
                      <div className="absolute inset-0 border border-stone-200 flex items-center justify-center">
-                        <div className="text-[10px] text-stone-400 font-mono tracking-widest rotate-90">{steps[4].visual}</div>
+                        <div className="text-xs text-stone-400 font-mono tracking-widest rotate-90">{steps[4].visual}</div>
                      </div>
                  </motion.div>
             )}
@@ -158,12 +159,12 @@ export const BindingLayersDiagram: React.FC = () => {
                     initial={{ rotateY: 90 }}
                     animate={{ rotateY: -25, rotateX: 5 }}
                     transition={{ type: 'spring', stiffness: 40 }}
-                    className="w-36 h-52 bg-[#1a1a1a] relative shadow-2xl flex items-center justify-center border-l-4 border-stone-800"
+                    className="w-40 h-60 bg-[#1a1a1a] relative shadow-2xl flex items-center justify-center border-l-4 border-stone-800"
                     style={{ transformStyle: 'preserve-3d' }}
                  >
-                     <div className="absolute top-4 w-full text-center text-nobel-gold font-serif text-lg tracking-widest">CLZ</div>
-                     <div className="w-16 h-16 border border-nobel-gold/30 rounded-full flex items-center justify-center">
-                        <div className="w-12 h-12 border border-nobel-gold/60 rounded-full"></div>
+                     <div className="absolute top-4 w-full text-center text-nobel-gold font-serif text-xl tracking-widest">CLZ</div>
+                     <div className="w-20 h-20 border border-nobel-gold/30 rounded-full flex items-center justify-center">
+                        <div className="w-16 h-16 border border-nobel-gold/60 rounded-full"></div>
                      </div>
                      {/* Thickness */}
                      <div className="absolute right-0 top-0 h-full w-2 bg-stone-800 transform translate-x-2 rotate-y-90 origin-left"></div>
@@ -333,8 +334,8 @@ export const BookAnatomyDiagram: React.FC = () => {
 
         {/* Interaction Hint */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
-            <div className="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full border border-stone-200 shadow-sm flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-500">
-                <MousePointer2 size={12} />
+            <div className="bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-stone-200 shadow-sm flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-500">
+                <MousePointer2 size={14} />
                 <span>{t('anatomy.hint')}</span>
             </div>
         </div>
@@ -342,12 +343,12 @@ export const BookAnatomyDiagram: React.FC = () => {
 
       {/* List (Bottom on Mobile, Left on Desktop) */}
       <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-2">
-         <div className="mb-2">
-             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">{t('anatomy.label')}</span>
-             <h3 className="font-serif text-2xl text-stone-900 mt-1">
+         <div className="mb-4">
+             <span className="text-sm font-bold text-nobel-gold uppercase tracking-widest">{t('anatomy.label')}</span>
+             <h3 className="font-serif text-3xl text-stone-900 mt-2">
                 {selectedPart ? parts.find(p => p.id === selectedPart)?.label : t('anatomy.default_title')}
              </h3>
-             <p className="text-sm text-stone-500 mt-2 h-12 leading-relaxed">
+             <p className="text-base text-stone-500 mt-3 h-16 leading-relaxed">
                 {selectedPart ? parts.find(p => p.id === selectedPart)?.desc : t('anatomy.default_desc')}
              </p>
          </div>
@@ -357,13 +358,13 @@ export const BookAnatomyDiagram: React.FC = () => {
                  <button
                     key={part.id}
                     onClick={() => setSelectedPart(part.id)}
-                    className={`w-full text-left px-4 py-4 border-l-2 transition-all duration-300 group ${selectedPart === part.id ? 'border-nobel-gold bg-stone-50 pl-6' : 'border-stone-200 hover:border-stone-300 hover:bg-stone-50/50'}`}
+                    className={`w-full text-left px-4 py-5 border-l-2 transition-all duration-300 group ${selectedPart === part.id ? 'border-nobel-gold bg-stone-50 pl-6' : 'border-stone-200 hover:border-stone-300 hover:bg-stone-50/50'}`}
                  >
                      <div className="flex items-center justify-between">
                          <span className={`text-sm font-bold uppercase tracking-wider ${selectedPart === part.id ? 'text-stone-900' : 'text-stone-400 group-hover:text-stone-600'}`}>
                              {part.label}
                          </span>
-                         {selectedPart === part.id && <ArrowRight size={14} className="text-nobel-gold" />}
+                         {selectedPart === part.id && <ArrowRight size={16} className="text-nobel-gold" />}
                      </div>
                  </button>
              ))}
@@ -396,11 +397,11 @@ export const FormatComparisonDiagram: React.FC = () => {
             {/* Header */}
             <div className="flex justify-between items-end mb-8 pb-4 border-b border-stone-800">
                 <div>
-                    <h3 className="font-serif text-2xl text-white italic">{t('formats.config.title')}</h3>
-                    <p className="text-stone-500 text-xs uppercase tracking-widest mt-1">{t('formats.config.limit')}</p>
+                    <h3 className="font-serif text-3xl text-white italic">{t('formats.config.title')}</h3>
+                    <p className="text-stone-500 text-xs uppercase tracking-widest mt-2">{t('formats.config.limit')}</p>
                 </div>
                 <div className="text-right">
-                     <div className="text-3xl font-mono text-nobel-gold">{width}<span className="text-sm text-stone-600 ml-1">mm</span> <span className="text-stone-700 mx-1">x</span> {height}<span className="text-sm text-stone-600 ml-1">mm</span></div>
+                     <div className="text-4xl font-mono text-nobel-gold">{width}<span className="text-base text-stone-600 ml-1">mm</span> <span className="text-stone-700 mx-1">x</span> {height}<span className="text-base text-stone-600 ml-1">mm</span></div>
                 </div>
             </div>
 
@@ -415,7 +416,7 @@ export const FormatComparisonDiagram: React.FC = () => {
                         height: `${MAX_H * scaleFactor}px` 
                     }}
                 >
-                    <span className="text-[9px] text-stone-700 font-mono uppercase">{t('formats.config.max_cap')}: 435 x 605</span>
+                    <span className="text-[10px] text-stone-700 font-mono uppercase">{t('formats.config.max_cap')}: 435 x 605</span>
                 </div>
 
                 {/* Dynamic Book */}
@@ -431,13 +432,13 @@ export const FormatComparisonDiagram: React.FC = () => {
                     
                     {/* Dimensions on Book */}
                     <div className="text-center opacity-50 pointer-events-none">
-                        <div className="text-stone-900 font-serif text-2xl font-bold">CLZ</div>
-                        <div className="text-[10px] tracking-[0.3em] text-stone-500 mt-1">EXTRA FORMAT</div>
+                        <div className="text-stone-900 font-serif text-3xl font-bold">CLZ</div>
+                        <div className="text-xs tracking-[0.3em] text-stone-500 mt-2">EXTRA FORMAT</div>
                     </div>
 
                     {/* Size Indicators */}
-                    <div className="absolute -bottom-6 left-0 w-full text-center text-[10px] text-stone-500 font-mono">{width}mm</div>
-                    <div className="absolute -right-8 top-1/2 -translate-y-1/2 text-[10px] text-stone-500 font-mono rotate-90">{height}mm</div>
+                    <div className="absolute -bottom-8 left-0 w-full text-center text-xs text-stone-500 font-mono">{width}mm</div>
+                    <div className="absolute -right-8 top-1/2 -translate-y-1/2 text-xs text-stone-500 font-mono rotate-90">{height}mm</div>
                 </div>
             </div>
 
@@ -445,8 +446,8 @@ export const FormatComparisonDiagram: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-stone-950 p-6 rounded-sm border border-stone-800">
                 {/* Width Control */}
                 <div className="space-y-3">
-                    <div className="flex justify-between text-xs text-stone-400 font-bold tracking-wider uppercase">
-                        <span className="flex items-center gap-2"><MoveHorizontal size={14} /> {t('formats.config.width')}</span>
+                    <div className="flex justify-between text-sm text-stone-400 font-bold tracking-wider uppercase">
+                        <span className="flex items-center gap-2"><MoveHorizontal size={16} /> {t('formats.config.width')}</span>
                         <span className="text-nobel-gold">{width} mm</span>
                     </div>
                     <input 
@@ -458,7 +459,7 @@ export const FormatComparisonDiagram: React.FC = () => {
                         className="w-full h-1 bg-stone-800 rounded-lg appearance-none cursor-pointer accent-nobel-gold"
                         style={{ touchAction: 'none' }}
                     />
-                    <div className="flex justify-between text-[9px] text-stone-600 font-mono">
+                    <div className="flex justify-between text-[10px] text-stone-600 font-mono">
                         <span>{MIN_W}</span>
                         <span>{MAX_W}</span>
                     </div>
@@ -466,8 +467,8 @@ export const FormatComparisonDiagram: React.FC = () => {
 
                 {/* Height Control */}
                 <div className="space-y-3">
-                    <div className="flex justify-between text-xs text-stone-400 font-bold tracking-wider uppercase">
-                        <span className="flex items-center gap-2"><MoveVertical size={14} /> {t('formats.config.height')}</span>
+                    <div className="flex justify-between text-sm text-stone-400 font-bold tracking-wider uppercase">
+                        <span className="flex items-center gap-2"><MoveVertical size={16} /> {t('formats.config.height')}</span>
                         <span className="text-nobel-gold">{height} mm</span>
                     </div>
                     <input 
@@ -479,7 +480,7 @@ export const FormatComparisonDiagram: React.FC = () => {
                         className="w-full h-1 bg-stone-800 rounded-lg appearance-none cursor-pointer accent-nobel-gold"
                         style={{ touchAction: 'none' }}
                     />
-                    <div className="flex justify-between text-[9px] text-stone-600 font-mono">
+                    <div className="flex justify-between text-[10px] text-stone-600 font-mono">
                         <span>{MIN_H}</span>
                         <span>{MAX_H}</span>
                     </div>
@@ -494,27 +495,27 @@ export const FormatComparisonDiagram: React.FC = () => {
 export const MaxiSpecsDiagram: React.FC = () => {
     const { t } = useTranslation();
     return (
-        <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+        <div className="grid grid-cols-2 gap-6 w-full max-w-md">
             <SpecCard 
-                icon={<Ruler className="text-nobel-gold" />} 
+                icon={<Ruler className="text-nobel-gold" size={24} />} 
                 label={t('formats.specs.spine.label')} 
                 value="80mm" 
                 sub={t('formats.specs.spine.sub')}
             />
              <SpecCard 
-                icon={<Weight className="text-nobel-gold" />} 
+                icon={<Weight className="text-nobel-gold" size={24} />} 
                 label={t('formats.specs.weight.label')}
                 value="12kg" 
                 sub={t('formats.specs.weight.sub')}
             />
              <SpecCard 
-                icon={<Layers className="text-nobel-gold" />} 
+                icon={<Layers className="text-nobel-gold" size={24} />} 
                 label={t('formats.specs.caliper.label')}
                 value="5mm" 
                 sub={t('formats.specs.caliper.sub')}
             />
              <SpecCard 
-                icon={<BoxSelect className="text-nobel-gold" />} 
+                icon={<BoxSelect className="text-nobel-gold" size={24} />} 
                 label={t('formats.specs.min.label')}
                 value="100x150" 
                 sub={t('formats.specs.min.sub')}
@@ -524,12 +525,12 @@ export const MaxiSpecsDiagram: React.FC = () => {
 }
 
 const SpecCard = ({ icon, label, value, sub }: { icon: React.ReactNode, label: string, value: string, sub: string }) => (
-    <div className="group p-4 bg-stone-800/50 border border-stone-700 hover:border-nobel-gold transition-colors">
-        <div className="flex items-center justify-between mb-3">
+    <div className="group p-6 bg-stone-800/50 border border-stone-700 hover:border-nobel-gold transition-colors">
+        <div className="flex items-center justify-between mb-4">
             {icon}
-            <div className="text-2xl font-mono text-white font-bold">{value}</div>
+            <div className="text-3xl font-mono text-white font-bold">{value}</div>
         </div>
-        <div className="text-xs text-stone-400 font-bold uppercase tracking-wider mb-1">{label}</div>
-        <div className="text-[10px] text-stone-600">{sub}</div>
+        <div className="text-sm text-stone-400 font-bold uppercase tracking-wider mb-2">{label}</div>
+        <div className="text-xs text-stone-600">{sub}</div>
     </div>
 )

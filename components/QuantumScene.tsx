@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -5,24 +6,8 @@
 
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Environment, Box, Cylinder, Plane, useTexture } from '@react-three/drei';
+import { Float, MeshDistortMaterial, Environment, Box, Cylinder, Plane, useTexture, Grid, Center, OrbitControls, SoftShadows } from '@react-three/drei';
 import * as THREE from 'three';
-
-// Add missing JSX types for Three.js elements
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      mesh: any;
-      group: any;
-      ambientLight: any;
-      spotLight: any;
-      pointLight: any;
-      fog: any;
-      meshStandardMaterial: any;
-      planeGeometry: any;
-    }
-  }
-}
 
 // --- HERO SCENE: FLOATING PAPER & GOLD LEAF ---
 
@@ -52,7 +37,11 @@ const FloatingPage = ({ position, rotation, scale = 1 }: { position: [number, nu
   );
 };
 
-const GoldLeafParticle = ({ position }: { position: [number, number, number] }) => {
+type GoldLeafParticleProps = {
+    position: [number, number, number];
+};
+
+const GoldLeafParticle: React.FC<GoldLeafParticleProps> = ({ position }) => {
     const ref = useRef<THREE.Mesh>(null);
     useFrame((state) => {
         if(ref.current) {
@@ -106,72 +95,186 @@ export const HeroScene: React.FC = () => {
   );
 };
 
-// --- INDUSTRIAL SCENE: BOOK PRESS ---
-
+// --- INDUSTRIAL SCENE: BOOK PRESS (Legacy) ---
 export const IndustrialMachineScene: React.FC = () => {
-  return (
-    <div className="w-full h-full absolute inset-0">
-      <Canvas camera={{ position: [4, 3, 4], fov: 40 }}>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[5, 10, 5]} angle={0.3} penumbra={1} intensity={2} color="#fff" castShadow />
-        <pointLight position={[-5, 2, -5]} intensity={1} color="#C5A059" />
-        <Environment preset="city" />
-        
-        <Float rotationIntensity={0.1} floatIntensity={0.2} speed={0.5}>
-          <group rotation={[0, -Math.PI / 4, 0]} position={[0, -0.5, 0]}>
-            
-            {/* Base Plate */}
-            <Box args={[3, 0.2, 2]} position={[0, 0, 0]}>
-               <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.2} />
-            </Box>
-
-            {/* The Book Stack */}
-            <Box args={[1.8, 0.6, 1.2]} position={[0, 0.4, 0]}>
-                <meshStandardMaterial color="#F9F8F4" roughness={0.8} />
-            </Box>
-            {/* Book Spine Detail */}
-            <Box args={[0.05, 0.6, 1.2]} position={[-0.92, 0.4, 0]}>
-                <meshStandardMaterial color="#C5A059" metalness={0.5} roughness={0.4} />
-            </Box>
-
-            {/* Top Press Plate */}
-            <Box args={[3, 0.2, 2]} position={[0, 0.8, 0]}>
-               <meshStandardMaterial color="#333" metalness={0.9} roughness={0.2} />
-            </Box>
-
-            {/* Screw Columns */}
-            <Cylinder args={[0.1, 0.1, 2.5]} position={[1.2, 1, 0.8]}>
-               <meshStandardMaterial color="#888" metalness={1} roughness={0.3} />
-            </Cylinder>
-            <Cylinder args={[0.1, 0.1, 2.5]} position={[-1.2, 1, 0.8]}>
-               <meshStandardMaterial color="#888" metalness={1} roughness={0.3} />
-            </Cylinder>
-            <Cylinder args={[0.1, 0.1, 2.5]} position={[1.2, 1, -0.8]}>
-               <meshStandardMaterial color="#888" metalness={1} roughness={0.3} />
-            </Cylinder>
-             <Cylinder args={[0.1, 0.1, 2.5]} position={[-1.2, 1, -0.8]}>
-               <meshStandardMaterial color="#888" metalness={1} roughness={0.3} />
-            </Cylinder>
-
-            {/* Top Wheel */}
-            <group position={[0, 2.2, 0]}>
-                <Cylinder args={[0.8, 0.8, 0.1, 32]} rotation={[0,0,0]}>
-                    <meshStandardMaterial color="#C5A059" metalness={1} roughness={0.3} />
-                </Cylinder>
-                <Box args={[0.1, 0.3, 0.1]} position={[0, 0.2, 0]}>
-                     <meshStandardMaterial color="#111" />
-                </Box>
-            </group>
-            
-            {/* Central Screw */}
-            <Cylinder args={[0.15, 0.15, 1.4]} position={[0, 1.5, 0]}>
-                {/* Screw thread texture simulation via bump map or geometry segments */}
-                <meshStandardMaterial color="#666" metalness={0.8} roughness={0.5} />
-            </Cylinder>
-
-          </group>
-        </Float>
-      </Canvas>
-    </div>
-  );
+  return null; // Component deprecated/removed for performance
 }
+
+// --- CONTACT SCENE: ARCHITECTURAL WHITE MODEL ---
+
+// Industrial Silo/Tank
+const IndustrialTank = ({ position }: { position: [number, number, number] }) => (
+    <group position={position}>
+        <mesh castShadow receiveShadow position={[0, 3, 0]}>
+            <cylinderGeometry args={[2.5, 2.5, 6, 32]} />
+            <meshStandardMaterial color="#eeeeee" roughness={0.4} />
+        </mesh>
+    </group>
+);
+
+// Low Poly Tree
+const LowPolyTree = ({ position, scale = 1 }: { position: [number, number, number], scale?: number }) => (
+     <group position={position} scale={scale}>
+        <mesh position={[0, 1, 0]} castShadow>
+            <cylinderGeometry args={[0.3, 0.4, 2, 8]} />
+             <meshStandardMaterial color="#8d6e63" />
+        </mesh>
+        <mesh position={[0, 3.5, 0]} castShadow>
+            <dodecahedronGeometry args={[2]} />
+            <meshStandardMaterial color="#a5d6a7" roughness={1} />
+        </mesh>
+     </group>
+);
+
+// Surrounding Industrial Block
+const ContextBuilding = ({ position, args, rotation = [0,0,0] }: { position: [number, number, number], args: [number, number, number], rotation?: [number, number, number] }) => (
+    <mesh position={position} rotation={rotation as any} castShadow receiveShadow>
+        <boxGeometry args={args} />
+        <meshStandardMaterial color="#f0f0f0" roughness={0.9} />
+    </mesh>
+);
+
+const LogisticsLayer = () => {
+    return (
+        <group>
+            {/* --- LOGISTICS YARD REMOVED (Trucks & Pallets deleted) --- */}
+            
+            {/* Industrial Tanks (Left side context) */}
+            <IndustrialTank position={[-25, 0, -15]} />
+            <IndustrialTank position={[-25, 0, -8]} />
+
+            {/* Greenery / Landscaping */}
+            <LowPolyTree position={[-30, 0, 10]} scale={1.2} />
+            <LowPolyTree position={[-35, 0, 15]} />
+            <LowPolyTree position={[-28, 0, 5]} />
+            <LowPolyTree position={[30, 0, 30]} scale={0.8} />
+            <LowPolyTree position={[35, 0, 25]} />
+
+            {/* --- OUTER CONTEXT: Surrounding Industrial Zone --- */}
+            
+            {/* North Block - Huge Warehouse */}
+            <ContextBuilding position={[0, 6, -50]} args={[100, 12, 40]} />
+            
+            {/* East Block - Neighboring Factory */}
+            <ContextBuilding position={[60, 8, 0]} args={[40, 16, 80]} />
+            
+            {/* West Block - Office Complex */}
+            <ContextBuilding position={[-60, 5, -10]} args={[40, 10, 60]} />
+            
+            {/* South Boundary */}
+            <ContextBuilding position={[10, 4, 60]} args={[80, 8, 20]} />
+
+        </group>
+    )
+}
+
+export const ContactScene: React.FC = () => {
+    
+    // Custom SVG Path Parser to create the building shape
+    const hqShape = useMemo(() => {
+        const shape = new THREE.Shape();
+        
+        // Visual reconstruction of the points based on the 762x818 coordinate space:
+        shape.moveTo(0, 0); // Top Left
+        shape.lineTo(51, 0);
+        shape.lineTo(51, 146);
+        shape.lineTo(119, 147); // Small jut out
+        shape.lineTo(117, 223);
+        shape.lineTo(157, 227);
+        shape.lineTo(160, 230);
+        shape.lineTo(167, 375);
+        shape.lineTo(220, 375);
+        shape.lineTo(227, 504);
+        shape.lineTo(230, 507);
+        shape.lineTo(297, 506);
+        shape.lineTo(465, 505); // Long straight section
+        // The curve approximation
+        shape.lineTo(516, 458);
+        shape.lineTo(554, 450);
+        shape.lineTo(621, 376);
+        shape.lineTo(693, 244);
+        shape.lineTo(737, 145); // Top Right Tip
+        shape.lineTo(760, 152); 
+        shape.lineTo(736, 257);
+        
+        // The large sweeping curve back to bottom left
+        // We approximate this with a few quadratic curves for the smooth "fan" look
+        shape.quadraticCurveTo(650, 400, 455, 600);
+        shape.quadraticCurveTo(226, 818, 0, 818);
+        
+        shape.lineTo(0, 0); // Close loop
+
+        return shape;
+    }, []);
+
+    const extrudeSettings = useMemo(() => ({
+        depth: 150, // Significantly increased depth for better visibility
+        bevelEnabled: false,
+    }), []);
+
+    return (
+        <div className="w-full h-full absolute inset-0 bg-[#e5e5e5]">
+            <Canvas shadows camera={{ position: [0, 100, 80], fov: 35 }}>
+                
+                {/* Architectural Lighting - Clean & Bright */}
+                <ambientLight intensity={0.7} />
+                <directionalLight 
+                    position={[50, 100, 50]} 
+                    intensity={1.5} 
+                    castShadow 
+                    shadow-mapSize={[2048, 2048]} 
+                    shadow-bias={-0.0005}
+                />
+                
+                <group position={[0, 0, 0]}>
+                    <Center top>
+                         {/* THE HQ - Main Building from SVG */}
+                         {/* Scaled and Mirrored along X axis */}
+                         <group scale={[-0.05, 0.05, 0.05]}> 
+                            <mesh rotation={[-Math.PI/2, 0, 0]} castShadow receiveShadow>
+                                <extrudeGeometry args={[hqShape, extrudeSettings]} />
+                                <meshStandardMaterial color="#ffffff" roughness={0.5} metalness={0.1} side={THREE.DoubleSide} />
+                            </mesh>
+                            
+                            {/* Roof Detail - Wireframe overlay */}
+                             <mesh rotation={[-Math.PI/2, 0, 0]} position={[0, 150.1, 0]}>
+                                <extrudeGeometry args={[hqShape, { depth: 0, bevelEnabled: false }]} />
+                                <meshBasicMaterial color="#cccccc" wireframe side={THREE.DoubleSide} />
+                            </mesh>
+                         </group>
+                    </Center>
+                    
+                    {/* Surrounding Logistics Context */}
+                    <LogisticsLayer />
+
+                     {/* Ground Plane - Slightly Darker for contrast */}
+                     <mesh rotation={[-Math.PI/2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
+                         <planeGeometry args={[800, 800]} />
+                         <meshStandardMaterial color="#d4d4d4" roughness={1} />
+                     </mesh>
+                </group>
+
+                {/* Controls - Fixed View (Zoom Disabled) - ANGLED VIEW DEFAULT */}
+                <OrbitControls 
+                    enableRotate={true}
+                    maxPolarAngle={Math.PI / 2.2} 
+                    enableZoom={false}
+                />
+                
+                <Environment preset="city" />
+                {/* Adjusted Fog to ensure object is visible but fades out far context */}
+                <fog attach="fog" args={['#e5e5e5', 150, 500]} />
+                <SoftShadows size={20} samples={10} focus={0.5} />
+            </Canvas>
+            
+            <div className="absolute bottom-6 left-6 z-10 pointer-events-none">
+                 <div className="flex items-center gap-2 mb-1">
+                     <span className="text-nobel-gold font-mono text-xs tracking-[0.2em] uppercase">Padova Z.I.</span>
+                 </div>
+                 <div className="text-stone-400 font-mono text-xs tracking-widest">
+                    Architectural Model 1:500
+                </div>
+            </div>
+        </div>
+    );
+};

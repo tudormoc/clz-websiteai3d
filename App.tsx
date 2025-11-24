@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -5,17 +6,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { HeroScene } from './components/QuantumScene';
+import { HeroScene, ContactScene } from './components/QuantumScene';
 import { BindingLayersDiagram, FormatComparisonDiagram, BookAnatomyDiagram, MaxiSpecsDiagram } from './components/Diagrams';
 import { LegacySection, SelectedWorks, GlobalReach } from './components/Sections';
-import { ArrowDown, Menu, X, Mail, ArrowRight, Globe } from 'lucide-react';
+import { ArrowDown, Menu, X, Mail, ArrowRight, Globe, MapPin, Phone, Clock, Send } from 'lucide-react';
 
 const ServiceCard = ({ title, sub, delay }: { title: string, sub: string, delay: string }) => {
   return (
     <div className="flex flex-col group animate-fade-in-up items-center p-8 bg-white rounded-sm border border-stone-200 shadow-sm hover:shadow-xl transition-all duration-500 w-full max-w-xs hover:border-nobel-gold" style={{ animationDelay: delay }}>
-      <h3 className="font-serif text-2xl text-stone-900 text-center mb-3 italic">{title}</h3>
+      <h3 className="font-serif text-2xl lg:text-3xl text-stone-900 text-center mb-3 italic">{title}</h3>
       <div className="w-8 h-0.5 bg-nobel-gold mb-4 opacity-60 group-hover:w-24 transition-all duration-500"></div>
-      <p className="text-xs text-stone-500 font-bold uppercase tracking-widest text-center leading-relaxed">{sub}</p>
+      <p className="text-sm text-stone-500 font-bold uppercase tracking-widest text-center leading-relaxed">{sub}</p>
     </div>
   );
 };
@@ -35,7 +36,7 @@ const HomePage: React.FC<{ onNavigate: (page: string, section?: string) => void 
         <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(249,248,244,0.0)_0%,rgba(249,248,244,0.5)_60%,rgba(249,248,244,1)_100%)]" />
 
         <div className="relative z-10 container mx-auto px-6 text-center">
-          <div className="inline-block mb-6 px-4 py-1 border border-stone-300 text-stone-500 text-[10px] tracking-[0.3em] uppercase font-bold backdrop-blur-sm bg-white/40">
+          <div className="inline-block mb-6 px-4 py-1 border border-stone-300 text-stone-500 text-xs tracking-[0.3em] uppercase font-bold backdrop-blur-sm bg-white/40">
             {t('brand.est')}
           </div>
           <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-medium leading-tight mb-8 text-stone-900 drop-shadow-sm">
@@ -43,12 +44,12 @@ const HomePage: React.FC<{ onNavigate: (page: string, section?: string) => void 
             <span className="text-4xl md:text-6xl lg:text-7xl block mt-2 text-stone-800">Lavoratori Zanardi</span>
           </h1>
           <div className="w-24 h-1 bg-nobel-gold mx-auto mb-8"></div>
-          <p className="max-w-xl mx-auto text-lg md:text-xl text-stone-600 font-serif italic leading-relaxed mb-12 whitespace-pre-line">
+          <p className="max-w-xl mx-auto text-xl text-stone-600 font-serif italic leading-relaxed mb-12 whitespace-pre-line">
             {t('brand.subtitle')}
           </p>
           
           <div className="flex justify-center">
-             <button onClick={() => onNavigate('home', 'intro')} className="group flex flex-col items-center gap-2 text-xs font-bold tracking-widest text-stone-400 hover:text-nobel-gold transition-colors cursor-pointer uppercase">
+             <button onClick={() => onNavigate('home', 'intro')} className="group flex flex-col items-center gap-2 text-sm font-bold tracking-widest text-stone-400 hover:text-nobel-gold transition-colors cursor-pointer uppercase">
                 <span>{t('brand.discover')}</span>
                 <span className="p-3 border border-stone-200 rounded-full group-hover:border-nobel-gold transition-colors bg-white">
                     <ArrowDown size={16} />
@@ -66,14 +67,14 @@ const HomePage: React.FC<{ onNavigate: (page: string, section?: string) => void 
                     <div className="absolute top-4 left-4 w-16 h-16 border-t border-l border-nobel-gold opacity-50"></div>
                     <div className="absolute bottom-4 right-4 w-16 h-16 border-b border-r border-nobel-gold opacity-50"></div>
                     <h3 className="text-white font-serif text-5xl text-center leading-snug">
-                        <span className="text-nobel-gold italic block text-2xl mb-2">{t('intro.badge')}</span>
+                        <span className="text-nobel-gold italic block text-3xl mb-2">{t('intro.badge')}</span>
                         {t('intro.title_card')}
                     </h3>
                 </div>
             </div>
-            <div className="md:col-span-7 text-lg text-stone-600 leading-relaxed space-y-8">
+            <div className="md:col-span-7 text-xl text-stone-600 leading-relaxed space-y-8">
               <div>
-                  <div className="inline-block mb-3 text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('intro.label')}</div>
+                  <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('intro.label')}</div>
                   <h2 className="font-serif text-5xl mb-6 leading-tight text-stone-900 whitespace-pre-line">{t('intro.headline')}</h2>
               </div>
               <p>
@@ -87,17 +88,17 @@ const HomePage: React.FC<{ onNavigate: (page: string, section?: string) => void 
                 </Trans>
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
-                  <div className="px-4 py-3 bg-stone-50 border border-stone-200 text-xs font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_case')}</div>
-                  <div className="px-4 py-3 bg-stone-50 border border-stone-200 text-xs font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_sewn')}</div>
-                  <div className="px-4 py-3 bg-stone-50 border border-stone-200 text-xs font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_qc')}</div>
+                  <div className="px-5 py-3 bg-stone-50 border border-stone-200 text-sm font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_case')}</div>
+                  <div className="px-5 py-3 bg-stone-50 border border-stone-200 text-sm font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_sewn')}</div>
+                  <div className="px-5 py-3 bg-stone-50 border border-stone-200 text-sm font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_qc')}</div>
               </div>
 
               <div className="pt-8">
                 <button 
                   onClick={() => onNavigate('atelier')} 
-                  className="inline-flex items-center gap-2 text-stone-900 border-b border-stone-900 pb-1 hover:text-nobel-gold hover:border-nobel-gold transition-colors text-sm font-bold uppercase tracking-widest"
+                  className="inline-flex items-center gap-2 text-stone-900 border-b-2 border-stone-900 pb-1 hover:text-nobel-gold hover:border-nobel-gold transition-colors text-base font-bold uppercase tracking-widest"
                 >
-                  {t('intro.enter')} <ArrowRight size={14} />
+                  {t('intro.enter')} <ArrowRight size={16} />
                 </button>
               </div>
             </div>
@@ -115,12 +116,17 @@ const AtelierPage: React.FC = () => {
   const { t } = useTranslation();
   return (
   <div className="animate-fade-in">
-    {/* Atelier Header */}
-    <div className="pt-40 pb-20 bg-stone-900 text-stone-200 text-center">
-        <div className="container mx-auto px-6">
-            <div className="inline-block mb-4 px-3 py-1 border border-stone-700 rounded-full text-[10px] uppercase tracking-widest text-nobel-gold">{t('atelier.label')}</div>
-            <h1 className="font-serif text-5xl md:text-7xl text-white mb-6">{t('atelier.headline')}</h1>
-            <p className="max-w-2xl mx-auto text-stone-400 text-lg font-serif italic">
+    {/* Atelier Header - Enhanced Dark Theme */}
+    <div className="relative pt-48 pb-24 bg-[#111] text-stone-200 text-center overflow-hidden">
+        {/* Noise Texture */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        {/* Radial Light */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(197,160,89,0.15)_0%,transparent_70%)] pointer-events-none"></div>
+
+        <div className="relative container mx-auto px-6 z-10">
+            <div className="inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-widest text-nobel-gold shadow-lg">{t('atelier.label')}</div>
+            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white mb-6 drop-shadow-2xl">{t('atelier.headline')}</h1>
+            <p className="max-w-3xl mx-auto text-stone-400 text-xl font-serif italic leading-relaxed">
                 {t('atelier.sub')}
             </p>
         </div>
@@ -130,9 +136,9 @@ const AtelierPage: React.FC = () => {
     <section id="process" className="py-24 bg-stone-50">
         <div className="container mx-auto px-6">
                 <div className="mb-16 max-w-2xl">
-                <div className="inline-block mb-3 text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('process.label')}</div>
-                <h2 className="font-serif text-4xl text-stone-900 mb-6">{t('process.headline')}</h2>
-                <p className="text-stone-600">{t('process.sub')}</p>
+                <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('process.label')}</div>
+                <h2 className="font-serif text-5xl text-stone-900 mb-6">{t('process.headline')}</h2>
+                <p className="text-stone-600 text-xl">{t('process.sub')}</p>
                 </div>
                 <BindingLayersDiagram />
         </div>
@@ -143,12 +149,12 @@ const AtelierPage: React.FC = () => {
         <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     <div>
-                    <div className="inline-block mb-3 text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('anatomy.label')}</div>
-                    <h2 className="font-serif text-4xl text-stone-900 mb-6">{t('anatomy.headline')}</h2>
+                    <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('anatomy.label')}</div>
+                    <h2 className="font-serif text-5xl text-stone-900 mb-6">{t('anatomy.headline')}</h2>
                     <BookAnatomyDiagram />
                     </div>
                     <div className="flex flex-col justify-center space-y-8">
-                    <p className="text-lg text-stone-600 leading-relaxed">
+                    <p className="text-xl text-stone-600 leading-relaxed">
                         {t('anatomy.desc')}
                     </p>
                     <div className="grid grid-cols-2 gap-8">
@@ -164,16 +170,16 @@ const AtelierPage: React.FC = () => {
     <section id="formats" className="py-24 bg-stone-900 text-stone-200">
             <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-                <div className="inline-block mb-3 text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('formats.label')}</div>
-                <h2 className="font-serif text-5xl text-white mb-6">{t('formats.headline')}</h2>
-                <p className="max-w-2xl mx-auto text-stone-400">{t('formats.sub')}</p>
+                <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('formats.label')}</div>
+                <h2 className="font-serif text-5xl md:text-6xl text-white mb-6">{t('formats.headline')}</h2>
+                <p className="max-w-2xl mx-auto text-xl text-stone-400">{t('formats.sub')}</p>
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
                     <FormatComparisonDiagram />
                     <div className="flex flex-col justify-center">
                         <h3 className="font-serif text-3xl mb-6 text-white italic">{t('formats.text.headline')}</h3>
-                        <p className="text-stone-400 mb-8 leading-relaxed">
+                        <p className="text-stone-400 mb-8 leading-relaxed text-lg">
                             {t('formats.text.p1')}
                         </p>
                         <MaxiSpecsDiagram />
@@ -185,10 +191,92 @@ const AtelierPage: React.FC = () => {
   );
 };
 
+const ContactPage: React.FC = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="animate-fade-in">
+        {/* Contact Header - Enhanced Dark Theme */}
+        <div className="relative pt-48 pb-20 bg-[#0a0a0a] text-stone-200 border-b border-stone-800 overflow-hidden">
+             {/* Noise Texture */}
+            <div className="absolute inset-0 opacity-15 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+            {/* Spotlight Gradient */}
+            <div className="absolute top-0 right-0 w-2/3 h-full bg-[radial-gradient(circle_at_top_right,rgba(197,160,89,0.1)_0%,transparent_60%)] pointer-events-none"></div>
+
+            <div className="relative container mx-auto px-6 z-10">
+                <div className="inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-widest text-nobel-gold shadow-lg">{t('contact.label')}</div>
+                <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white mb-6 drop-shadow-2xl">{t('contact.headline')}</h1>
+                <p className="max-w-3xl text-stone-400 text-xl font-serif italic leading-relaxed">
+                    {t('contact.sub')}
+                </p>
+            </div>
+        </div>
+
+        <section className="bg-[#F9F8F4]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[600px]">
+                
+                {/* Immersive 3D Map / Location */}
+                <div className="lg:col-span-6 relative h-[500px] lg:h-auto bg-stone-900 overflow-hidden">
+                     <ContactScene />
+                     <div className="absolute top-8 left-8 p-8 bg-white/90 backdrop-blur-sm shadow-xl border-l-4 border-nobel-gold max-w-sm">
+                         <div className="space-y-6">
+                            <div>
+                                <h3 className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">{t('contact.info.address_label')}</h3>
+                                <p className="font-serif text-2xl text-stone-900 whitespace-pre-line leading-snug">{t('contact.info.address')}</p>
+                            </div>
+                            
+                            <div className="flex flex-col gap-3">
+                                <a href="tel:+39049000000" className="flex items-center gap-3 text-stone-600 hover:text-nobel-gold transition-colors">
+                                    <Phone size={16} /> <span className="text-base font-mono">+39 049 000 0000</span>
+                                </a>
+                                <a href="mailto:info@clz.it" className="flex items-center gap-3 text-stone-600 hover:text-nobel-gold transition-colors">
+                                    <Mail size={16} /> <span className="text-base font-mono">info@clz.it</span>
+                                </a>
+                            </div>
+                         </div>
+                     </div>
+                </div>
+
+                {/* Simplified Form */}
+                <div className="lg:col-span-6 p-8 lg:p-24 bg-white flex flex-col justify-center">
+                    <form className="space-y-12 max-w-xl mx-auto w-full">
+                        <div className="space-y-10">
+                            <div className="space-y-3">
+                                <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.name')}</label>
+                                <input type="text" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder="Name" />
+                            </div>
+                            <div className="space-y-3">
+                                 <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.company')}</label>
+                                 <input type="text" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder="Company" />
+                            </div>
+                            <div className="space-y-3">
+                                <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.email')}</label>
+                                <input type="email" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder="Email" />
+                            </div>
+                        </div>
+
+                        <div className="space-y-3 pt-6">
+                             <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.specs')}</label>
+                             <textarea rows={5} className="w-full border border-stone-200 p-5 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors bg-stone-50 resize-none font-sans text-lg" placeholder="Message or specifications..."></textarea>
+                        </div>
+
+                        <div className="pt-6 flex justify-start">
+                            <button type="button" className="px-12 py-6 bg-stone-900 text-white font-bold uppercase tracking-widest text-sm hover:bg-nobel-gold transition-colors flex items-center gap-3 shadow-xl">
+                                {t('contact.form.submit')} <Send size={16} />
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+  );
+}
+
 // --- MAIN APP ---
 
 const App: React.FC = () => {
-  const [activePage, setActivePage] = useState<'home' | 'atelier'>('home');
+  const [activePage, setActivePage] = useState<'home' | 'atelier' | 'contact'>('home');
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
@@ -200,7 +288,7 @@ const App: React.FC = () => {
   }, []);
 
   // Simple Router Logic
-  const navigateTo = (page: 'home' | 'atelier', sectionId?: string) => {
+  const navigateTo = (page: 'home' | 'atelier' | 'contact', sectionId?: string) => {
     setMenuOpen(false);
     
     // If we are changing pages, scroll to top first unless section provided
@@ -226,86 +314,110 @@ const App: React.FC = () => {
     }
   };
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === 'it' ? 'en' : 'it';
-    i18n.changeLanguage(newLang);
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
   };
+
+  // --- DYNAMIC THEME LOGIC ---
+  // If not scrolled and we are on a "Dark Mode" page (Atelier or Contact), use light text.
+  const isDarkHeader = !scrolled && (activePage === 'atelier' || activePage === 'contact');
+  
+  // Dynamic classes with drop-shadow for better legibility
+  const navTextColor = isDarkHeader ? 'text-white drop-shadow-md' : 'text-stone-900';
+  const navSubTextColor = isDarkHeader ? 'text-stone-300 drop-shadow-sm' : 'text-stone-500';
+  const navLinkColor = isDarkHeader ? 'text-stone-200 drop-shadow-sm' : 'text-stone-600';
+  const navBorderColor = isDarkHeader ? 'border-stone-500' : 'border-stone-300';
+  // Use a slight gradient overlay when scrolled for readability
+  const navBgColor = scrolled ? 'bg-[#F9F8F4]/95 backdrop-blur-md shadow-sm border-b border-stone-200' : 'bg-transparent';
 
   return (
     <div className="min-h-screen bg-[#F9F8F4] text-stone-800 selection:bg-nobel-gold selection:text-white">
       
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#F9F8F4]/95 backdrop-blur-md shadow-sm py-4 border-b border-stone-200' : 'bg-transparent py-8'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-6 ${navBgColor}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigateTo('home')}>
-            <div className="w-10 h-10 border-2 border-nobel-gold flex items-center justify-center text-nobel-gold font-serif font-bold text-xl shadow-sm bg-stone-900">C</div>
+          
+          {/* Brand Logo */}
+          <div className="flex items-center gap-4 cursor-pointer group" onClick={() => navigateTo('home')}>
+            <div className={`w-12 h-12 border-2 border-nobel-gold flex items-center justify-center font-serif font-bold text-2xl shadow-sm bg-stone-900 text-nobel-gold transition-transform duration-500 group-hover:rotate-180`}>C</div>
             <div className="flex flex-col">
-                <span className={`font-serif font-bold text-lg tracking-widest transition-opacity text-stone-900 leading-none`}>
+                <span className={`font-serif font-bold text-xl tracking-widest transition-colors duration-500 leading-none ${navTextColor}`}>
                 CLZ
                 </span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-stone-500">{t('brand.location')}</span>
+                <span className={`text-xs uppercase tracking-[0.2em] transition-colors duration-500 ${navSubTextColor}`}>{t('brand.location')}</span>
             </div>
           </div>
           
-          <div className="hidden lg:flex items-center gap-6 text-[10px] font-bold tracking-[0.15em] text-stone-600 uppercase">
+          {/* Desktop Menu - INCREASED FONT SIZES */}
+          <div className={`hidden lg:flex items-center gap-8 text-sm font-bold tracking-widest uppercase transition-colors duration-500 ${navLinkColor}`}>
             {/* Home Links */}
-            <button onClick={() => navigateTo('home', 'intro')} className={`hover:text-nobel-gold transition-colors ${activePage === 'home' ? 'text-stone-900' : ''}`}>{t('nav.brand')}</button>
+            <button onClick={() => navigateTo('home', 'intro')} className={`hover:text-nobel-gold transition-colors ${activePage === 'home' ? (isDarkHeader ? 'text-white' : 'text-stone-900') : ''}`}>{t('nav.brand')}</button>
             <button onClick={() => navigateTo('home', 'legacy')} className="hover:text-nobel-gold transition-colors">{t('nav.legacy')}</button>
             <button onClick={() => navigateTo('home', 'works')} className="hover:text-nobel-gold transition-colors">{t('nav.works')}</button>
             
-            <span className="text-stone-300">|</span>
+            <span className="opacity-30">|</span>
 
             {/* Atelier Links */}
             <button onClick={() => navigateTo('atelier')} className={`hover:text-nobel-gold transition-colors ${activePage === 'atelier' ? 'text-nobel-gold' : ''}`}>{t('nav.atelier')}</button>
             <button onClick={() => navigateTo('atelier', 'process')} className="hover:text-nobel-gold transition-colors">{t('nav.process')}</button>
             <button onClick={() => navigateTo('atelier', 'formats')} className="hover:text-nobel-gold transition-colors">{t('nav.formats')}</button>
 
-            <a href="mailto:info@clz.it" className="flex items-center gap-2 px-5 py-2 bg-stone-900 text-white hover:bg-nobel-gold transition-colors shadow-sm cursor-pointer ml-4">
-              <Mail size={14} />
+            {/* Contact Button */}
+            <button onClick={() => navigateTo('contact')} className={`flex items-center gap-2 px-6 py-3 transition-all duration-300 shadow-sm cursor-pointer ml-4 font-bold border ${activePage === 'contact' ? 'bg-nobel-gold border-nobel-gold text-white' : isDarkHeader ? 'bg-transparent border-white text-white hover:bg-white hover:text-stone-900' : 'bg-stone-900 border-stone-900 text-white hover:bg-nobel-gold hover:border-nobel-gold'}`}>
+              <Mail size={16} />
               {t('nav.contact')}
-            </a>
+            </button>
 
             {/* Language Switcher */}
-            <button onClick={toggleLanguage} className="ml-2 px-2 py-1 border border-stone-300 hover:border-nobel-gold hover:text-nobel-gold transition-colors min-w-[32px] text-center">
-                {i18n.language === 'it' ? 'EN' : 'IT'}
-            </button>
+            <div className={`flex ml-4 border rounded-sm transition-colors duration-500 ${navBorderColor}`}>
+                <button onClick={() => changeLanguage('it')} className={`px-3 py-1.5 hover:text-nobel-gold transition-colors min-w-[40px] text-center ${i18n.language === 'it' ? 'font-bold text-nobel-gold' : ''}`}>IT</button>
+                <div className={`w-px ${isDarkHeader ? 'bg-stone-700' : 'bg-stone-300'}`}></div>
+                <button onClick={() => changeLanguage('en')} className={`px-3 py-1.5 hover:text-nobel-gold transition-colors min-w-[40px] text-center ${i18n.language === 'en' ? 'font-bold text-nobel-gold' : ''}`}>EN</button>
+                <div className={`w-px ${isDarkHeader ? 'bg-stone-700' : 'bg-stone-300'}`}></div>
+                <button onClick={() => changeLanguage('fr')} className={`px-3 py-1.5 hover:text-nobel-gold transition-colors min-w-[40px] text-center ${i18n.language === 'fr' ? 'font-bold text-nobel-gold' : ''}`}>FR</button>
+            </div>
           </div>
 
-          <button className="lg:hidden text-stone-900 p-2" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X /> : <Menu />}
+          {/* Mobile Toggle */}
+          <button className={`lg:hidden p-2 transition-colors ${navTextColor}`} onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={32} /> : <Menu size={32} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-[#F9F8F4] flex flex-col items-center justify-center gap-8 text-2xl font-serif animate-fade-in text-stone-900">
+        <div className="fixed inset-0 z-40 bg-[#F9F8F4] flex flex-col items-center justify-center gap-10 text-3xl font-serif animate-fade-in text-stone-900">
             <button onClick={() => navigateTo('home', 'intro')}>{t('nav.brand')}</button>
             <button onClick={() => navigateTo('home', 'works')}>{t('nav.works')}</button>
             <button onClick={() => navigateTo('atelier')}>{t('nav.atelier')}</button>
             <button onClick={() => navigateTo('atelier', 'process')}>{t('nav.process')}</button>
             <button onClick={() => navigateTo('atelier', 'formats')}>{t('nav.formats')}</button>
+            <button onClick={() => navigateTo('contact')}>{t('nav.contact')}</button>
             
-            <div className="flex gap-4 mt-4">
-                <button onClick={() => { i18n.changeLanguage('it'); setMenuOpen(false); }} className={`px-4 py-2 border ${i18n.language === 'it' ? 'border-nobel-gold text-nobel-gold' : 'border-stone-300'}`}>IT</button>
-                <button onClick={() => { i18n.changeLanguage('en'); setMenuOpen(false); }} className={`px-4 py-2 border ${i18n.language === 'en' ? 'border-nobel-gold text-nobel-gold' : 'border-stone-300'}`}>EN</button>
+            <div className="flex gap-6 mt-6 text-lg font-sans">
+                <button onClick={() => { i18n.changeLanguage('it'); setMenuOpen(false); }} className={`px-6 py-3 border ${i18n.language === 'it' ? 'border-nobel-gold text-nobel-gold font-bold' : 'border-stone-300'}`}>IT</button>
+                <button onClick={() => { i18n.changeLanguage('en'); setMenuOpen(false); }} className={`px-6 py-3 border ${i18n.language === 'en' ? 'border-nobel-gold text-nobel-gold font-bold' : 'border-stone-300'}`}>EN</button>
+                <button onClick={() => { i18n.changeLanguage('fr'); setMenuOpen(false); }} className={`px-6 py-3 border ${i18n.language === 'fr' ? 'border-nobel-gold text-nobel-gold font-bold' : 'border-stone-300'}`}>FR</button>
             </div>
 
-            <a href="mailto:info@clz.it" className="px-6 py-3 bg-stone-900 text-white shadow-lg cursor-pointer flex items-center gap-2">
-               <Mail size={18} /> {t('nav.contact')}
-            </a>
+            <button onClick={() => navigateTo('contact')} className="px-8 py-4 bg-stone-900 text-white shadow-lg cursor-pointer flex items-center gap-3 text-lg font-sans font-bold uppercase tracking-widest mt-4">
+               <Mail size={20} /> {t('nav.contact')}
+            </button>
         </div>
       )}
 
       <main>
-          {activePage === 'home' ? <HomePage onNavigate={navigateTo} /> : <AtelierPage />}
+          {activePage === 'home' && <HomePage onNavigate={navigateTo} />}
+          {activePage === 'atelier' && <AtelierPage />}
+          {activePage === 'contact' && <ContactPage />}
       </main>
 
-      <footer className="bg-stone-950 py-12 border-t border-stone-900 text-center">
+      <footer className="bg-stone-950 py-16 border-t border-stone-900 text-center">
            <div className="container mx-auto px-6">
-               <div className="text-nobel-gold font-serif font-bold text-2xl mb-4">CLZ</div>
-               <p className="text-stone-600 text-xs tracking-widest uppercase mb-6">&copy; {new Date().getFullYear()} Cooperativa Lavoratori Zanardi. {t('brand.location')}</p>
-               <div className="flex justify-center gap-8 text-xs font-bold uppercase tracking-widest text-stone-500">
+               <div className="text-nobel-gold font-serif font-bold text-3xl mb-6">CLZ</div>
+               <p className="text-stone-500 text-sm tracking-widest uppercase mb-8">&copy; {new Date().getFullYear()} Cooperativa Lavoratori Zanardi. {t('brand.location')}</p>
+               <div className="flex justify-center gap-10 text-sm font-bold uppercase tracking-widest text-stone-600">
                   <a href="#" className="hover:text-white transition-colors">{t('brand.legal')}</a>
                   <a href="#" className="hover:text-white transition-colors">{t('brand.privacy')}</a>
                   <a href="#" className="hover:text-white transition-colors">{t('brand.credits')}</a>

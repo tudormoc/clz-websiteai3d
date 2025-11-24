@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -17,11 +18,11 @@ export const LegacySection = () => {
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-stone-800/20 to-transparent pointer-events-none"></div>
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div>
-           <div className="inline-block mb-3 text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('legacy.label')}</div>
+           <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('legacy.label')}</div>
            <h2 className="font-serif text-4xl md:text-5xl text-white mb-8 leading-tight whitespace-pre-line">
              {t('legacy.headline')}
            </h2>
-           <div className="space-y-6 text-stone-400 leading-relaxed text-lg">
+           <div className="space-y-6 text-stone-400 leading-relaxed text-xl">
              <p>
                {t('legacy.p1')}
              </p>
@@ -34,16 +35,16 @@ export const LegacySection = () => {
            
            <div className="mt-12 grid grid-cols-3 gap-6 border-t border-stone-800 pt-8">
               <div>
-                <div className="text-3xl font-serif text-nobel-gold">1963</div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">{t('legacy.stat_est')}</div>
+                <div className="text-4xl font-serif text-nobel-gold">1963</div>
+                <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{t('legacy.stat_est')}</div>
               </div>
               <div>
-                <div className="text-3xl font-serif text-nobel-gold">4M+</div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">{t('legacy.stat_books')}</div>
+                <div className="text-4xl font-serif text-nobel-gold">4M+</div>
+                <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{t('legacy.stat_books')}</div>
               </div>
               <div>
-                <div className="text-3xl font-serif text-nobel-gold">55</div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">{t('legacy.stat_artisans')}</div>
+                <div className="text-4xl font-serif text-nobel-gold">55</div>
+                <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{t('legacy.stat_artisans')}</div>
               </div>
            </div>
         </div>
@@ -53,7 +54,7 @@ export const LegacySection = () => {
             <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(197,160,89,0.05)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px]"></div>
             <div className="text-center z-10">
                 <div className="text-6xl font-serif italic text-stone-800 mb-2">{t('legacy.since')}</div>
-                <div className="text-8xl font-bold text-stone-800">1963</div>
+                <div className="text-9xl font-bold text-stone-800">1963</div>
             </div>
         </div>
       </div>
@@ -74,7 +75,7 @@ const CoverArt = ({ style, title }: { style: string, title: string }) => {
                 <div className="absolute inset-0 bg-[#EBE9E4] p-6 flex flex-col justify-between">
                     <div className="w-12 h-1 bg-stone-900"></div>
                     <h3 className={`font-serif text-4xl leading-none tracking-tighter text-stone-900 mix-blend-multiply`}>{title}</h3>
-                    <div className="text-[9px] font-mono tracking-widest text-stone-500 uppercase">Fig. 01</div>
+                    <div className="text-xs font-mono tracking-widest text-stone-500 uppercase">Fig. 01</div>
                 </div>
             )
         case 'swiss':
@@ -83,7 +84,7 @@ const CoverArt = ({ style, title }: { style: string, title: string }) => {
                     <div className="row-span-2 border-b-2 border-white/20 flex items-end pb-4">
                          <h3 className="font-sans text-5xl font-bold text-white tracking-tighter leading-none transform -rotate-90 origin-bottom-left translate-x-8">{title}</h3>
                     </div>
-                    <div className="pt-4 flex justify-between text-white/60 font-mono text-[10px]">
+                    <div className="pt-4 flex justify-between text-white/60 font-mono text-xs">
                         <span>EDITION</span>
                         <span>2024</span>
                     </div>
@@ -157,7 +158,7 @@ const ProjectShowcase = ({ category, title, client, year, specs, style, spineCol
                     className={`absolute top-0 bottom-0 left-0 w-8 origin-left rotate-y-90 ${spineColor} flex flex-col justify-end pb-8 items-center backface-hidden shadow-inner`}
                     style={{ transform: 'rotateY(-90deg) translateX(-32px)' }} 
                 >
-                    <span className="text-[8px] tracking-widest text-white/80 font-mono uppercase rotate-90 whitespace-nowrap">{client} • {year}</span>
+                    <span className="text-[10px] tracking-widest text-white/80 font-mono uppercase rotate-90 whitespace-nowrap">{client} • {year}</span>
                 </div>
 
                 {/* Book Block / Pages (Side) */}
@@ -176,25 +177,25 @@ const ProjectShowcase = ({ category, title, client, year, specs, style, spineCol
         </div>
 
         {/* Spec Sheet / Details */}
-        <div className="border-t border-stone-200 pt-4 group-hover:border-nobel-gold transition-colors duration-500">
-            <div className="flex justify-between items-baseline mb-2">
-                <h3 className="font-serif text-2xl text-stone-900 group-hover:text-nobel-gold transition-colors">{title}</h3>
-                <span className="text-xs font-bold uppercase tracking-widest text-stone-400">{year}</span>
+        <div className="border-t border-stone-200 pt-6 group-hover:border-nobel-gold transition-colors duration-500">
+            <div className="flex justify-between items-baseline mb-3">
+                <h3 className="font-serif text-3xl text-stone-900 group-hover:text-nobel-gold transition-colors">{title}</h3>
+                <span className="text-sm font-bold uppercase tracking-widest text-stone-400">{year}</span>
             </div>
-            <p className="text-sm font-serif italic text-stone-500 mb-4">{client}</p>
+            <p className="text-base font-serif italic text-stone-500 mb-6">{client}</p>
             
-            <div className="grid grid-cols-2 gap-y-2 gap-x-8">
+            <div className="grid grid-cols-2 gap-y-3 gap-x-8">
                 {specs.map((spec, i) => (
-                    <div key={i} className="flex justify-between items-center text-[10px] uppercase tracking-wider border-b border-stone-100 pb-1">
+                    <div key={i} className="flex justify-between items-center text-xs uppercase tracking-wider border-b border-stone-100 pb-2">
                         <span className="text-stone-400">{spec.label}</span>
                         <span className="font-bold text-stone-700">{spec.value}</span>
                     </div>
                 ))}
             </div>
             
-            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2 text-xs font-bold text-nobel-gold uppercase tracking-widest">
+            <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2 text-sm font-bold text-nobel-gold uppercase tracking-widest">
                 <span>{t('works.cta')}</span>
-                <ArrowRight size={12} />
+                <ArrowRight size={14} />
             </div>
         </div>
     </motion.div>
@@ -283,7 +284,7 @@ export const SelectedWorks = () => {
             <div className="max-w-2xl">
                 <div className="flex items-center gap-3 mb-4">
                      <span className="w-8 h-px bg-nobel-gold"></span>
-                     <span className="text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('works.label')}</span>
+                     <span className="text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('works.label')}</span>
                 </div>
                 <h2 className="font-serif text-5xl md:text-6xl text-stone-900 leading-none">
                     {t('works.headline')}
@@ -295,7 +296,7 @@ export const SelectedWorks = () => {
                     <button 
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`text-xs font-bold uppercase tracking-widest pb-2 transition-all duration-300 ${activeTab === tab.id ? 'text-stone-900 border-b-2 border-nobel-gold' : 'text-stone-400 hover:text-stone-600 border-b-2 border-transparent'}`}
+                        className={`text-sm font-bold uppercase tracking-widest pb-2 transition-all duration-300 ${activeTab === tab.id ? 'text-stone-900 border-b-2 border-nobel-gold' : 'text-stone-400 hover:text-stone-600 border-b-2 border-transparent'}`}
                     >
                         {tab.label}
                     </button>
@@ -313,8 +314,8 @@ export const SelectedWorks = () => {
         </div>
 
         <div className="mt-24 text-center">
-            <button className="inline-flex items-center gap-2 text-stone-400 hover:text-nobel-gold transition-colors text-xs font-bold uppercase tracking-widest group">
-                <Plus size={16} />
+            <button className="inline-flex items-center gap-2 text-stone-400 hover:text-nobel-gold transition-colors text-sm font-bold uppercase tracking-widest group">
+                <Plus size={18} />
                 <span>{t('works.load_more')}</span>
             </button>
         </div>
@@ -335,27 +336,27 @@ export const GlobalReach = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                     {/* Placeholder for Client Logos - Using Typography for now */}
                     <div className="flex flex-col items-center gap-2 group cursor-default">
-                        <Building2 size={32} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
-                        <span className="font-serif font-bold text-lg">{t('global.museums')}</span>
-                        <span className="text-[9px] uppercase tracking-widest text-stone-400">{t('global.sub_archival')}</span>
+                        <Building2 size={36} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
+                        <span className="font-serif font-bold text-xl">{t('global.museums')}</span>
+                        <span className="text-xs uppercase tracking-widest text-stone-400">{t('global.sub_archival')}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group cursor-default">
-                        <BookOpen size={32} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
-                        <span className="font-serif font-bold text-lg">{t('global.publishers')}</span>
-                        <span className="text-[9px] uppercase tracking-widest text-stone-400">{t('global.sub_highvol')}</span>
+                        <BookOpen size={36} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
+                        <span className="font-serif font-bold text-xl">{t('global.publishers')}</span>
+                        <span className="text-xs uppercase tracking-widest text-stone-400">{t('global.sub_highvol')}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group cursor-default">
-                        <Globe size={32} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
-                        <span className="font-serif font-bold text-lg">{t('global.galleries')}</span>
-                        <span className="text-[9px] uppercase tracking-widest text-stone-400">{t('global.sub_limited')}</span>
+                        <Globe size={36} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
+                        <span className="font-serif font-bold text-xl">{t('global.galleries')}</span>
+                        <span className="text-xs uppercase tracking-widest text-stone-400">{t('global.sub_limited')}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group cursor-default">
-                         <div className="text-2xl font-serif font-bold border-2 border-stone-800 px-3 py-1 group-hover:border-nobel-gold group-hover:text-nobel-gold transition-colors">ISO 9001</div>
-                        <span className="text-[10px] uppercase tracking-widest mt-1">{t('global.iso')}</span>
+                         <div className="text-3xl font-serif font-bold border-2 border-stone-800 px-4 py-2 group-hover:border-nobel-gold group-hover:text-nobel-gold transition-colors">ISO 9001</div>
+                        <span className="text-xs uppercase tracking-widest mt-2">{t('global.iso')}</span>
                     </div>
                 </div>
 
-                <div className="mt-16 pt-16 border-t border-stone-200 flex flex-wrap justify-center gap-8 text-xs font-bold uppercase tracking-widest text-stone-400">
+                <div className="mt-16 pt-16 border-t border-stone-200 flex flex-wrap justify-center gap-8 text-sm font-bold uppercase tracking-widest text-stone-400">
                     <span>{t('global.cities.ny')}</span>
                     <span className="text-nobel-gold">•</span>
                     <span>{t('global.cities.ldn')}</span>
