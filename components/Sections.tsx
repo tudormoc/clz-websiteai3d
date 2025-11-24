@@ -1,46 +1,49 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Globe, Building2, BookOpen, Layers, Scan, Fingerprint, Plus } from 'lucide-react';
+import { ArrowRight, Globe, Building2, BookOpen, Plus } from 'lucide-react';
 
 // --- LEGACY SECTION ---
 export const LegacySection = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="legacy" className="py-24 bg-stone-900 text-stone-200 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-stone-800/20 to-transparent pointer-events-none"></div>
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div>
-           <div className="inline-block mb-3 text-xs font-bold tracking-widest text-nobel-gold uppercase">Our History</div>
-           <h2 className="font-serif text-4xl md:text-5xl text-white mb-8 leading-tight">
-             Half a Century of <br/>
-             <span className="italic text-stone-500">Bindery Excellence</span>
+           <div className="inline-block mb-3 text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('legacy.label')}</div>
+           <h2 className="font-serif text-4xl md:text-5xl text-white mb-8 leading-tight whitespace-pre-line">
+             {t('legacy.headline')}
            </h2>
            <div className="space-y-6 text-stone-400 leading-relaxed text-lg">
              <p>
-               Founded in 1963 in the heart of the Veneto region, CLZ began as a traditional artisan collective. Over the decades, we have evolved into a premier industrial partner for the world's most demanding publishers.
+               {t('legacy.p1')}
              </p>
              <p>
+               <Trans i18nKey="legacy.p2">
                We successfully bridged the gap between <strong className="text-white">hand-craftsmanship</strong> and <strong className="text-white">industrial scale</strong>. Today, our facility in Padova houses unique machinery capable of handling formats and materials that standard binderies simply cannot touch.
+               </Trans>
              </p>
            </div>
            
            <div className="mt-12 grid grid-cols-3 gap-6 border-t border-stone-800 pt-8">
               <div>
                 <div className="text-3xl font-serif text-nobel-gold">1963</div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">Established</div>
+                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">{t('legacy.stat_est')}</div>
               </div>
               <div>
                 <div className="text-3xl font-serif text-nobel-gold">4M+</div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">Books / Year</div>
+                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">{t('legacy.stat_books')}</div>
               </div>
               <div>
                 <div className="text-3xl font-serif text-nobel-gold">55</div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">Master Artisans</div>
+                <div className="text-[10px] uppercase tracking-widest text-stone-500 mt-1">{t('legacy.stat_artisans')}</div>
               </div>
            </div>
         </div>
@@ -49,7 +52,7 @@ export const LegacySection = () => {
             <div className="absolute inset-4 border border-stone-800"></div>
             <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(197,160,89,0.05)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px]"></div>
             <div className="text-center z-10">
-                <div className="text-6xl font-serif italic text-stone-800 mb-2">Since</div>
+                <div className="text-6xl font-serif italic text-stone-800 mb-2">{t('legacy.since')}</div>
                 <div className="text-8xl font-bold text-stone-800">1963</div>
             </div>
         </div>
@@ -122,6 +125,7 @@ interface ProjectProps {
 }
 
 const ProjectShowcase = ({ category, title, client, year, specs, style, spineColor }: ProjectProps) => {
+  const { t } = useTranslation();
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
@@ -189,7 +193,7 @@ const ProjectShowcase = ({ category, title, client, year, specs, style, spineCol
             </div>
             
             <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2 text-xs font-bold text-nobel-gold uppercase tracking-widest">
-                <span>View Case Study</span>
+                <span>{t('works.cta')}</span>
                 <ArrowRight size={12} />
             </div>
         </div>
@@ -198,69 +202,77 @@ const ProjectShowcase = ({ category, title, client, year, specs, style, spineCol
 };
 
 export const SelectedWorks = () => {
-  const [activeTab, setActiveTab] = useState('All');
-  const tabs = ['All', 'Fine Art', 'Architecture', 'Commercial'];
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState('all');
+  
+  const tabs = [
+      { id: 'all', label: t('works.tabs.all') },
+      { id: 'fine_art', label: t('works.tabs.fine_art') },
+      { id: 'architecture', label: t('works.tabs.architecture') },
+      { id: 'commercial', label: t('works.tabs.commercial') }
+  ];
 
-  const projects = [
+  // Memoize projects to update when language changes
+  const projects = useMemo(() => [
       {
-          category: 'Fine Art',
+          category: 'fine_art',
           title: 'Venetian Masters',
           client: 'Guggenheim Museum',
           year: '2023',
           style: 'photo',
           spineColor: 'bg-stone-800',
           specs: [
-              { label: 'Format', value: '300x400mm' },
-              { label: 'Paper', value: 'Munken Lynx' },
-              { label: 'Binding', value: 'Smyth Sewn' },
-              { label: 'Finish', value: 'Foil Deboss' }
+              { label: t('works.specs.format'), value: '300x400mm' },
+              { label: t('works.specs.paper'), value: 'Munken Lynx' },
+              { label: t('works.specs.binding'), value: t('intro.tag_sewn') },
+              { label: t('works.specs.finish'), value: 'Foil Deboss' }
           ]
       },
       {
-          category: 'Architecture',
+          category: 'architecture',
           title: 'Concrete Forms',
           client: 'Taschen',
           year: '2024',
           style: 'swiss',
           spineColor: 'bg-[#B71C1C]',
           specs: [
-              { label: 'Format', value: '240x300mm' },
-              { label: 'Cover', value: 'Linen' },
-              { label: 'Spine', value: 'Flat Back' },
-              { label: 'Weight', value: '2.4kg' }
+              { label: t('works.specs.format'), value: '240x300mm' },
+              { label: t('works.specs.cover'), value: 'Linen' },
+              { label: t('works.specs.spine'), value: 'Flat Back' },
+              { label: t('works.specs.weight'), value: '2.4kg' }
           ]
       },
       {
-          category: 'Commercial',
+          category: 'commercial',
           title: 'Prada Archive',
           client: 'Prada Foundation',
           year: '2022',
           style: 'minimal',
           spineColor: 'bg-stone-400',
           specs: [
-              { label: 'Format', value: '210x297mm' },
-              { label: 'Style', value: 'Exposed' },
-              { label: 'Ink', value: 'Tritone' },
-              { label: 'Run', value: '5,000' }
+              { label: t('works.specs.format'), value: '210x297mm' },
+              { label: t('works.specs.style'), value: 'Exposed' },
+              { label: t('works.specs.ink'), value: 'Tritone' },
+              { label: t('works.specs.run'), value: '5,000' }
           ]
       },
       {
-          category: 'Fine Art',
+          category: 'fine_art',
           title: 'Bauhaus 100',
           client: 'MOMA New York',
           year: '2023',
           style: 'bauhaus',
           spineColor: 'bg-[#C5A059]',
           specs: [
-              { label: 'Format', value: '280x280mm' },
-              { label: 'Board', value: '3mm Grey' },
-              { label: 'Wrap', value: 'Silk' },
-              { label: 'Detail', value: 'Tip-on' }
+              { label: t('works.specs.format'), value: '280x280mm' },
+              { label: t('works.specs.board'), value: '3mm Grey' },
+              { label: t('works.specs.wrap'), value: 'Silk' },
+              { label: t('works.specs.detail'), value: 'Tip-on' }
           ]
       }
-  ];
+  ], [t]);
 
-  const filtered = activeTab === 'All' ? projects : projects.filter(p => p.category === activeTab);
+  const filtered = activeTab === 'all' ? projects : projects.filter(p => p.category === activeTab);
 
   return (
     <section id="works" className="py-32 bg-[#fff]">
@@ -271,21 +283,21 @@ export const SelectedWorks = () => {
             <div className="max-w-2xl">
                 <div className="flex items-center gap-3 mb-4">
                      <span className="w-8 h-px bg-nobel-gold"></span>
-                     <span className="text-xs font-bold tracking-widest text-nobel-gold uppercase">Selected Works</span>
+                     <span className="text-xs font-bold tracking-widest text-nobel-gold uppercase">{t('works.label')}</span>
                 </div>
                 <h2 className="font-serif text-5xl md:text-6xl text-stone-900 leading-none">
-                    Curated <span className="italic text-stone-400">Archive</span>
+                    {t('works.headline')}
                 </h2>
             </div>
 
             <div className="flex gap-8 mt-8 md:mt-0">
                 {tabs.map(tab => (
                     <button 
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`text-xs font-bold uppercase tracking-widest pb-2 transition-all duration-300 ${activeTab === tab ? 'text-stone-900 border-b-2 border-nobel-gold' : 'text-stone-400 hover:text-stone-600 border-b-2 border-transparent'}`}
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`text-xs font-bold uppercase tracking-widest pb-2 transition-all duration-300 ${activeTab === tab.id ? 'text-stone-900 border-b-2 border-nobel-gold' : 'text-stone-400 hover:text-stone-600 border-b-2 border-transparent'}`}
                     >
-                        {tab}
+                        {tab.label}
                     </button>
                 ))}
             </div>
@@ -303,7 +315,7 @@ export const SelectedWorks = () => {
         <div className="mt-24 text-center">
             <button className="inline-flex items-center gap-2 text-stone-400 hover:text-nobel-gold transition-colors text-xs font-bold uppercase tracking-widest group">
                 <Plus size={16} />
-                <span>Load More Projects</span>
+                <span>{t('works.load_more')}</span>
             </button>
         </div>
 
@@ -314,46 +326,47 @@ export const SelectedWorks = () => {
 
 // --- GLOBAL REACH SECTION ---
 export const GlobalReach = () => {
+    const { t } = useTranslation();
     return (
         <section className="py-24 border-t border-stone-200 bg-stone-50">
             <div className="container mx-auto px-6 text-center">
-                <h2 className="font-serif text-3xl text-stone-900 mb-12 italic">Trusted by institutions across the globe</h2>
+                <h2 className="font-serif text-3xl text-stone-900 mb-12 italic">{t('global.headline')}</h2>
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                     {/* Placeholder for Client Logos - Using Typography for now */}
                     <div className="flex flex-col items-center gap-2 group cursor-default">
                         <Building2 size={32} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
-                        <span className="font-serif font-bold text-lg">MUSEUMS</span>
-                        <span className="text-[9px] uppercase tracking-widest text-stone-400">Archival Grade</span>
+                        <span className="font-serif font-bold text-lg">{t('global.museums')}</span>
+                        <span className="text-[9px] uppercase tracking-widest text-stone-400">{t('global.sub_archival')}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group cursor-default">
                         <BookOpen size={32} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
-                        <span className="font-serif font-bold text-lg">PUBLISHERS</span>
-                        <span className="text-[9px] uppercase tracking-widest text-stone-400">High Volume</span>
+                        <span className="font-serif font-bold text-lg">{t('global.publishers')}</span>
+                        <span className="text-[9px] uppercase tracking-widest text-stone-400">{t('global.sub_highvol')}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group cursor-default">
                         <Globe size={32} className="text-stone-800 group-hover:text-nobel-gold transition-colors" />
-                        <span className="font-serif font-bold text-lg">GALLERIES</span>
-                        <span className="text-[9px] uppercase tracking-widest text-stone-400">Limited Editions</span>
+                        <span className="font-serif font-bold text-lg">{t('global.galleries')}</span>
+                        <span className="text-[9px] uppercase tracking-widest text-stone-400">{t('global.sub_limited')}</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group cursor-default">
                          <div className="text-2xl font-serif font-bold border-2 border-stone-800 px-3 py-1 group-hover:border-nobel-gold group-hover:text-nobel-gold transition-colors">ISO 9001</div>
-                        <span className="text-[10px] uppercase tracking-widest mt-1">Certified</span>
+                        <span className="text-[10px] uppercase tracking-widest mt-1">{t('global.iso')}</span>
                     </div>
                 </div>
 
                 <div className="mt-16 pt-16 border-t border-stone-200 flex flex-wrap justify-center gap-8 text-xs font-bold uppercase tracking-widest text-stone-400">
-                    <span>New York</span>
+                    <span>{t('global.cities.ny')}</span>
                     <span className="text-nobel-gold">•</span>
-                    <span>London</span>
+                    <span>{t('global.cities.ldn')}</span>
                     <span className="text-nobel-gold">•</span>
-                    <span>Paris</span>
+                    <span>{t('global.cities.par')}</span>
                     <span className="text-nobel-gold">•</span>
-                    <span>Milan</span>
+                    <span>{t('global.cities.mil')}</span>
                     <span className="text-nobel-gold">•</span>
-                    <span>Berlin</span>
+                    <span>{t('global.cities.ber')}</span>
                     <span className="text-nobel-gold">•</span>
-                    <span>Tokyo</span>
+                    <span>{t('global.cities.tok')}</span>
                 </div>
             </div>
         </section>

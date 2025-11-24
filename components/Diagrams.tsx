@@ -1,10 +1,10 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, Environment, PerspectiveCamera, ContactShadows, OrbitControls } from '@react-three/drei';
@@ -14,14 +14,16 @@ import { Maximize2, RotateCw, ArrowRight, CheckCircle2, Ruler, BoxSelect, Weight
 // --- 1. THE PROCESS: CHRONOLOGICAL TIMELINE ---
 
 export const BindingLayersDiagram: React.FC = () => {
-  const steps = [
-    { id: 'print', label: 'Printed Sheets', desc: 'Offset printing on large format archival paper sheets.' },
-    { id: 'cut', label: 'Cutting', desc: 'Precision trimming of raw sheets to flat signature size.' },
-    { id: 'fold', label: 'Folding', desc: 'Machine folding into 16 or 32-page signatures.' },
-    { id: 'gather', label: 'Gathering & Sewing', desc: 'Signatures are gathered and Smyth-sewn for durability.' },
-    { id: 'block', label: 'Book Block', desc: 'Spine gluing, mull lining, and three-knife trimming.' },
-    { id: 'cover', label: 'Cover & Details', desc: 'Casing-in the block into the handmade hardboard cover.' }
-  ];
+  const { t } = useTranslation();
+  
+  const steps = useMemo(() => [
+    { id: 'print', label: t('process.steps.print.label'), desc: t('process.steps.print.desc'), visual: t('process.steps.print.visual') },
+    { id: 'cut', label: t('process.steps.cut.label'), desc: t('process.steps.cut.desc'), visual: t('process.steps.cut.visual') },
+    { id: 'fold', label: t('process.steps.fold.label'), desc: t('process.steps.fold.desc'), visual: t('process.steps.fold.visual') },
+    { id: 'gather', label: t('process.steps.gather.label'), desc: t('process.steps.gather.desc') },
+    { id: 'block', label: t('process.steps.block.label'), desc: t('process.steps.block.desc'), visual: t('process.steps.block.visual') },
+    { id: 'cover', label: t('process.steps.cover.label'), desc: t('process.steps.cover.desc') }
+  ], [t]);
 
   const [activeStep, setActiveStep] = useState<number>(0);
 
@@ -31,7 +33,7 @@ export const BindingLayersDiagram: React.FC = () => {
       {/* Controls */}
       <div className="w-full lg:w-1/3 flex flex-col gap-2">
          <div className="mb-4">
-             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">Production Cycle</span>
+             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">{t('process.cycle')}</span>
              <h3 className="font-serif text-2xl text-stone-900 mt-1">{steps[activeStep].label}</h3>
              <p className="text-sm text-stone-500 mt-2 h-10">{steps[activeStep].desc}</p>
          </div>
@@ -71,7 +73,7 @@ export const BindingLayersDiagram: React.FC = () => {
                     <div className="grid grid-cols-4 grid-rows-2 gap-2 w-full h-full p-4 opacity-20">
                         {[...Array(8)].map((_, i) => <div key={i} className="bg-stone-800 w-full h-full"></div>)}
                     </div>
-                    <span className="absolute font-serif text-3xl text-stone-400 italic">Sheet 100x70</span>
+                    <span className="absolute font-serif text-3xl text-stone-400 italic text-center px-4">{steps[0].visual}</span>
                 </motion.div>
             )}
 
@@ -86,7 +88,7 @@ export const BindingLayersDiagram: React.FC = () => {
                             transition={{ duration: 0.5 }}
                             className="h-56 bg-white shadow-md border border-stone-200 relative"
                         >
-                            <div className="absolute top-0 right-0 p-2 text-[10px] text-stone-400">TRIMMED</div>
+                            <div className="absolute top-0 right-0 p-2 text-[10px] text-stone-400">{steps[1].visual}</div>
                         </motion.div>
                      ))}
                 </motion.div>
@@ -102,7 +104,7 @@ export const BindingLayersDiagram: React.FC = () => {
                         className="w-32 h-48 bg-white shadow-xl border-l border-stone-300 origin-left relative"
                         style={{ transformStyle: 'preserve-3d' }}
                     >
-                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-xl">16pp</div>
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-xl">{steps[2].visual}</div>
                     </motion.div>
                     <div className="w-32 h-48 bg-stone-50 border border-stone-200 shadow-sm"></div>
                 </motion.div>
@@ -144,7 +146,7 @@ export const BindingLayersDiagram: React.FC = () => {
                      <div className="absolute top-0 left-0 w-full h-6 bg-[#F0EFE9] transform -translate-y-6 rotate-x-90 origin-bottom border border-stone-200"></div>
                      {/* Front */}
                      <div className="absolute inset-0 border border-stone-200 flex items-center justify-center">
-                        <div className="text-[10px] text-stone-400 font-mono tracking-widest rotate-90">TRIMMED BLOCK</div>
+                        <div className="text-[10px] text-stone-400 font-mono tracking-widest rotate-90">{steps[4].visual}</div>
                      </div>
                  </motion.div>
             )}
@@ -296,14 +298,16 @@ const Book3DModel = ({ selectedPart }: { selectedPart: string | null }) => {
 };
 
 export const BookAnatomyDiagram: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedPart, setSelectedPart] = useState<string | null>(null);
-  const parts = [
-      { id: 'cover', label: 'Hardcover Board', desc: 'High-density greyboard 2mm-4mm wrapped in cloth or printed paper.' },
-      { id: 'spine', label: 'Square Spine', desc: 'Reinforced industrial spine for maximum durability and shelf presence.' },
-      { id: 'headband', label: 'Headband', desc: 'Decorative woven cotton band applied to top and bottom of spine.' },
-      { id: 'endpapers', label: 'Endpapers', desc: '140gsm archival paper connecting block to case.' },
-      { id: 'block', label: 'Book Block', desc: 'Thread-sewn signatures (Smyth Sewing) for lie-flat opening.' },
-  ];
+  
+  const parts = useMemo(() => [
+      { id: 'cover', label: t('anatomy.parts.cover.label'), desc: t('anatomy.parts.cover.desc') },
+      { id: 'spine', label: t('anatomy.parts.spine.label'), desc: t('anatomy.parts.spine.desc') },
+      { id: 'headband', label: t('anatomy.parts.headband.label'), desc: t('anatomy.parts.headband.desc') },
+      { id: 'endpapers', label: t('anatomy.parts.endpapers.label'), desc: t('anatomy.parts.endpapers.desc') },
+      { id: 'block', label: t('anatomy.parts.block.label'), desc: t('anatomy.parts.block.desc') },
+  ], [t]);
 
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 w-full my-8">
@@ -331,7 +335,7 @@ export const BookAnatomyDiagram: React.FC = () => {
         <div className="absolute bottom-4 left-0 right-0 flex justify-center pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
             <div className="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full border border-stone-200 shadow-sm flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-500">
                 <MousePointer2 size={12} />
-                <span>Drag to Rotate • Pinch to Zoom</span>
+                <span>{t('anatomy.hint')}</span>
             </div>
         </div>
       </div>
@@ -339,12 +343,12 @@ export const BookAnatomyDiagram: React.FC = () => {
       {/* List (Bottom on Mobile, Left on Desktop) */}
       <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-2">
          <div className="mb-2">
-             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">Elements of Style</span>
+             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">{t('anatomy.label')}</span>
              <h3 className="font-serif text-2xl text-stone-900 mt-1">
-                {selectedPart ? parts.find(p => p.id === selectedPart)?.label : 'Book Anatomy'}
+                {selectedPart ? parts.find(p => p.id === selectedPart)?.label : t('anatomy.default_title')}
              </h3>
              <p className="text-sm text-stone-500 mt-2 h-12 leading-relaxed">
-                {selectedPart ? parts.find(p => p.id === selectedPart)?.desc : 'Select a component to inspect its details and construction.'}
+                {selectedPart ? parts.find(p => p.id === selectedPart)?.desc : t('anatomy.default_desc')}
              </p>
          </div>
 
@@ -373,6 +377,7 @@ export const BookAnatomyDiagram: React.FC = () => {
 // --- 3. SCALE MATTERS: DUAL SLIDER CONFIGURATOR (NO SCROLL BUG) ---
 
 export const FormatComparisonDiagram: React.FC = () => {
+    const { t } = useTranslation();
     // Standard dimensions
     const MAX_W = 435;
     const MAX_H = 605;
@@ -391,8 +396,8 @@ export const FormatComparisonDiagram: React.FC = () => {
             {/* Header */}
             <div className="flex justify-between items-end mb-8 pb-4 border-b border-stone-800">
                 <div>
-                    <h3 className="font-serif text-2xl text-white italic">Format Configurator</h3>
-                    <p className="text-stone-500 text-xs uppercase tracking-widest mt-1">Industrial Limits</p>
+                    <h3 className="font-serif text-2xl text-white italic">{t('formats.config.title')}</h3>
+                    <p className="text-stone-500 text-xs uppercase tracking-widest mt-1">{t('formats.config.limit')}</p>
                 </div>
                 <div className="text-right">
                      <div className="text-3xl font-mono text-nobel-gold">{width}<span className="text-sm text-stone-600 ml-1">mm</span> <span className="text-stone-700 mx-1">x</span> {height}<span className="text-sm text-stone-600 ml-1">mm</span></div>
@@ -410,7 +415,7 @@ export const FormatComparisonDiagram: React.FC = () => {
                         height: `${MAX_H * scaleFactor}px` 
                     }}
                 >
-                    <span className="text-[9px] text-stone-700 font-mono uppercase">Max Capacity: 435 x 605</span>
+                    <span className="text-[9px] text-stone-700 font-mono uppercase">{t('formats.config.max_cap')}: 435 x 605</span>
                 </div>
 
                 {/* Dynamic Book */}
@@ -441,7 +446,7 @@ export const FormatComparisonDiagram: React.FC = () => {
                 {/* Width Control */}
                 <div className="space-y-3">
                     <div className="flex justify-between text-xs text-stone-400 font-bold tracking-wider uppercase">
-                        <span className="flex items-center gap-2"><MoveHorizontal size={14} /> Width</span>
+                        <span className="flex items-center gap-2"><MoveHorizontal size={14} /> {t('formats.config.width')}</span>
                         <span className="text-nobel-gold">{width} mm</span>
                     </div>
                     <input 
@@ -462,7 +467,7 @@ export const FormatComparisonDiagram: React.FC = () => {
                 {/* Height Control */}
                 <div className="space-y-3">
                     <div className="flex justify-between text-xs text-stone-400 font-bold tracking-wider uppercase">
-                        <span className="flex items-center gap-2"><MoveVertical size={14} /> Height</span>
+                        <span className="flex items-center gap-2"><MoveVertical size={14} /> {t('formats.config.height')}</span>
                         <span className="text-nobel-gold">{height} mm</span>
                     </div>
                     <input 
@@ -487,31 +492,32 @@ export const FormatComparisonDiagram: React.FC = () => {
 // --- 4. MAXI SPECS: TECHNICAL BLUEPRINT ---
 
 export const MaxiSpecsDiagram: React.FC = () => {
+    const { t } = useTranslation();
     return (
         <div className="grid grid-cols-2 gap-4 w-full max-w-md">
             <SpecCard 
                 icon={<Ruler className="text-nobel-gold" />} 
-                label="Max Spine" 
+                label={t('formats.specs.spine.label')} 
                 value="80mm" 
-                sub="Reinforced Square Back"
+                sub={t('formats.specs.spine.sub')}
             />
              <SpecCard 
                 icon={<Weight className="text-nobel-gold" />} 
-                label="Max Weight" 
+                label={t('formats.specs.weight.label')}
                 value="12kg" 
-                sub="Block Integrity"
+                sub={t('formats.specs.weight.sub')}
             />
              <SpecCard 
                 icon={<Layers className="text-nobel-gold" />} 
-                label="Board Caliper" 
+                label={t('formats.specs.caliper.label')}
                 value="5mm" 
-                sub="High Density Greyboard"
+                sub={t('formats.specs.caliper.sub')}
             />
              <SpecCard 
                 icon={<BoxSelect className="text-nobel-gold" />} 
-                label="Min Format" 
+                label={t('formats.specs.min.label')}
                 value="100x150" 
-                sub="Versatile Range"
+                sub={t('formats.specs.min.sub')}
             />
         </div>
     );
