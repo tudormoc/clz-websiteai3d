@@ -1,0 +1,529 @@
+
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+*/
+
+import React, { useState, useRef, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Float, Environment, PerspectiveCamera, ContactShadows, OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
+import { Maximize2, RotateCw, ArrowRight, CheckCircle2, Ruler, BoxSelect, Weight, Layers, ScanLine, MoveHorizontal, MoveVertical, MousePointer2, ZoomIn } from 'lucide-react';
+
+// --- 1. THE PROCESS: CHRONOLOGICAL TIMELINE ---
+
+export const BindingLayersDiagram: React.FC = () => {
+  const steps = [
+    { id: 'print', label: 'Printed Sheets', desc: 'Offset printing on large format archival paper sheets.' },
+    { id: 'cut', label: 'Cutting', desc: 'Precision trimming of raw sheets to flat signature size.' },
+    { id: 'fold', label: 'Folding', desc: 'Machine folding into 16 or 32-page signatures.' },
+    { id: 'gather', label: 'Gathering & Sewing', desc: 'Signatures are gathered and Smyth-sewn for durability.' },
+    { id: 'block', label: 'Book Block', desc: 'Spine gluing, mull lining, and three-knife trimming.' },
+    { id: 'cover', label: 'Cover & Details', desc: 'Casing-in the block into the handmade hardboard cover.' }
+  ];
+
+  const [activeStep, setActiveStep] = useState<number>(0);
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-8 items-start p-8 bg-white rounded-sm shadow-sm border border-stone-200 my-8">
+      
+      {/* Controls */}
+      <div className="w-full lg:w-1/3 flex flex-col gap-2">
+         <div className="mb-4">
+             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">Production Cycle</span>
+             <h3 className="font-serif text-2xl text-stone-900 mt-1">{steps[activeStep].label}</h3>
+             <p className="text-sm text-stone-500 mt-2 h-10">{steps[activeStep].desc}</p>
+         </div>
+
+         <div className="space-y-1 relative">
+             <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-stone-100"></div>
+             {steps.map((step, idx) => (
+                 <button
+                    key={step.id}
+                    onClick={() => setActiveStep(idx)}
+                    className={`relative w-full flex items-center gap-4 p-3 rounded-sm transition-all duration-300 group ${activeStep === idx ? 'bg-stone-50' : 'hover:bg-stone-50'}`}
+                 >
+                     <div className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border-2 transition-colors ${activeStep === idx ? 'border-nobel-gold bg-nobel-gold text-white' : activeStep > idx ? 'border-nobel-gold bg-white text-nobel-gold' : 'border-stone-200 bg-white text-stone-300'}`}>
+                         {activeStep > idx ? <CheckCircle2 size={12} /> : idx + 1}
+                     </div>
+                     <span className={`text-sm font-bold uppercase tracking-wider ${activeStep === idx ? 'text-stone-900' : 'text-stone-400 group-hover:text-stone-600'}`}>
+                         {step.label}
+                     </span>
+                 </button>
+             ))}
+         </div>
+      </div>
+
+      {/* Visualizer */}
+      <div className="w-full lg:w-2/3 h-[350px] bg-[#F5F4F0] border border-stone-200 relative flex items-center justify-center overflow-hidden perspective-1000 rounded-sm">
+         <AnimatePresence mode="wait">
+            {/* 1. PRINTED SHEETS */}
+            {activeStep === 0 && (
+                <motion.div
+                    key="print"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-72 h-56 bg-white shadow-lg border border-stone-200 relative flex items-center justify-center"
+                >
+                    <div className="grid grid-cols-4 grid-rows-2 gap-2 w-full h-full p-4 opacity-20">
+                        {[...Array(8)].map((_, i) => <div key={i} className="bg-stone-800 w-full h-full"></div>)}
+                    </div>
+                    <span className="absolute font-serif text-3xl text-stone-400 italic">Sheet 100x70</span>
+                </motion.div>
+            )}
+
+            {/* 2. CUTTING */}
+            {activeStep === 1 && (
+                <motion.div key="cut" className="relative grid grid-cols-2 gap-4">
+                     {[1,2].map(i => (
+                        <motion.div
+                            key={i}
+                            initial={{ width: '18rem', opacity: 0 }}
+                            animate={{ width: '9rem', opacity: 1 }}
+                            transition={{ duration: 0.5 }}
+                            className="h-56 bg-white shadow-md border border-stone-200 relative"
+                        >
+                            <div className="absolute top-0 right-0 p-2 text-[10px] text-stone-400">TRIMMED</div>
+                        </motion.div>
+                     ))}
+                </motion.div>
+            )}
+
+            {/* 3. FOLDING */}
+            {activeStep === 2 && (
+                <motion.div key="fold" className="flex items-center justify-center">
+                    <motion.div
+                        initial={{ rotateY: 0 }}
+                        animate={{ rotateY: -160 }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                        className="w-32 h-48 bg-white shadow-xl border-l border-stone-300 origin-left relative"
+                        style={{ transformStyle: 'preserve-3d' }}
+                    >
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-xl">16pp</div>
+                    </motion.div>
+                    <div className="w-32 h-48 bg-stone-50 border border-stone-200 shadow-sm"></div>
+                </motion.div>
+            )}
+
+            {/* 4. GATHERING & SEWING */}
+            {activeStep === 3 && (
+                <motion.div key="gather" className="flex flex-col items-center -space-y-12 transform rotate-x-12">
+                     {[1,2,3,4,5].map(i => (
+                        <motion.div
+                            key={i}
+                            initial={{ y: -50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="w-32 h-6 bg-white border border-stone-300 shadow-sm relative z-10"
+                        >
+                            {/* Thread */}
+                            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-nobel-gold/50"></div>
+                        </motion.div>
+                     ))}
+                </motion.div>
+            )}
+
+            {/* 5. BOOK BLOCK */}
+            {activeStep === 4 && (
+                 <motion.div
+                    key="block"
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1, rotateY: -30, rotateX: 10 }}
+                    className="w-32 h-48 bg-[#EBE9E4] relative shadow-2xl"
+                    style={{ transformStyle: 'preserve-3d' }}
+                 >
+                     {/* Spine Glue/Mull */}
+                     <div className="absolute left-0 top-0 bottom-0 w-3 bg-stone-200/80 backdrop-blur-sm transform -translate-x-3 rotate-y-90 origin-right border-l border-stone-300 flex flex-col justify-center items-center gap-1">
+                        <div className="w-full h-px bg-stone-300"></div>
+                        <div className="w-full h-px bg-stone-300"></div>
+                     </div>
+                     {/* Top */}
+                     <div className="absolute top-0 left-0 w-full h-6 bg-[#F0EFE9] transform -translate-y-6 rotate-x-90 origin-bottom border border-stone-200"></div>
+                     {/* Front */}
+                     <div className="absolute inset-0 border border-stone-200 flex items-center justify-center">
+                        <div className="text-[10px] text-stone-400 font-mono tracking-widest rotate-90">TRIMMED BLOCK</div>
+                     </div>
+                 </motion.div>
+            )}
+
+             {/* 6. COVER & DETAILS */}
+             {activeStep === 5 && (
+                 <motion.div
+                    key="cover"
+                    initial={{ rotateY: 90 }}
+                    animate={{ rotateY: -25, rotateX: 5 }}
+                    transition={{ type: 'spring', stiffness: 40 }}
+                    className="w-36 h-52 bg-[#1a1a1a] relative shadow-2xl flex items-center justify-center border-l-4 border-stone-800"
+                    style={{ transformStyle: 'preserve-3d' }}
+                 >
+                     <div className="absolute top-4 w-full text-center text-nobel-gold font-serif text-lg tracking-widest">CLZ</div>
+                     <div className="w-16 h-16 border border-nobel-gold/30 rounded-full flex items-center justify-center">
+                        <div className="w-12 h-12 border border-nobel-gold/60 rounded-full"></div>
+                     </div>
+                     {/* Thickness */}
+                     <div className="absolute right-0 top-0 h-full w-2 bg-stone-800 transform translate-x-2 rotate-y-90 origin-left"></div>
+                 </motion.div>
+             )}
+         </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
+
+// --- 2. ELEMENTS OF STYLE: 3D INTERACTIVE BOOK ---
+
+const CameraRig = ({ selectedPart }: { selectedPart: string | null }) => {
+    const { camera } = useThree();
+    const controlsRef = useRef<any>(null);
+    const isUserInteracting = useRef(false);
+    const targetPos = useRef(new THREE.Vector3(0, 0, 7.5)); // Increased default distance
+    
+    useEffect(() => {
+        let x = 0, y = 0, z = 7.5; // Default
+
+        switch (selectedPart) {
+            case 'headband': x = 0; y = 2.2; z = 2.5; break; // Zoomed in top
+            case 'spine': x = -3; y = 0; z = 4; break; // Zoomed in side
+            case 'endpapers': x = 2; y = 0; z = 5; break; // Front open
+            case 'block': x = 2; y = -1.5; z = 4; break; // Bottom corner
+            default: x = 0; y = 0; z = 7.5; break; // Wide shot
+        }
+
+        targetPos.current.set(x, y, z);
+        // Reset interaction flag when selection changes via UI to allow camera to move
+        isUserInteracting.current = false;
+    }, [selectedPart]);
+
+    useFrame((state, delta) => {
+        if (!isUserInteracting.current) {
+            // Smoothly move camera to target position if user isn't dragging
+            state.camera.position.lerp(targetPos.current, delta * 2.5);
+        }
+        // Always ensure controls look at center
+        if(controlsRef.current) controlsRef.current.target.lerp(new THREE.Vector3(0,0,0), 0.1);
+    });
+
+    return (
+        <OrbitControls 
+            ref={controlsRef}
+            makeDefault
+            enableZoom={true} // Enable zoom
+            minDistance={3} // Prevent going inside the book
+            maxDistance={12} // Prevent going too far
+            enablePan={false}
+            rotateSpeed={0.5}
+            minPolarAngle={0.2}
+            maxPolarAngle={Math.PI - 0.2}
+            onStart={() => { isUserInteracting.current = true; }}
+        />
+    );
+}
+
+const Book3DModel = ({ selectedPart }: { selectedPart: string | null }) => {
+    const coverGroupRef = useRef<THREE.Group>(null);
+    
+    // Open cover if Endpapers or Cover is selected
+    const targetOpen = (selectedPart === 'endpapers' || selectedPart === 'cover') ? -Math.PI / 2.2 : 0;
+
+    useFrame((state, delta) => {
+        if (coverGroupRef.current) {
+            coverGroupRef.current.rotation.y = THREE.MathUtils.lerp(coverGroupRef.current.rotation.y, targetOpen, delta * 3);
+        }
+    });
+
+    // Highlighting logic
+    const getMaterial = (partName: string, baseColor: string, roughness: number = 0.5, emissive: boolean = false) => (
+        <meshStandardMaterial 
+            color={selectedPart === partName ? '#C5A059' : baseColor} 
+            emissive={selectedPart === partName && emissive ? '#C5A059' : '#000'}
+            emissiveIntensity={selectedPart === partName && emissive ? 0.4 : 0}
+            roughness={selectedPart === partName ? 0.2 : roughness}
+            metalness={selectedPart === partName ? 0.5 : 0}
+        />
+    );
+
+    return (
+        <group rotation={[0, -0.4, 0]}>
+            {/* Back Cover */}
+            <mesh position={[0, 0, -0.15]} receiveShadow>
+                <boxGeometry args={[2.1, 3.1, 0.05]} />
+                {getMaterial('cover', '#1a1a1a', 0.3)}
+            </mesh>
+
+            {/* Spine */}
+            <mesh position={[-1.05, 0, 0]} receiveShadow>
+                <boxGeometry args={[0.12, 3.1, 0.35]} />
+                {getMaterial('spine', '#1a1a1a', 0.3, true)}
+            </mesh>
+
+            {/* Book Block (Pages) */}
+            <group position={[0.05, 0, 0]}>
+                <mesh receiveShadow castShadow>
+                    <boxGeometry args={[2, 3, 0.25]} />
+                    {getMaterial('block', '#EBE9E4', 0.8, true)}
+                </mesh>
+                
+                {/* Headband Top */}
+                <mesh position={[-0.95, 1.45, 0]}>
+                    <cylinderGeometry args={[0.04, 0.04, 0.20, 16]} />
+                    <meshStandardMaterial color={selectedPart === 'headband' ? '#C5A059' : '#C5A059'} emissive={selectedPart === 'headband' ? '#C5A059' : '#000'} emissiveIntensity={selectedPart === 'headband' ? 0.8 : 0} />
+                </mesh>
+                 {/* Headband Bottom */}
+                 <mesh position={[-0.95, -1.45, 0]}>
+                    <cylinderGeometry args={[0.04, 0.04, 0.20, 16]} />
+                    <meshStandardMaterial color={selectedPart === 'headband' ? '#C5A059' : '#C5A059'} />
+                </mesh>
+            </group>
+
+            {/* Front Cover (Animated) */}
+            <group ref={coverGroupRef} position={[-1.05, 0, 0.15]}>
+                <mesh position={[1.05, 0, 0]} castShadow receiveShadow>
+                    <boxGeometry args={[2.1, 3.1, 0.05]} />
+                    {getMaterial('cover', '#1a1a1a', 0.3)}
+                </mesh>
+                {/* Endpaper (Inside Cover) */}
+                <mesh position={[1.05, 0, -0.026]}>
+                    <planeGeometry args={[2.05, 3.05]} />
+                     {getMaterial('endpapers', '#F5F4F0', 0.9, true)}
+                </mesh>
+            </group>
+        </group>
+    );
+};
+
+export const BookAnatomyDiagram: React.FC = () => {
+  const [selectedPart, setSelectedPart] = useState<string | null>(null);
+  const parts = [
+      { id: 'cover', label: 'Hardcover Board', desc: 'High-density greyboard 2mm-4mm wrapped in cloth or printed paper.' },
+      { id: 'spine', label: 'Square Spine', desc: 'Reinforced industrial spine for maximum durability and shelf presence.' },
+      { id: 'headband', label: 'Headband', desc: 'Decorative woven cotton band applied to top and bottom of spine.' },
+      { id: 'endpapers', label: 'Endpapers', desc: '140gsm archival paper connecting block to case.' },
+      { id: 'block', label: 'Book Block', desc: 'Thread-sewn signatures (Smyth Sewing) for lie-flat opening.' },
+  ];
+
+  return (
+    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 w-full my-8">
+      
+      {/* Visualizer (Top on Mobile, Right on Desktop) */}
+      <div 
+        className="order-1 lg:order-2 lg:col-span-8 h-[350px] lg:h-[550px] bg-[#F5F4F0] rounded-sm relative border border-stone-200 shadow-inner overflow-hidden group"
+        style={{ touchAction: 'none' }} // Prevents scroll capture on mobile while dragging
+      >
+        <Canvas shadows camera={{ position: [0, 0, 7.5], fov: 35 }}>
+            <ambientLight intensity={0.7} />
+            <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} castShadow intensity={1.5} />
+            <pointLight position={[-10, -5, -5]} color="#C5A059" intensity={1} />
+            
+            <Float speed={1} rotationIntensity={0.2} floatIntensity={0.2}>
+                <Book3DModel selectedPart={selectedPart} />
+            </Float>
+
+            <ContactShadows position={[0, -2, 0]} opacity={0.4} scale={10} blur={2} far={4} />
+            <Environment preset="studio" />
+            <CameraRig selectedPart={selectedPart} />
+        </Canvas>
+
+        {/* Interaction Hint */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
+            <div className="bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full border border-stone-200 shadow-sm flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+                <MousePointer2 size={12} />
+                <span>Drag to Rotate • Pinch to Zoom</span>
+            </div>
+        </div>
+      </div>
+
+      {/* List (Bottom on Mobile, Left on Desktop) */}
+      <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-2">
+         <div className="mb-2">
+             <span className="text-xs font-bold text-nobel-gold uppercase tracking-widest">Elements of Style</span>
+             <h3 className="font-serif text-2xl text-stone-900 mt-1">
+                {selectedPart ? parts.find(p => p.id === selectedPart)?.label : 'Book Anatomy'}
+             </h3>
+             <p className="text-sm text-stone-500 mt-2 h-12 leading-relaxed">
+                {selectedPart ? parts.find(p => p.id === selectedPart)?.desc : 'Select a component to inspect its details and construction.'}
+             </p>
+         </div>
+
+         <div className="space-y-1">
+             {parts.map((part) => (
+                 <button
+                    key={part.id}
+                    onClick={() => setSelectedPart(part.id)}
+                    className={`w-full text-left px-4 py-4 border-l-2 transition-all duration-300 group ${selectedPart === part.id ? 'border-nobel-gold bg-stone-50 pl-6' : 'border-stone-200 hover:border-stone-300 hover:bg-stone-50/50'}`}
+                 >
+                     <div className="flex items-center justify-between">
+                         <span className={`text-sm font-bold uppercase tracking-wider ${selectedPart === part.id ? 'text-stone-900' : 'text-stone-400 group-hover:text-stone-600'}`}>
+                             {part.label}
+                         </span>
+                         {selectedPart === part.id && <ArrowRight size={14} className="text-nobel-gold" />}
+                     </div>
+                 </button>
+             ))}
+         </div>
+      </div>
+    </div>
+  );
+};
+
+
+// --- 3. SCALE MATTERS: DUAL SLIDER CONFIGURATOR (NO SCROLL BUG) ---
+
+export const FormatComparisonDiagram: React.FC = () => {
+    // Standard dimensions
+    const MAX_W = 435;
+    const MAX_H = 605;
+    const MIN_W = 150;
+    const MIN_H = 200;
+
+    const [width, setWidth] = useState(300);
+    const [height, setHeight] = useState(400);
+    
+    // Calculate scale relative to max container
+    // Max display area approx 300px wide
+    const scaleFactor = 0.6; 
+
+    return (
+        <div className="bg-stone-900 border border-stone-800 p-8 rounded-sm shadow-xl max-w-3xl mx-auto">
+            {/* Header */}
+            <div className="flex justify-between items-end mb-8 pb-4 border-b border-stone-800">
+                <div>
+                    <h3 className="font-serif text-2xl text-white italic">Format Configurator</h3>
+                    <p className="text-stone-500 text-xs uppercase tracking-widest mt-1">Industrial Limits</p>
+                </div>
+                <div className="text-right">
+                     <div className="text-3xl font-mono text-nobel-gold">{width}<span className="text-sm text-stone-600 ml-1">mm</span> <span className="text-stone-700 mx-1">x</span> {height}<span className="text-sm text-stone-600 ml-1">mm</span></div>
+                </div>
+            </div>
+
+            {/* Visualization Area */}
+            <div className="h-[450px] bg-[#111] relative flex items-center justify-center border border-stone-800/50 overflow-hidden mb-8 bg-[radial-gradient(#222_1px,transparent_1px)] [background-size:20px_20px]">
+                
+                {/* Max Limit Outline */}
+                <div 
+                    className="absolute border border-dashed border-stone-700 flex items-start justify-start p-2"
+                    style={{ 
+                        width: `${MAX_W * scaleFactor}px`, 
+                        height: `${MAX_H * scaleFactor}px` 
+                    }}
+                >
+                    <span className="text-[9px] text-stone-700 font-mono uppercase">Max Capacity: 435 x 605</span>
+                </div>
+
+                {/* Dynamic Book */}
+                <div 
+                    className="bg-stone-200 shadow-[0_0_30px_rgba(0,0,0,0.5)] relative transition-all duration-75 ease-out origin-center flex items-center justify-center"
+                    style={{ 
+                        width: `${width * scaleFactor}px`, 
+                        height: `${height * scaleFactor}px` 
+                    }}
+                >
+                    {/* Book Spine */}
+                    <div className="absolute left-0 top-0 bottom-0 w-3 bg-stone-300 border-r border-stone-400"></div>
+                    
+                    {/* Dimensions on Book */}
+                    <div className="text-center opacity-50 pointer-events-none">
+                        <div className="text-stone-900 font-serif text-2xl font-bold">CLZ</div>
+                        <div className="text-[10px] tracking-[0.3em] text-stone-500 mt-1">EXTRA FORMAT</div>
+                    </div>
+
+                    {/* Size Indicators */}
+                    <div className="absolute -bottom-6 left-0 w-full text-center text-[10px] text-stone-500 font-mono">{width}mm</div>
+                    <div className="absolute -right-8 top-1/2 -translate-y-1/2 text-[10px] text-stone-500 font-mono rotate-90">{height}mm</div>
+                </div>
+            </div>
+
+            {/* Control Deck - Dual Horizontal Sliders */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-stone-950 p-6 rounded-sm border border-stone-800">
+                {/* Width Control */}
+                <div className="space-y-3">
+                    <div className="flex justify-between text-xs text-stone-400 font-bold tracking-wider uppercase">
+                        <span className="flex items-center gap-2"><MoveHorizontal size={14} /> Width</span>
+                        <span className="text-nobel-gold">{width} mm</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        min={MIN_W} 
+                        max={MAX_W} 
+                        value={width}
+                        onChange={(e) => setWidth(parseInt(e.target.value))}
+                        className="w-full h-1 bg-stone-800 rounded-lg appearance-none cursor-pointer accent-nobel-gold"
+                        style={{ touchAction: 'none' }}
+                    />
+                    <div className="flex justify-between text-[9px] text-stone-600 font-mono">
+                        <span>{MIN_W}</span>
+                        <span>{MAX_W}</span>
+                    </div>
+                </div>
+
+                {/* Height Control */}
+                <div className="space-y-3">
+                    <div className="flex justify-between text-xs text-stone-400 font-bold tracking-wider uppercase">
+                        <span className="flex items-center gap-2"><MoveVertical size={14} /> Height</span>
+                        <span className="text-nobel-gold">{height} mm</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        min={MIN_H} 
+                        max={MAX_H} 
+                        value={height}
+                        onChange={(e) => setHeight(parseInt(e.target.value))}
+                        className="w-full h-1 bg-stone-800 rounded-lg appearance-none cursor-pointer accent-nobel-gold"
+                        style={{ touchAction: 'none' }}
+                    />
+                    <div className="flex justify-between text-[9px] text-stone-600 font-mono">
+                        <span>{MIN_H}</span>
+                        <span>{MAX_H}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// --- 4. MAXI SPECS: TECHNICAL BLUEPRINT ---
+
+export const MaxiSpecsDiagram: React.FC = () => {
+    return (
+        <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+            <SpecCard 
+                icon={<Ruler className="text-nobel-gold" />} 
+                label="Max Spine" 
+                value="80mm" 
+                sub="Reinforced Square Back"
+            />
+             <SpecCard 
+                icon={<Weight className="text-nobel-gold" />} 
+                label="Max Weight" 
+                value="12kg" 
+                sub="Block Integrity"
+            />
+             <SpecCard 
+                icon={<Layers className="text-nobel-gold" />} 
+                label="Board Caliper" 
+                value="5mm" 
+                sub="High Density Greyboard"
+            />
+             <SpecCard 
+                icon={<BoxSelect className="text-nobel-gold" />} 
+                label="Min Format" 
+                value="100x150" 
+                sub="Versatile Range"
+            />
+        </div>
+    );
+}
+
+const SpecCard = ({ icon, label, value, sub }: { icon: React.ReactNode, label: string, value: string, sub: string }) => (
+    <div className="group p-4 bg-stone-800/50 border border-stone-700 hover:border-nobel-gold transition-colors">
+        <div className="flex items-center justify-between mb-3">
+            {icon}
+            <div className="text-2xl font-mono text-white font-bold">{value}</div>
+        </div>
+        <div className="text-xs text-stone-400 font-bold uppercase tracking-wider mb-1">{label}</div>
+        <div className="text-[10px] text-stone-600">{sub}</div>
+    </div>
+)
