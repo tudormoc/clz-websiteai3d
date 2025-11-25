@@ -16,6 +16,7 @@ export const fr = {
       works: "Travaux",
       atelier: "L'Atelier",
       process: "Processus",
+      bindings: "Reliures",
       formats: "Formats Maxi",
       contact: "Contact"
     },
@@ -109,7 +110,7 @@ export const fr = {
       label: "Anatomie",
       headline: "Construit pour l'Éternité",
       desc: "Chaque composant est sélectionné pour sa qualité d'archivage et son intégrité structurelle. De la densité du carton gris au sens de la fibre du papier, rien n'est laissé au hasard.",
-      hint: "Glisser pour Tourner • Pincer pour Zoomer",
+      hint: "Glisser pour Tourner",
       default_title: "Anatomia du Livre",
       default_desc: "Sélectionnez un composant pour inspecter ses détails et sa construction.",
       parts: {
@@ -146,6 +147,86 @@ export const fr = {
         weight: { label: "Poids Max", sub: "Intégrité du Bloc" },
         caliper: { label: "Épaisseur Carton", sub: "Carton Gris Haute Densité" },
         min: { label: "Format Min", sub: "Gamme Polyvalente" }
+      }
+    },
+    bindings: {
+      label: "Styles de Reliure",
+      headline: "Techniques Maîtrisées",
+      sub: "Sélectionnez un style de reliure pour explorer ses caractéristiques uniques et applications.",
+      hint: "Cliquez pour explorer",
+      types: {
+        perfect: {
+          name: "Reliure Cartonnée Collée",
+          tagline: "Précision Industrielle",
+          desc: "Le pilier de l'édition moderne. Les pages sont fraisées et collées à un dos renforcé, puis emboîtées dans une couverture rigide. Idéal pour les livres d'art et catalogues à grand tirage.",
+          specs: {
+            method: "Adhésif PUR",
+            spine: "Dos Carré",
+            durability: "Haute",
+            ideal: "Catalogues, Livres d'Art"
+          }
+        },
+        swiss: {
+          name: "Reliure Suisse",
+          tagline: "Ouverture à Plat",
+          desc: "Le bloc livre est attaché uniquement au carton arrière de la couverture, laissant le dos complètement exposé. Permet au livre de s'ouvrir entièrement à plat—idéal pour les livres photo et portfolios.",
+          specs: {
+            method: "Bloc sur Arrière",
+            spine: "Dos Exposé",
+            durability: "Très Haute",
+            ideal: "Photographie, Portfolios"
+          }
+        },
+        bodonian: {
+          name: "Reliure Bodonienne",
+          tagline: "Héritage Classique",
+          desc: "Caractérisée par une couverture rigide en deux pièces séparées, créant un dos en retrait. Le dos est renforcé par une gaze, reliant les plats de couverture au bloc livre via les gardes.",
+          specs: {
+            method: "Couverture Deux Pièces",
+            spine: "Dos en Retrait",
+            durability: "Exceptionnelle",
+            ideal: "Éditions Limitées"
+          }
+        },
+        halfleather: {
+          name: "Demi-Cuir",
+          tagline: "Luxe Intemporel",
+          desc: "Dos et coins habillés de cuir véritable, avec toile ou papier marbré sur les plats. Une finition prestigieuse qui évoque la permanence et la valeur de collection.",
+          specs: {
+            method: "Cuir + Toile",
+            spine: "Habillé Cuir",
+            durability: "Archivistique",
+            ideal: "Éditions de Collection"
+          }
+        },
+        leporello: {
+          name: "Leporello",
+          tagline: "Pli Accordéon",
+          desc: "Une feuille continue pliée qui s'étend comme un accordéon. Pas de reliure au sens traditionnel—la structure elle-même est le design. Parfait pour l'imagerie panoramique et les expositions.",
+          specs: {
+            method: "Pli Concertina",
+            spine: "Aucun",
+            durability: "Moyenne",
+            ideal: "Expositions, Panoramas"
+          }
+        },
+        octavius: {
+          name: "Octavius",
+          tagline: "Exclusivité CLZ",
+          desc: "Notre technique de reliure exclusive. Lorsque le livre s'ouvre, les pages se déploient sur plusieurs niveaux et directions, créant une expérience de lecture tridimensionnelle unique. Parfait pour les installations artistiques et pièces de collection.",
+          specs: {
+            method: "Pli Multi-Niveaux",
+            spine: "Renforcé",
+            durability: "Exceptionnelle",
+            ideal: "Livres d'Art, Collection"
+          }
+        }
+      },
+      specs_labels: {
+        method: "Méthode",
+        spine: "Dos",
+        durability: "Durabilité",
+        ideal: "Idéal Pour"
       }
     },
     contact: {

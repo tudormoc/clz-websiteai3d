@@ -16,6 +16,7 @@ export const it = {
       works: "Lavori",
       atelier: "L'Atelier",
       process: "Processo",
+      bindings: "Rilegature",
       formats: "Fuori Formato",
       contact: "Contatti"
     },
@@ -109,7 +110,7 @@ export const it = {
       label: "Anatomia",
       headline: "Costruito per l'Eternità",
       desc: "Ogni componente è selezionato per qualità archivistica e integrità strutturale. Dalla densità del cartone alla direzione della fibra della carta, nulla è lasciato al caso.",
-      hint: "Trascina per Ruotare • Pizzica per Ingrandire",
+      hint: "Trascina per Ruotare",
       default_title: "Anatomia del Libro",
       default_desc: "Seleziona un componente per ispezionarne i dettagli e la costruzione.",
       parts: {
@@ -146,6 +147,86 @@ export const it = {
         weight: { label: "Peso Max", sub: "Integrità del Blocco" },
         caliper: { label: "Spessore Cartone", sub: "Cartone Grigio Alta Densità" },
         min: { label: "Formato Min", sub: "Gamma Versatile" }
+      }
+    },
+    bindings: {
+      label: "Stili di Rilegatura",
+      headline: "Tecniche Magistrali",
+      sub: "Seleziona uno stile di rilegatura per esplorare le sue caratteristiche uniche e applicazioni.",
+      hint: "Clicca per esplorare",
+      types: {
+        perfect: {
+          name: "Cartonato Fresato",
+          tagline: "Precisione Industriale",
+          desc: "Il cavallo di battaglia dell'editoria moderna. Le pagine vengono fresate e incollate a un dorso rinforzato, poi incassate in una copertina rigida. Ideale per libri d'arte e cataloghi ad alto volume.",
+          specs: {
+            method: "Adesivo PUR",
+            spine: "Dorso Quadro",
+            durability: "Alta",
+            ideal: "Cataloghi, Libri d'Arte"
+          }
+        },
+        swiss: {
+          name: "Rilegatura Svizzera",
+          tagline: "Apertura Piatta",
+          desc: "Il blocco libro è attaccato solo al cartone posteriore della copertina, lasciando il dorso completamente esposto. Permette al libro di aprirsi completamente piatto—ideale per libri fotografici e portfolio.",
+          specs: {
+            method: "Blocco su Retro",
+            spine: "Dorso Scoperto",
+            durability: "Molto Alta",
+            ideal: "Fotografia, Portfolio"
+          }
+        },
+        bodonian: {
+          name: "Rilegatura Bodoniana",
+          tagline: "Eredità Classica",
+          desc: "Caratterizzata da una copertina rigida in due pezzi separati, che crea un dorso incassato. Il dorso è rinforzato con garza, collegando i piatti della copertina al blocco libro tramite i risguardi.",
+          specs: {
+            method: "Copertina in Due Pezzi",
+            spine: "Dorso Incassato",
+            durability: "Eccezionale",
+            ideal: "Edizioni Limitate"
+          }
+        },
+        halfleather: {
+          name: "Mezza Pelle",
+          tagline: "Lusso Senza Tempo",
+          desc: "Dorso e angoli rivestiti in vera pelle, con tela o carta marmorizzata sui piatti. Una finitura prestigiosa che parla di permanenza e valore collezionistico.",
+          specs: {
+            method: "Pelle + Tela",
+            spine: "Rivestito in Pelle",
+            durability: "Archivistica",
+            ideal: "Edizioni da Collezione"
+          }
+        },
+        leporello: {
+          name: "Leporello",
+          tagline: "Piega a Fisarmonica",
+          desc: "Un foglio continuo piegato che si espande come una fisarmonica. Nessuna rilegatura nel senso tradizionale—la struttura stessa è il design. Perfetto per immagini panoramiche e mostre.",
+          specs: {
+            method: "Piega a Concertina",
+            spine: "Nessuno",
+            durability: "Media",
+            ideal: "Mostre, Panorami"
+          }
+        },
+        octavius: {
+          name: "Octavius",
+          tagline: "Esclusiva CLZ",
+          desc: "La nostra tecnica di rilegatura esclusiva. Quando il libro si apre, le pagine si dispiegano su più livelli e direzioni, creando un'esperienza di lettura tridimensionale unica. Perfetto per installazioni artistiche e pezzi da collezione.",
+          specs: {
+            method: "Piega Multi-Livello",
+            spine: "Rinforzato",
+            durability: "Eccezionale",
+            ideal: "Libri d'Arte, Collezione"
+          }
+        }
+      },
+      specs_labels: {
+        method: "Metodo",
+        spine: "Dorso",
+        durability: "Durabilità",
+        ideal: "Ideale Per"
       }
     },
     contact: {

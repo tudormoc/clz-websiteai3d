@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { HeroScene, ContactScene } from './components/QuantumScene';
-import { BindingLayersDiagram, FormatComparisonDiagram, BookAnatomyDiagram, MaxiSpecsDiagram } from './components/Diagrams';
+import { BindingLayersDiagram, FormatComparisonDiagram, BookAnatomyDiagram, MaxiSpecsDiagram, BindingTypesShowcase } from './components/Diagrams';
 import { LegacySection, SelectedWorks, GlobalReach } from './components/Sections';
 import { ArrowDown, Menu, X, Mail, ArrowRight, Globe, MapPin, Phone, Clock, Send } from 'lucide-react';
 
@@ -140,6 +140,18 @@ const AtelierPage: React.FC = () => {
                 <p className="text-stone-600 text-xl">{t('process.sub')}</p>
                 </div>
                 <BindingLayersDiagram />
+        </div>
+    </section>
+
+    {/* Binding Types Section - NEW */}
+    <section id="bindings" className="py-24 bg-stone-950">
+        <div className="container mx-auto px-6">
+            <div className="mb-16 text-center">
+                <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('bindings.label')}</div>
+                <h2 className="font-serif text-5xl md:text-6xl text-white mb-6">{t('bindings.headline')}</h2>
+                <p className="text-stone-400 text-xl max-w-2xl mx-auto">{t('bindings.sub')}</p>
+            </div>
+            <BindingTypesShowcase />
         </div>
     </section>
 
@@ -359,6 +371,7 @@ const App: React.FC = () => {
             {/* Atelier Links */}
             <button onClick={() => navigateTo('atelier')} className={`hover:text-nobel-gold transition-colors ${activePage === 'atelier' ? 'text-nobel-gold' : ''}`}>{t('nav.atelier')}</button>
             <button onClick={() => navigateTo('atelier', 'process')} className="hover:text-nobel-gold transition-colors">{t('nav.process')}</button>
+            <button onClick={() => navigateTo('atelier', 'bindings')} className="hover:text-nobel-gold transition-colors">{t('nav.bindings')}</button>
             <button onClick={() => navigateTo('atelier', 'formats')} className="hover:text-nobel-gold transition-colors">{t('nav.formats')}</button>
 
             {/* Contact Button */}
@@ -391,6 +404,7 @@ const App: React.FC = () => {
             <button onClick={() => navigateTo('home', 'works')}>{t('nav.works')}</button>
             <button onClick={() => navigateTo('atelier')}>{t('nav.atelier')}</button>
             <button onClick={() => navigateTo('atelier', 'process')}>{t('nav.process')}</button>
+            <button onClick={() => navigateTo('atelier', 'bindings')}>{t('nav.bindings')}</button>
             <button onClick={() => navigateTo('atelier', 'formats')}>{t('nav.formats')}</button>
             <button onClick={() => navigateTo('contact')}>{t('nav.contact')}</button>
             

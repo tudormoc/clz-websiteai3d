@@ -16,6 +16,7 @@ export const en = {
       works: "Works",
       atelier: "The Atelier",
       process: "Process",
+      bindings: "Bindings",
       formats: "Maxi Formats",
       contact: "Contact"
     },
@@ -109,7 +110,7 @@ export const en = {
       label: "Anatomy",
       headline: "Constructed for Eternity",
       desc: "Every component is selected for archival quality and structural integrity. From the density of the greyboard to the direction of the paper grain, nothing is left to chance.",
-      hint: "Drag to Rotate • Pinch to Zoom",
+      hint: "Drag to Rotate",
       default_title: "Book Anatomy",
       default_desc: "Select a component to inspect its details and construction.",
       parts: {
@@ -146,6 +147,86 @@ export const en = {
         weight: { label: "Max Weight", sub: "Block Integrity" },
         caliper: { label: "Board Caliper", sub: "High Density Greyboard" },
         min: { label: "Min Format", sub: "Versatile Range" }
+      }
+    },
+    bindings: {
+      label: "Binding Styles",
+      headline: "Master Techniques",
+      sub: "Select a binding style to explore its unique characteristics and applications.",
+      hint: "Click to explore",
+      types: {
+        perfect: {
+          name: "Perfect Binding Hardcover",
+          tagline: "Industrial Precision",
+          desc: "The workhorse of modern publishing. Pages are milled and glued to a reinforced spine, then cased into a rigid hardcover. Ideal for high-volume art books and catalogues.",
+          specs: {
+            method: "PUR Adhesive",
+            spine: "Square Back",
+            durability: "High",
+            ideal: "Catalogues, Art Books"
+          }
+        },
+        swiss: {
+          name: "Swiss Binding",
+          tagline: "Lay-Flat Excellence",
+          desc: "The page block is attached only to the back cover board, leaving the spine completely exposed. This allows the book to open fully flat—ideal for photography books and design portfolios.",
+          specs: {
+            method: "Back-Attached Block",
+            spine: "Exposed Sewn",
+            durability: "Very High",
+            ideal: "Photography, Portfolios"
+          }
+        },
+        bodonian: {
+          name: "Bodonian Binding",
+          tagline: "Classical Heritage",
+          desc: "Characterised by a hard cardboard cover in two separate pieces, creating a recessed spine. The spine is reinforced with gauze fabric, connecting the cover plates to the book block via the endpapers.",
+          specs: {
+            method: "Two-Piece Cover",
+            spine: "Recessed Gauze",
+            durability: "Exceptional",
+            ideal: "Limited Editions"
+          }
+        },
+        halfleather: {
+          name: "Half Leather",
+          tagline: "Timeless Luxury",
+          desc: "Spine and corners wrapped in genuine leather, with cloth or marbled paper on the boards. A prestigious finish that speaks of permanence and collector value.",
+          specs: {
+            method: "Leather + Cloth",
+            spine: "Leather Wrapped",
+            durability: "Archival",
+            ideal: "Collector Editions"
+          }
+        },
+        leporello: {
+          name: "Leporello",
+          tagline: "Accordion Fold",
+          desc: "A continuous folded sheet that expands like an accordion. No binding in the traditional sense—the structure itself is the design. Perfect for panoramic imagery and exhibitions.",
+          specs: {
+            method: "Concertina Fold",
+            spine: "None",
+            durability: "Medium",
+            ideal: "Exhibitions, Panoramas"
+          }
+        },
+        octavius: {
+          name: "Octavius",
+          tagline: "CLZ Proprietary",
+          desc: "Our exclusive binding technique. When the book opens, pages unfold in multiple layers and directions, creating a unique three-dimensional reading experience. Perfect for art installations and collector pieces.",
+          specs: {
+            method: "Multi-Layer Fold",
+            spine: "Reinforced",
+            durability: "Exceptional",
+            ideal: "Art Books, Collectors"
+          }
+        }
+      },
+      specs_labels: {
+        method: "Method",
+        spine: "Spine",
+        durability: "Durability",
+        ideal: "Ideal For"
       }
     },
     contact: {
