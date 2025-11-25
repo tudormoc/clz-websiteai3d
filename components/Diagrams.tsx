@@ -7,9 +7,10 @@ import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, Environment, PerspectiveCamera, ContactShadows, OrbitControls } from '@react-three/drei';
+import { Float, Environment, ContactShadows, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import { Maximize2, RotateCw, ArrowRight, CheckCircle2, Ruler, BoxSelect, Weight, Layers, ScanLine, MoveHorizontal, MoveVertical, MousePointer2, ZoomIn } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Ruler, BoxSelect, Weight, Layers, MoveHorizontal, MoveVertical, MousePointer2 } from 'lucide-react';
+import { SectionLabel, Headline, Subtitle, Body, SpecItem, ListItemButton } from './Typography';
 
 // --- 1. THE PROCESS: CHRONOLOGICAL TIMELINE ---
 
@@ -33,9 +34,9 @@ export const BindingLayersDiagram: React.FC = () => {
       {/* Controls */}
       <div className="w-full lg:w-1/3 flex flex-col gap-2">
          <div className="mb-4">
-             <span className="text-sm font-bold text-nobel-gold uppercase tracking-widest">{t('process.cycle')}</span>
-             <h3 className="font-serif text-3xl text-stone-900 mt-2">{steps[activeStep].label}</h3>
-             <p className="text-base text-stone-500 mt-3 h-12 leading-relaxed">{steps[activeStep].desc}</p>
+             <SectionLabel>{t('process.cycle')}</SectionLabel>
+             <Headline as="h3" size="sm" className="mt-2">{steps[activeStep].label}</Headline>
+             <Body size="sm" className="mt-3 h-12">{steps[activeStep].desc}</Body>
          </div>
 
          <div className="space-y-1 relative">
@@ -341,22 +342,22 @@ export const BookAnatomyDiagram: React.FC = () => {
       {/* List (Bottom on Mobile, Left on Desktop) */}
       <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-2">
          <div className="mb-4">
-             <span className="text-sm font-bold text-nobel-gold uppercase tracking-widest">{t('anatomy.label')}</span>
-             <h3 className="font-serif text-3xl text-stone-900 mt-2">
+             <SectionLabel>{t('anatomy.label')}</SectionLabel>
+             <Headline as="h3" size="sm" className="mt-2">
                 {selectedPart ? parts.find(p => p.id === selectedPart)?.label : t('anatomy.default_title')}
-             </h3>
-             {/* Updated paragraph to use min-height instead of fixed height to prevent text overlap */}
-             <p className="text-base text-stone-500 mt-3 min-h-[4rem] leading-relaxed pb-4">
+             </Headline>
+             <Body size="sm" className="mt-3 min-h-[4rem] pb-4">
                 {selectedPart ? parts.find(p => p.id === selectedPart)?.desc : t('anatomy.default_desc')}
-             </p>
+             </Body>
          </div>
 
          <div className="space-y-1">
              {parts.map((part) => (
-                 <button
+                 <ListItemButton
                     key={part.id}
+                    isActive={selectedPart === part.id}
                     onClick={() => setSelectedPart(part.id)}
-                    className={`w-full text-left px-4 py-5 border-l-2 transition-all duration-300 group ${selectedPart === part.id ? 'border-nobel-gold bg-stone-50 pl-6' : 'border-stone-200 hover:border-stone-300 hover:bg-stone-50/50'}`}
+                    className="py-5"
                  >
                      <div className="flex items-center justify-between">
                          <span className={`text-sm font-bold uppercase tracking-wider ${selectedPart === part.id ? 'text-stone-900' : 'text-stone-400 group-hover:text-stone-600'}`}>
@@ -364,7 +365,7 @@ export const BookAnatomyDiagram: React.FC = () => {
                          </span>
                          {selectedPart === part.id && <ArrowRight size={16} className="text-nobel-gold" />}
                      </div>
-                 </button>
+                 </ListItemButton>
              ))}
          </div>
       </div>
@@ -774,13 +775,10 @@ const BindingTypeButton = ({
     const { t } = useTranslation();
     
     return (
-        <button
+        <ListItemButton
+            isActive={isSelected}
             onClick={onClick}
-            className={`w-full text-left px-4 py-4 border-l-2 transition-all duration-300 ${
-                isSelected 
-                    ? 'border-nobel-gold bg-stone-800/50 pl-5' 
-                    : 'border-stone-700 hover:border-stone-500 hover:bg-stone-800/30'
-            }`}
+            variant="light"
         >
             <span className={`text-sm font-bold uppercase tracking-wider transition-colors ${
                 isSelected ? 'text-nobel-gold' : 'text-white'
@@ -790,7 +788,7 @@ const BindingTypeButton = ({
             <p className="text-xs text-stone-500 mt-1">
                 {t(`bindings.types.${typeKey}.tagline`)}
             </p>
-        </button>
+        </ListItemButton>
     );
 };
 
@@ -817,22 +815,26 @@ export const BindingTypesShowcase: React.FC = () => {
                 {/* Specs Panel */}
                 <div className="mt-8 p-5 bg-stone-800/30 border border-stone-800 rounded-sm">
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                            <div className="text-xs text-stone-500 font-bold uppercase tracking-widest">{t('bindings.specs_labels.method')}</div>
-                            <div className="text-white text-sm">{t(`bindings.types.${selectedType}.specs.method`)}</div>
-                        </div>
-                        <div className="space-y-1">
-                            <div className="text-xs text-stone-500 font-bold uppercase tracking-widest">{t('bindings.specs_labels.spine')}</div>
-                            <div className="text-white text-sm">{t(`bindings.types.${selectedType}.specs.spine`)}</div>
-                        </div>
-                        <div className="space-y-1">
-                            <div className="text-xs text-stone-500 font-bold uppercase tracking-widest">{t('bindings.specs_labels.durability')}</div>
-                            <div className="text-nobel-gold text-sm">{t(`bindings.types.${selectedType}.specs.durability`)}</div>
-                        </div>
-                        <div className="space-y-1">
-                            <div className="text-xs text-stone-500 font-bold uppercase tracking-widest">{t('bindings.specs_labels.ideal')}</div>
-                            <div className="text-white text-sm">{t(`bindings.types.${selectedType}.specs.ideal`)}</div>
-                        </div>
+                        <SpecItem 
+                            label={t('bindings.specs_labels.method')} 
+                            value={t(`bindings.types.${selectedType}.specs.method`)} 
+                            variant="light" 
+                        />
+                        <SpecItem 
+                            label={t('bindings.specs_labels.spine')} 
+                            value={t(`bindings.types.${selectedType}.specs.spine`)} 
+                            variant="light" 
+                        />
+                        <SpecItem 
+                            label={t('bindings.specs_labels.durability')} 
+                            value={t(`bindings.types.${selectedType}.specs.durability`)} 
+                            variant="light" 
+                        />
+                        <SpecItem 
+                            label={t('bindings.specs_labels.ideal')} 
+                            value={t(`bindings.types.${selectedType}.specs.ideal`)} 
+                            variant="light" 
+                        />
                     </div>
                 </div>
             </div>
@@ -871,15 +873,15 @@ export const BindingTypesShowcase: React.FC = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <div className="text-nobel-gold text-xs font-bold uppercase tracking-[0.2em] mb-2">
+                        <SectionLabel className="mb-2">
                             {t(`bindings.types.${selectedType}.tagline`)}
-                        </div>
-                        <h3 className="font-serif text-3xl text-white mb-3">
+                        </SectionLabel>
+                        <Headline as="h3" variant="light" size="sm" className="mb-3">
                             {t(`bindings.types.${selectedType}.name`)}
-                        </h3>
-                        <p className="text-stone-400 text-base max-w-lg leading-relaxed">
+                        </Headline>
+                        <Body variant="light" className="max-w-lg">
                             {t(`bindings.types.${selectedType}.desc`)}
-                        </p>
+                        </Body>
                     </motion.div>
                 </div>
                 

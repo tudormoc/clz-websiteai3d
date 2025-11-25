@@ -8,6 +8,7 @@ import React, { useState, useMemo } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Globe, Building2, BookOpen, Plus } from 'lucide-react';
+import { SectionLabel, Headline, Subtitle, Body, Stat } from './Typography';
 
 // --- LEGACY SECTION ---
 export const LegacySection = () => {
@@ -18,34 +19,25 @@ export const LegacySection = () => {
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-stone-800/20 to-transparent pointer-events-none"></div>
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div>
-           <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('legacy.label')}</div>
-           <h2 className="font-serif text-4xl md:text-5xl text-white mb-8 leading-tight whitespace-pre-line">
+           <SectionLabel>{t('legacy.label')}</SectionLabel>
+           <Headline variant="light" className="mb-8 whitespace-pre-line">
              {t('legacy.headline')}
-           </h2>
-           <div className="space-y-6 text-stone-400 leading-relaxed text-xl">
-             <p>
+           </Headline>
+           <div className="space-y-6">
+             <Body variant="light" size="lg">
                {t('legacy.p1')}
-             </p>
-             <p>
+             </Body>
+             <Body variant="light" size="lg">
                <Trans i18nKey="legacy.p2">
                We successfully bridged the gap between <strong className="text-white">hand-craftsmanship</strong> and <strong className="text-white">industrial scale</strong>. Today, our facility in Padova houses unique machinery capable of handling formats and materials that standard binderies simply cannot touch.
                </Trans>
-             </p>
+             </Body>
            </div>
            
            <div className="mt-12 grid grid-cols-3 gap-6 border-t border-stone-800 pt-8">
-              <div>
-                <div className="text-4xl font-serif text-nobel-gold">1963</div>
-                <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{t('legacy.stat_est')}</div>
-              </div>
-              <div>
-                <div className="text-4xl font-serif text-nobel-gold">4M+</div>
-                <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{t('legacy.stat_books')}</div>
-              </div>
-              <div>
-                <div className="text-4xl font-serif text-nobel-gold">55</div>
-                <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{t('legacy.stat_artisans')}</div>
-              </div>
+              <Stat value="1963" label={t('legacy.stat_est')} />
+              <Stat value="4M+" label={t('legacy.stat_books')} />
+              <Stat value="55" label={t('legacy.stat_artisans')} />
            </div>
         </div>
         <div className="relative h-[500px] border border-stone-800 bg-stone-950 p-8 flex items-center justify-center">
@@ -74,7 +66,7 @@ const CoverArt = ({ style, title }: { style: string, title: string }) => {
             return (
                 <div className="absolute inset-0 bg-[#EBE9E4] p-6 flex flex-col justify-between">
                     <div className="w-12 h-1 bg-stone-900"></div>
-                    <h3 className={`font-serif text-4xl leading-none tracking-tighter text-stone-900 mix-blend-multiply`}>{title}</h3>
+                    <h3 className="font-serif text-4xl leading-none tracking-tighter text-stone-900 mix-blend-multiply">{title}</h3>
                     <div className="text-xs font-mono tracking-widest text-stone-500 uppercase">Fig. 01</div>
                 </div>
             )
@@ -96,7 +88,7 @@ const CoverArt = ({ style, title }: { style: string, title: string }) => {
                     <div className="absolute top-0 right-0 w-32 h-32 bg-stone-800 rounded-bl-full mix-blend-multiply opacity-90"></div>
                     <div className="absolute bottom-12 left-8 w-24 h-24 bg-[#C5A059] rounded-full mix-blend-multiply opacity-80"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className={`font-serif italic text-3xl text-stone-900 z-10 relative`}>{title}</h3>
+                        <h3 className="font-serif italic text-3xl text-stone-900 z-10 relative">{title}</h3>
                     </div>
                 </div>
             )
@@ -284,11 +276,11 @@ export const SelectedWorks = () => {
             <div className="max-w-2xl">
                 <div className="flex items-center gap-3 mb-4">
                      <span className="w-8 h-px bg-nobel-gold"></span>
-                     <span className="text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('works.label')}</span>
+                     <SectionLabel className="mb-0">{t('works.label')}</SectionLabel>
                 </div>
-                <h2 className="font-serif text-5xl md:text-6xl text-stone-900 leading-none">
+                <Headline size="xl" className="leading-none">
                     {t('works.headline')}
-                </h2>
+                </Headline>
             </div>
 
             <div className="flex gap-8 mt-8 md:mt-0">
@@ -331,7 +323,7 @@ export const GlobalReach = () => {
     return (
         <section className="py-24 border-t border-stone-200 bg-stone-50">
             <div className="container mx-auto px-6 text-center">
-                <h2 className="font-serif text-3xl text-stone-900 mb-12 italic">{t('global.headline')}</h2>
+                <Headline as="h2" size="sm" className="mb-12 italic">{t('global.headline')}</Headline>
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                     {/* Placeholder for Client Logos - Using Typography for now */}

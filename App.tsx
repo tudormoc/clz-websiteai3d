@@ -8,6 +8,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { HeroScene, ContactScene } from './components/QuantumScene';
 import { BindingLayersDiagram, FormatComparisonDiagram, BookAnatomyDiagram, MaxiSpecsDiagram, BindingTypesShowcase } from './components/Diagrams';
 import { LegacySection, SelectedWorks, GlobalReach } from './components/Sections';
+import { SectionLabel, Headline, Subtitle, Body, Tag, Divider, PageLabel, SectionHeader } from './components/Typography';
 import { ArrowDown, Menu, X, Mail, ArrowRight, Globe, MapPin, Phone, Clock, Send } from 'lucide-react';
 
 const ServiceCard = ({ title, sub, delay }: { title: string, sub: string, delay: string }) => {
@@ -42,10 +43,10 @@ const HomePage: React.FC<{ onNavigate: (page: string, section?: string) => void 
             Cooperativa <br/>
             <span className="text-4xl md:text-6xl lg:text-7xl block mt-2 text-stone-800">Lavoratori Zanardi</span>
           </h1>
-          <div className="w-24 h-1 bg-nobel-gold mx-auto mb-8"></div>
-          <p className="max-w-xl mx-auto text-xl text-stone-600 font-serif italic leading-relaxed mb-12 whitespace-pre-line">
+          <Divider className="mx-auto mb-8" />
+          <Subtitle italic className="max-w-xl mx-auto mb-12 whitespace-pre-line">
             {t('brand.subtitle')}
-          </p>
+          </Subtitle>
           
           <div className="flex justify-center">
              <button onClick={() => onNavigate('home', 'intro')} className="group flex flex-col items-center gap-2 text-sm font-bold tracking-widest text-stone-400 hover:text-nobel-gold transition-colors cursor-pointer uppercase">
@@ -71,25 +72,25 @@ const HomePage: React.FC<{ onNavigate: (page: string, section?: string) => void 
                     </h3>
                 </div>
             </div>
-            <div className="md:col-span-7 text-xl text-stone-600 leading-relaxed space-y-8">
+            <div className="md:col-span-7 space-y-8">
               <div>
-                  <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('intro.label')}</div>
-                  <h2 className="font-serif text-5xl mb-6 leading-tight text-stone-900 whitespace-pre-line">{t('intro.headline')}</h2>
+                  <SectionLabel>{t('intro.label')}</SectionLabel>
+                  <Headline size="lg" className="mb-6 whitespace-pre-line">{t('intro.headline')}</Headline>
               </div>
-              <p>
+              <Body size="lg">
                 <Trans i18nKey="intro.p1" values={{ initial: 'W' }}>
                     <span className="text-6xl float-left mr-3 mt-[-12px] font-serif text-stone-300">W</span>e do not sell books; we construct them. Operating from Padova, CLZ serves an international clientele of museums, art galleries, and luxury publishers.
                 </Trans>
-              </p>
-              <p>
+              </Body>
+              <Body size="lg">
                 <Trans i18nKey="intro.p2">
                     We focus exclusively on <strong>Cardboard / Hardcover</strong> binding ("Cartonato"). We do not produce softcovers or brochures. Our facility merges heavy industrial precision with the delicate touch required for <strong className="text-stone-900">Maxi Extra</strong> formats and heavy-board limited editions.
                 </Trans>
-              </p>
+              </Body>
               <div className="flex flex-wrap gap-4 pt-4">
-                  <div className="px-5 py-3 bg-stone-50 border border-stone-200 text-sm font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_case')}</div>
-                  <div className="px-5 py-3 bg-stone-50 border border-stone-200 text-sm font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_sewn')}</div>
-                  <div className="px-5 py-3 bg-stone-50 border border-stone-200 text-sm font-bold uppercase tracking-wider text-stone-500">{t('intro.tag_qc')}</div>
+                  <Tag>{t('intro.tag_case')}</Tag>
+                  <Tag>{t('intro.tag_sewn')}</Tag>
+                  <Tag>{t('intro.tag_qc')}</Tag>
               </div>
 
               <div className="pt-8">
@@ -123,11 +124,11 @@ const AtelierPage: React.FC = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(197,160,89,0.15)_0%,transparent_70%)] pointer-events-none"></div>
 
         <div className="relative container mx-auto px-6 z-10">
-            <div className="inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-widest text-nobel-gold shadow-lg">{t('atelier.label')}</div>
-            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white mb-6 drop-shadow-2xl">{t('atelier.headline')}</h1>
-            <p className="max-w-3xl text-stone-400 text-xl font-serif italic leading-relaxed">
+            <PageLabel>{t('atelier.label')}</PageLabel>
+            <Headline as="h1" variant="light" size="page" className="mb-6 drop-shadow-2xl">{t('atelier.headline')}</Headline>
+            <Subtitle variant="light" italic className="max-w-3xl">
                 {t('atelier.sub')}
-            </p>
+            </Subtitle>
         </div>
     </div>
 
@@ -135,21 +136,28 @@ const AtelierPage: React.FC = () => {
     <section id="process" className="py-24 bg-stone-50">
         <div className="container mx-auto px-6">
                 <div className="mb-16 max-w-2xl">
-                <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('process.label')}</div>
-                <h2 className="font-serif text-5xl text-stone-900 mb-6">{t('process.headline')}</h2>
-                <p className="text-stone-600 text-xl">{t('process.sub')}</p>
+                  <SectionHeader 
+                    label={t('process.label')}
+                    headline={t('process.headline')}
+                    subtitle={t('process.sub')}
+                  />
                 </div>
                 <BindingLayersDiagram />
         </div>
     </section>
 
-    {/* Binding Types Section - NEW */}
+    {/* Binding Types Section */}
     <section id="bindings" className="py-24 bg-stone-950">
         <div className="container mx-auto px-6">
-            <div className="mb-16 text-center">
-                <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('bindings.label')}</div>
-                <h2 className="font-serif text-5xl md:text-6xl text-white mb-6">{t('bindings.headline')}</h2>
-                <p className="text-stone-400 text-xl max-w-2xl mx-auto">{t('bindings.sub')}</p>
+            <div className="mb-16">
+              <SectionHeader 
+                label={t('bindings.label')}
+                headline={t('bindings.headline')}
+                subtitle={t('bindings.sub')}
+                variant="light"
+                headlineSize="xl"
+                centered
+              />
             </div>
             <BindingTypesShowcase />
         </div>
@@ -160,14 +168,14 @@ const AtelierPage: React.FC = () => {
         <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     <div>
-                    <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('anatomy.label')}</div>
-                    <h2 className="font-serif text-5xl text-stone-900 mb-6">{t('anatomy.headline')}</h2>
+                    <SectionLabel>{t('anatomy.label')}</SectionLabel>
+                    <Headline className="mb-6">{t('anatomy.headline')}</Headline>
                     <BookAnatomyDiagram />
                     </div>
                     <div className="flex flex-col justify-center space-y-8">
-                    <p className="text-xl text-stone-600 leading-relaxed">
+                    <Body size="lg">
                         {t('anatomy.desc')}
-                    </p>
+                    </Body>
                     <div className="grid grid-cols-2 gap-8">
                         <ServiceCard title={t('anatomy.cards.materials')} sub={t('anatomy.cards.sourcing')} delay="0s" />
                         <ServiceCard title={t('anatomy.cards.precision')} sub={t('anatomy.cards.tolerance')} delay="0.1s" />
@@ -180,19 +188,24 @@ const AtelierPage: React.FC = () => {
     {/* Formats Section */}
     <section id="formats" className="py-24 bg-stone-900 text-stone-200">
             <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-                <div className="inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase">{t('formats.label')}</div>
-                <h2 className="font-serif text-5xl md:text-6xl text-white mb-6">{t('formats.headline')}</h2>
-                <p className="max-w-2xl mx-auto text-xl text-stone-400">{t('formats.sub')}</p>
+            <div className="mb-16">
+              <SectionHeader 
+                label={t('formats.label')}
+                headline={t('formats.headline')}
+                subtitle={t('formats.sub')}
+                variant="light"
+                headlineSize="xl"
+                centered
+              />
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
                     <FormatComparisonDiagram />
                     <div className="flex flex-col justify-center">
-                        <h3 className="font-serif text-3xl mb-6 text-white italic">{t('formats.text.headline')}</h3>
-                        <p className="text-stone-400 mb-8 leading-relaxed text-lg">
+                        <Headline as="h3" variant="light" size="sm" className="mb-6 italic">{t('formats.text.headline')}</Headline>
+                        <Body variant="light" size="lg" className="mb-8">
                             {t('formats.text.p1')}
-                        </p>
+                        </Body>
                         <MaxiSpecsDiagram />
                     </div>
             </div>
@@ -215,11 +228,11 @@ const ContactPage: React.FC = () => {
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[radial-gradient(circle_at_top_right,rgba(197,160,89,0.1)_0%,transparent_60%)] pointer-events-none"></div>
 
             <div className="relative container mx-auto px-6 z-10">
-                <div className="inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-widest text-nobel-gold shadow-lg">{t('contact.label')}</div>
-                <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl text-white mb-6 drop-shadow-2xl">{t('contact.headline')}</h1>
-                <p className="max-w-3xl text-stone-400 text-xl font-serif italic leading-relaxed">
+                <PageLabel>{t('contact.label')}</PageLabel>
+                <Headline as="h1" variant="light" size="page" className="mb-6 drop-shadow-2xl">{t('contact.headline')}</Headline>
+                <Subtitle variant="light" italic className="max-w-3xl">
                     {t('contact.sub')}
-                </p>
+                </Subtitle>
             </div>
         </div>
 
@@ -359,7 +372,7 @@ const App: React.FC = () => {
             </div>
           </div>
           
-          {/* Desktop Menu - INCREASED FONT SIZES */}
+          {/* Desktop Menu */}
           <div className={`hidden lg:flex items-center gap-8 text-sm font-bold tracking-widest uppercase transition-colors duration-500 ${navLinkColor}`}>
             {/* Home Links */}
             <button onClick={() => navigateTo('home', 'intro')} className={`hover:text-nobel-gold transition-colors ${activePage === 'home' ? (isDarkHeader ? 'text-white' : 'text-stone-900') : ''}`}>{t('nav.brand')}</button>
