@@ -110,15 +110,17 @@ export const en = {
       label: "Anatomy",
       headline: "Constructed for Eternity",
       desc: "Every component is selected for archival quality and structural integrity. From the density of the greyboard to the direction of the paper grain, nothing is left to chance.",
-      hint: "Drag to Rotate",
-      default_title: "Book Anatomy",
-      default_desc: "Select a component to inspect its details and construction.",
+      hint: "Select a component",
+      default_title: "Technical Blueprint",
+      default_desc: "Explore the anatomy of a CLZ hardcover. Each element is engineered for permanence.",
       parts: {
-        cover: { label: "Hardcover Board", desc: "High-density greyboard 2mm-4mm wrapped in cloth or printed paper." },
-        spine: { label: "Square Spine", desc: "Reinforced industrial spine for maximum durability and shelf presence." },
-        headband: { label: "Headband", desc: "Decorative woven cotton band applied to top and bottom of spine." },
-        endpapers: { label: "Endpapers", desc: "140gsm archival paper connecting block to case." },
-        block: { label: "Book Block", desc: "Thread-sewn signatures (Smyth Sewing) for lie-flat opening." }
+        cover: { label: "Hardcover Board", desc: "High-density greyboard 2mm-4mm wrapped in cloth or printed paper.", spec: "2-4mm" },
+        spine: { label: "Square Spine", desc: "Reinforced industrial spine for maximum durability and shelf presence.", spec: "Reinforced" },
+        headband: { label: "Headband", desc: "Decorative woven cotton band applied to top and bottom of spine.", spec: "Cotton" },
+        endpapers: { label: "Endpapers", desc: "140gsm archival paper connecting block to case.", spec: "140gsm" },
+        block: { label: "Book Block", desc: "Thread-sewn signatures (Smyth Sewing) for lie-flat opening.", spec: "Smyth Sewn" },
+        ribbon: { label: "Ribbon Marker", desc: "Satin bookmark ribbon anchored beneath the headband.", spec: "Satin" },
+        hinge: { label: "Hinge", desc: "Flexible joint between cover board and spine allowing smooth opening.", spec: "Flexible" }
       },
       cards: {
         materials: "Materials",

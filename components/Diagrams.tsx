@@ -177,197 +177,151 @@ export const BindingLayersDiagram: React.FC = () => {
 };
 
 
-// --- 2. ELEMENTS OF STYLE: 3D INTERACTIVE BOOK ---
+// --- 2. SCHEMATIC BOOK ANATOMY: TECHNICAL BLUEPRINT ---
 
-const CameraRig = ({ selectedPart }: { selectedPart: string | null }) => {
-    const { camera } = useThree();
-    const controlsRef = useRef<any>(null);
-    const isUserInteracting = useRef(false);
-    const targetPos = useRef(new THREE.Vector3(0, 0, 10)); // Default distance set to 10 for full view
-    
-    useEffect(() => {
-        let x = 0, y = 0, z = 10; // Base "Wide Shot"
+type AnatomyPartKey = 'cover' | 'spine' | 'headband' | 'endpapers' | 'block' | 'ribbon' | 'hinge';
 
-        switch (selectedPart) {
-            case 'headband': x = 0; y = 1.2; z = 7; break; // Closer but not macro
-            case 'spine': x = -2; y = 0; z = 8; break; // Side view with context
-            case 'endpapers': x = 1; y = 0; z = 9; break; // Front view
-            case 'block': x = 1; y = -1; z = 9; break; // Corner view
-            default: x = 0; y = 0; z = 10; break; // Wide shot
-        }
-
-        targetPos.current.set(x, y, z);
-        // Reset interaction flag when selection changes via UI to allow camera to move
-        isUserInteracting.current = false;
-    }, [selectedPart]);
-
-    useFrame((state, delta) => {
-        if (!isUserInteracting.current) {
-            // Smoothly move camera to target position if user isn't dragging
-            state.camera.position.lerp(targetPos.current, delta * 2.5);
-        }
-        // Always ensure controls look at center
-        if(controlsRef.current) controlsRef.current.target.lerp(new THREE.Vector3(0,0,0), 0.1);
-    });
-
-    return (
-        <OrbitControls 
-            ref={controlsRef}
-            makeDefault
-            enableZoom={false} // Disabled Zoom for fixed view
-            enablePan={false}
-            rotateSpeed={0.5}
-            minPolarAngle={0.2}
-            maxPolarAngle={Math.PI - 0.2}
-            onStart={() => { isUserInteracting.current = true; }}
-        />
-    );
+interface PartConfig {
+  id: AnatomyPartKey;
+  path: string;
+  anchorX: number;
+  anchorY: number;
 }
 
-const Book3DModel = ({ selectedPart }: { selectedPart: string | null }) => {
-    const coverGroupRef = useRef<THREE.Group>(null);
-    
-    // Open cover if Endpapers or Cover is selected
-    const targetOpen = (selectedPart === 'endpapers' || selectedPart === 'cover') ? -Math.PI / 2.2 : 0;
-
-    useFrame((state, delta) => {
-        if (coverGroupRef.current) {
-            coverGroupRef.current.rotation.y = THREE.MathUtils.lerp(coverGroupRef.current.rotation.y, targetOpen, delta * 3);
-        }
-    });
-
-    // Highlighting logic
-    const getMaterial = (partName: string, baseColor: string, roughness: number = 0.5, emissive: boolean = false) => (
-        <meshStandardMaterial 
-            color={selectedPart === partName ? '#C5A059' : baseColor} 
-            emissive={selectedPart === partName && emissive ? '#C5A059' : '#000'}
-            emissiveIntensity={selectedPart === partName && emissive ? 0.4 : 0}
-            roughness={selectedPart === partName ? 0.2 : roughness}
-            metalness={selectedPart === partName ? 0.5 : 0}
-        />
-    );
-
-    return (
-        <group rotation={[0, -0.4, 0]}>
-            {/* Back Cover */}
-            <mesh position={[0, 0, -0.15]} receiveShadow>
-                <boxGeometry args={[2.1, 3.1, 0.05]} />
-                {getMaterial('cover', '#1a1a1a', 0.3)}
-            </mesh>
-
-            {/* Spine */}
-            <mesh position={[-1.05, 0, 0]} receiveShadow>
-                <boxGeometry args={[0.12, 3.1, 0.35]} />
-                {getMaterial('spine', '#1a1a1a', 0.3, true)}
-            </mesh>
-
-            {/* Book Block (Pages) */}
-            <group position={[0.05, 0, 0]}>
-                <mesh receiveShadow castShadow>
-                    <boxGeometry args={[2, 3, 0.25]} />
-                    {getMaterial('block', '#EBE9E4', 0.8, true)}
-                </mesh>
-                
-                {/* Headband Top */}
-                <mesh position={[-0.95, 1.45, 0]}>
-                    <cylinderGeometry args={[0.04, 0.04, 0.20, 16]} />
-                    <meshStandardMaterial color={selectedPart === 'headband' ? '#C5A059' : '#C5A059'} emissive={selectedPart === 'headband' ? '#C5A059' : '#000'} emissiveIntensity={selectedPart === 'headband' ? 0.8 : 0} />
-                </mesh>
-                 {/* Headband Bottom */}
-                 <mesh position={[-0.95, -1.45, 0]}>
-                    <cylinderGeometry args={[0.04, 0.04, 0.20, 16]} />
-                    <meshStandardMaterial color={selectedPart === 'headband' ? '#C5A059' : '#C5A059'} />
-                </mesh>
-            </group>
-
-            {/* Front Cover (Animated) */}
-            <group ref={coverGroupRef} position={[-1.05, 0, 0.15]}>
-                <mesh position={[1.05, 0, 0]} castShadow receiveShadow>
-                    <boxGeometry args={[2.1, 3.1, 0.05]} />
-                    {getMaterial('cover', '#1a1a1a', 0.3)}
-                </mesh>
-                {/* Endpaper (Inside Cover) */}
-                <mesh position={[1.05, 0, -0.026]}>
-                    <planeGeometry args={[2.05, 3.05]} />
-                     {getMaterial('endpapers', '#F5F4F0', 0.9, true)}
-                </mesh>
-            </group>
-        </group>
-    );
-};
+// All 7 book anatomy parts
+const PART_CONFIGS: PartConfig[] = [
+  { id: 'cover', path: 'M40,30 L260,30 L260,370 L40,370 Z', anchorX: 260, anchorY: 70 },
+  { id: 'spine', path: 'M20,30 L40,30 L40,370 L20,370 Z', anchorX: 20, anchorY: 200 },
+  { id: 'headband', path: 'M20,30 L40,30 L40,48 L20,48 Z', anchorX: 30, anchorY: 39 },
+  { id: 'block', path: 'M50,45 L250,45 L250,355 L50,355 Z', anchorX: 250, anchorY: 300 },
+  { id: 'endpapers', path: 'M50,45 L80,45 L80,355 L50,355 Z', anchorX: 65, anchorY: 200 },
+  { id: 'ribbon', path: 'M28,48 L32,48 L32,390 L28,390 Z', anchorX: 30, anchorY: 370 },
+  { id: 'hinge', path: 'M40,45 L50,45 L50,355 L40,355 Z', anchorX: 45, anchorY: 150 },
+];
 
 export const BookAnatomyDiagram: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedPart, setSelectedPart] = useState<string | null>(null);
+  const [selectedPart, setSelectedPart] = useState<AnatomyPartKey | null>(null);
   
-  const parts = useMemo(() => [
-      { id: 'cover', label: t('anatomy.parts.cover.label'), desc: t('anatomy.parts.cover.desc') },
-      { id: 'spine', label: t('anatomy.parts.spine.label'), desc: t('anatomy.parts.spine.desc') },
-      { id: 'headband', label: t('anatomy.parts.headband.label'), desc: t('anatomy.parts.headband.desc') },
-      { id: 'endpapers', label: t('anatomy.parts.endpapers.label'), desc: t('anatomy.parts.endpapers.desc') },
-      { id: 'block', label: t('anatomy.parts.block.label'), desc: t('anatomy.parts.block.desc') },
-  ], [t]);
+  const parts = useMemo(() => PART_CONFIGS.map(config => ({
+    ...config,
+    label: t(`anatomy.parts.${config.id}.label`),
+    desc: t(`anatomy.parts.${config.id}.desc`),
+    spec: t(`anatomy.parts.${config.id}.spec`),
+  })), [t]);
+
+  const selectedPartData = selectedPart ? parts.find(p => p.id === selectedPart) : null;
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 w-full my-8">
+    <div className="flex flex-col gap-4 mt-6">
       
-      {/* Visualizer (Top on Mobile, Right on Desktop) */}
-      <div 
-        className="order-1 lg:order-2 lg:col-span-8 h-[350px] lg:h-[550px] bg-[#F5F4F0] rounded-sm relative border border-stone-200 shadow-inner overflow-hidden group"
-        style={{ touchAction: 'none' }} // Prevents scroll capture on mobile while dragging
-      >
-        <Canvas shadows camera={{ position: [0, 0, 10], fov: 35 }}>
-            <ambientLight intensity={0.7} />
-            <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} castShadow intensity={1.5} />
-            <pointLight position={[-10, -5, -5]} color="#C5A059" intensity={1} />
-            
-            <Float speed={1} rotationIntensity={0.2} floatIntensity={0.2}>
-                <Book3DModel selectedPart={selectedPart} />
-            </Float>
-
-            <ContactShadows position={[0, -2, 0]} opacity={0.4} scale={10} blur={2} far={4} />
-            <Environment preset="studio" />
-            <CameraRig selectedPart={selectedPart} />
-        </Canvas>
-
-        {/* Interaction Hint */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
-            <div className="bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-stone-200 shadow-sm flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-500">
-                <MousePointer2 size={14} />
-                <span>{t('anatomy.hint')}</span>
-            </div>
+      {/* Schematic Visualizer */}
+      <div className="w-full h-[320px] sm:h-[380px] bg-[#F5F4F0] border border-stone-200 relative flex items-center justify-center overflow-hidden rounded-sm">
+        
+        {/* SVG Schematic */}
+        <svg 
+          viewBox="0 0 300 420" 
+          className="w-full h-full"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {/* Book shadow */}
+          <rect x={25} y={35} width={245} height={345} fill="#d6d3d1" opacity={0.2} rx={2} />
+          
+          {/* Interactive parts */}
+          {parts.map((part) => (
+            <motion.path
+              key={part.id}
+              d={part.path}
+              fill={selectedPart === part.id ? 'rgba(197, 160, 89, 0.35)' : '#ffffff'}
+              stroke={selectedPart === part.id ? '#C5A059' : '#a8a29e'}
+              strokeWidth={selectedPart === part.id ? 2.5 : 1}
+              className="cursor-pointer"
+              onClick={() => setSelectedPart(selectedPart === part.id ? null : part.id)}
+              whileHover={{ fill: 'rgba(197, 160, 89, 0.2)' }}
+              transition={{ duration: 0.2 }}
+            />
+          ))}
+          
+          {/* Page lines inside block */}
+          {[...Array(5)].map((_, i) => (
+            <line
+              key={i}
+              x1={100 + i * 28} y1={55}
+              x2={100 + i * 28} y2={345}
+              stroke="#e7e5e4"
+              strokeWidth={1}
+            />
+          ))}
+          
+          {/* Ribbon end detail */}
+          <path d="M28,390 L30,405 L32,390" fill="none" stroke="#C5A059" strokeWidth={1.5} opacity={0.7} />
+          
+          {/* Headband stripes - top */}
+          <line x1={22} y1={35} x2={38} y2={35} stroke="#C5A059" strokeWidth={1} opacity={0.6} />
+          <line x1={22} y1={40} x2={38} y2={40} stroke="#C5A059" strokeWidth={1} opacity={0.6} />
+          
+          {/* Headband stripes - bottom */}
+          <line x1={22} y1={365} x2={38} y2={365} stroke="#C5A059" strokeWidth={1} opacity={0.6} />
+          <line x1={22} y1={360} x2={38} y2={360} stroke="#C5A059" strokeWidth={1} opacity={0.6} />
+          
+          {/* Anchor indicator when part selected */}
+          {selectedPart && (
+            <motion.circle
+              cx={parts.find(p => p.id === selectedPart)?.anchorX}
+              cy={parts.find(p => p.id === selectedPart)?.anchorY}
+              r={8}
+              fill="#C5A059"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.2 }}
+            />
+          )}
+        </svg>
+        
+        {/* Selected part info overlay */}
+        {selectedPartData && (
+          <motion.div 
+            className="absolute top-3 left-3 right-3 sm:right-auto sm:max-w-[200px] bg-white/95 backdrop-blur-sm p-3 rounded-sm border border-stone-200 shadow-lg"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="text-sm font-bold text-stone-900 mb-1">{selectedPartData.label}</div>
+            <Body size="sm" className="text-xs">{selectedPartData.desc}</Body>
+          </motion.div>
+        )}
+        
+        {/* Hint */}
+        <div className="absolute bottom-3 left-0 right-0 flex justify-center pointer-events-none">
+          <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-stone-200 shadow-sm flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+            <MousePointer2 size={12} />
+            <span>{t('anatomy.hint')}</span>
+          </div>
         </div>
       </div>
-
-      {/* List (Bottom on Mobile, Left on Desktop) */}
-      <div className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-2">
-         <div className="mb-4">
-             <SectionLabel>{t('anatomy.label')}</SectionLabel>
-             <Headline as="h3" size="sm" className="mt-2">
-                {selectedPart ? parts.find(p => p.id === selectedPart)?.label : t('anatomy.default_title')}
-             </Headline>
-             <Body size="sm" className="mt-3 min-h-[4rem] pb-4">
-                {selectedPart ? parts.find(p => p.id === selectedPart)?.desc : t('anatomy.default_desc')}
-             </Body>
-         </div>
-
-         <div className="space-y-1">
-             {parts.map((part) => (
-                 <ListItemButton
-                    key={part.id}
-                    isActive={selectedPart === part.id}
-                    onClick={() => setSelectedPart(part.id)}
-                    className="py-5"
-                 >
-                     <div className="flex items-center justify-between">
-                         <span className={`text-sm font-bold uppercase tracking-wider ${selectedPart === part.id ? 'text-stone-900' : 'text-stone-400 group-hover:text-stone-600'}`}>
-                             {part.label}
-                         </span>
-                         {selectedPart === part.id && <ArrowRight size={16} className="text-nobel-gold" />}
-                     </div>
-                 </ListItemButton>
-             ))}
-         </div>
+      
+      {/* Parts Grid - 2 rows of buttons */}
+      <div className="grid grid-cols-4 sm:grid-cols-4 gap-2">
+        {parts.map((part) => (
+          <button
+            key={part.id}
+            onClick={() => setSelectedPart(selectedPart === part.id ? null : part.id)}
+            className={`flex flex-col items-center text-center p-2 sm:p-3 rounded-sm border transition-all duration-300 ${
+              selectedPart === part.id 
+                ? 'bg-stone-50 border-nobel-gold' 
+                : 'bg-white border-stone-200 hover:border-stone-300 hover:bg-stone-50'
+            }`}
+          >
+            <div className={`w-2 h-2 rounded-full mb-2 transition-colors ${
+              selectedPart === part.id ? 'bg-nobel-gold' : 'bg-stone-300'
+            }`} />
+            <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider leading-tight transition-colors ${
+              selectedPart === part.id ? 'text-stone-900' : 'text-stone-500'
+            }`}>
+              {part.label}
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );

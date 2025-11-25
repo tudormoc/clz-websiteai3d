@@ -110,15 +110,17 @@ export const fr = {
       label: "Anatomie",
       headline: "Construit pour l'Éternité",
       desc: "Chaque composant est sélectionné pour sa qualité d'archivage et son intégrité structurelle. De la densité du carton gris au sens de la fibre du papier, rien n'est laissé au hasard.",
-      hint: "Glisser pour Tourner",
-      default_title: "Anatomia du Livre",
-      default_desc: "Sélectionnez un composant pour inspecter ses détails et sa construction.",
+      hint: "Sélectionnez un composant",
+      default_title: "Schéma Technique",
+      default_desc: "Explorez l'anatomie d'un cartonné CLZ. Chaque élément est conçu pour la permanence.",
       parts: {
-        cover: { label: "Carton Rigide", desc: "Carton gris haute densité 2mm-4mm habillé de toile ou papier imprimé." },
-        spine: { label: "Dos Carré", desc: "Dos industriel renforcé pour une durabilité maximale et une présence sur étagère." },
-        headband: { label: "Tranchefile", desc: "Bande de coton tissé décorative appliquée en tête et en pied du dos." },
-        endpapers: { label: "Pages de Garde", desc: "Papier d'archive 140gsm reliant le bloc à la couverture." },
-        block: { label: "Corps d'Ouvrage", desc: "Cahiers cousus au fil (Couture Smyth) pour une ouverture à plat." }
+        cover: { label: "Carton Rigide", desc: "Carton gris haute densité 2mm-4mm habillé de toile ou papier imprimé.", spec: "2-4mm" },
+        spine: { label: "Dos Carré", desc: "Dos industriel renforcé pour une durabilité maximale et une présence sur étagère.", spec: "Renforcé" },
+        headband: { label: "Tranchefile", desc: "Bande de coton tissé décorative appliquée en tête et en pied du dos.", spec: "Coton" },
+        endpapers: { label: "Pages de Garde", desc: "Papier d'archive 140gsm reliant le bloc à la couverture.", spec: "140gsm" },
+        block: { label: "Corps d'Ouvrage", desc: "Cahiers cousus au fil (Couture Smyth) pour une ouverture à plat.", spec: "Cousu Smyth" },
+        ribbon: { label: "Signet Ruban", desc: "Ruban marque-page en satin ancré sous la tranchefile.", spec: "Satin" },
+        hinge: { label: "Charnière", desc: "Joint flexible entre le carton et le dos permettant une ouverture fluide.", spec: "Flexible" }
       },
       cards: {
         materials: "Matériaux",

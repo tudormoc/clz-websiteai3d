@@ -110,15 +110,17 @@ export const it = {
       label: "Anatomia",
       headline: "Costruito per l'Eternità",
       desc: "Ogni componente è selezionato per qualità archivistica e integrità strutturale. Dalla densità del cartone alla direzione della fibra della carta, nulla è lasciato al caso.",
-      hint: "Trascina per Ruotare",
-      default_title: "Anatomia del Libro",
-      default_desc: "Seleziona un componente per ispezionarne i dettagli e la costruzione.",
+      hint: "Seleziona un componente",
+      default_title: "Schema Tecnico",
+      default_desc: "Esplora l'anatomia di un cartonato CLZ. Ogni elemento è progettato per la permanenza.",
       parts: {
-        cover: { label: "Cartone Rigido", desc: "Cartone grigio ad alta densità 2mm-4mm rivestito in tela o carta stampata." },
-        spine: { label: "Dorso Quadro", desc: "Dorso industriale rinforzato per la massima durata e presenza sullo scaffale." },
-        headband: { label: "Capitello", desc: "Banda decorativa in cotone intrecciato applicata in testa e al piede del dorso." },
-        endpapers: { label: "Risguardi", desc: "Carta d'archivio 140gsm che collega il blocco alla copertina." },
-        block: { label: "Blocco Libro", desc: "Segnature cucite a filo refe (Cucitura Smyth) per un'apertura piana." }
+        cover: { label: "Cartone Rigido", desc: "Cartone grigio ad alta densità 2mm-4mm rivestito in tela o carta stampata.", spec: "2-4mm" },
+        spine: { label: "Dorso Quadro", desc: "Dorso industriale rinforzato per la massima durata e presenza sullo scaffale.", spec: "Rinforzato" },
+        headband: { label: "Capitello", desc: "Banda decorativa in cotone intrecciato applicata in testa e al piede del dorso.", spec: "Cotone" },
+        endpapers: { label: "Risguardi", desc: "Carta d'archivio 140gsm che collega il blocco alla copertina.", spec: "140gsm" },
+        block: { label: "Blocco Libro", desc: "Segnature cucite a filo refe (Cucitura Smyth) per un'apertura piana.", spec: "Cucitura Smyth" },
+        ribbon: { label: "Segnalibro", desc: "Nastro segnalibro in raso ancorato sotto il capitello.", spec: "Raso" },
+        hinge: { label: "Cerniera", desc: "Giunzione flessibile tra cartone e dorso per un'apertura fluida.", spec: "Flessibile" }
       },
       cards: {
         materials: "Materiali",
