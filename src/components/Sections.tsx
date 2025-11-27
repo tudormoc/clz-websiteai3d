@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Globe, Building2, BookOpen, Plus } from 'lucide-react';
-import { SectionLabel, Headline, Subtitle, Body, Stat } from './Typography';
+import { SectionLabel, Headline, Body, Stat } from './Typography';
 
 // --- LEGACY SECTION ---
 export const LegacySection = () => {
@@ -117,7 +117,7 @@ interface ProjectProps {
     spineColor: string;
 }
 
-const ProjectShowcase = ({ category, title, client, year, specs, style, spineColor }: ProjectProps) => {
+const ProjectShowcase = ({ title, client, year, specs, style, spineColor }: ProjectProps) => {
   const { t } = useTranslation();
   return (
     <motion.div 
@@ -127,65 +127,63 @@ const ProjectShowcase = ({ category, title, client, year, specs, style, spineCol
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="group w-full flex flex-col gap-6"
     >
-        {/* 3D Book Container */}
+        {/* 3D Book Container - Big books like original */}
         <div className="relative w-full aspect-[4/5] md:aspect-square lg:aspect-[4/5] xl:aspect-[3/4] perspective-1000 cursor-pointer">
             
-            {/* The Book */}
-            <div className="absolute inset-10 md:inset-16 transition-all duration-700 ease-out transform-style-3d group-hover:rotate-y-[-25deg] group-hover:rotate-x-[10deg] group-hover:translate-x-4 group-hover:-translate-y-4">
+            {/* The Book - Subtle hover animation */}
+            <div className="absolute inset-10 md:inset-16 transition-all duration-500 ease-out transform-style-3d group-hover:rotate-y-[-6deg] group-hover:-translate-y-1">
                 
                 {/* Front Cover */}
-                <div className="absolute inset-0 backface-hidden shadow-xl group-hover:shadow-2xl transition-shadow duration-500 overflow-hidden rounded-[2px]">
+                <div className="absolute inset-0 backface-hidden shadow-xl group-hover:shadow-2xl transition-shadow duration-300 overflow-hidden rounded-[2px]">
                     <CoverArt style={style} title={title} />
                     
-                    {/* Texture Overlays */}
-                    <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/linen.png')] mix-blend-multiply pointer-events-none"></div>
-                    <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-white/10 pointer-events-none"></div>
+                    {/* Texture Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-white/5 pointer-events-none"></div>
                     
                     {/* Lighting Sheen */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out pointer-events-none"></div>
                 </div>
 
-                {/* Spine (Visible on rotate) */}
+                {/* Spine */}
                 <div 
-                    className={`absolute top-0 bottom-0 left-0 w-8 origin-left rotate-y-90 ${spineColor} flex flex-col justify-end pb-8 items-center backface-hidden shadow-inner`}
-                    style={{ transform: 'rotateY(-90deg) translateX(-32px)' }} 
+                    className={`absolute top-0 bottom-0 left-0 w-6 origin-left ${spineColor} flex flex-col justify-end pb-8 items-center backface-hidden shadow-inner`}
+                    style={{ transform: 'rotateY(-90deg) translateX(-24px)' }} 
                 >
-                    <span className="text-[10px] tracking-widest text-white/80 font-mono uppercase rotate-90 whitespace-nowrap">{client} • {year}</span>
+                    <span className="text-[9px] tracking-widest text-white/70 font-mono uppercase rotate-90 whitespace-nowrap">{client} • {year}</span>
                 </div>
 
-                {/* Book Block / Pages (Side) */}
+                {/* Pages edge */}
                 <div 
-                    className="absolute top-2 bottom-2 right-0 w-6 bg-[#F5F4F0] origin-right rotate-y-90 backface-hidden"
-                    style={{ transform: 'rotateY(90deg) translateZ(0px) translateX(0px)' }}
+                    className="absolute top-2 bottom-2 right-0 w-4 bg-[#F5F4F0] origin-right backface-hidden"
+                    style={{ transform: 'rotateY(90deg) translateX(16px)' }}
                 >
-                    {/* Page lines texture */}
                     <div className="h-full w-full bg-[repeating-linear-gradient(transparent,transparent_2px,#e5e5e5_3px)]"></div>
                 </div>
                  
-                 {/* Shadow */}
-                 <div className="absolute -bottom-8 left-4 right-4 h-8 bg-black/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-z-[-50px]"></div>
+                {/* Shadow */}
+                <div className="absolute -bottom-6 left-4 right-4 h-6 bg-black/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
             </div>
         </div>
 
         {/* Spec Sheet / Details */}
-        <div className="border-t border-stone-200 pt-6 group-hover:border-nobel-gold transition-colors duration-500">
-            <div className="flex justify-between items-baseline mb-3">
-                <h3 className="font-serif text-3xl text-stone-900 group-hover:text-nobel-gold transition-colors">{title}</h3>
-                <span className="text-sm font-bold uppercase tracking-widest text-stone-400">{year}</span>
+        <div className="border-t border-stone-200 pt-4 md:pt-6 group-hover:border-nobel-gold transition-colors duration-300">
+            <div className="flex justify-between items-baseline mb-2 md:mb-3">
+                <h3 className="font-serif text-2xl md:text-3xl text-stone-900 group-hover:text-nobel-gold transition-colors">{title}</h3>
+                <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-stone-400">{year}</span>
             </div>
-            <p className="text-base font-serif italic text-stone-500 mb-6">{client}</p>
+            <p className="text-sm md:text-base font-serif italic text-stone-500 mb-4 md:mb-6">{client}</p>
             
-            <div className="grid grid-cols-2 gap-y-3 gap-x-8">
+            <div className="grid grid-cols-2 gap-y-2 md:gap-y-3 gap-x-4 md:gap-x-8">
                 {specs.map((spec, i) => (
-                    <div key={i} className="flex justify-between items-center text-xs uppercase tracking-wider border-b border-stone-100 pb-2">
+                    <div key={i} className="flex justify-between items-center text-[10px] md:text-xs uppercase tracking-wider border-b border-stone-100 pb-1 md:pb-2">
                         <span className="text-stone-400">{spec.label}</span>
                         <span className="font-bold text-stone-700">{spec.value}</span>
                     </div>
                 ))}
             </div>
             
-            <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2 text-sm font-bold text-nobel-gold uppercase tracking-widest">
+            <div className="mt-4 md:mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 text-xs md:text-sm font-bold text-nobel-gold uppercase tracking-widest">
                 <span>{t('works.cta')}</span>
                 <ArrowRight size={14} />
             </div>
@@ -283,12 +281,12 @@ export const SelectedWorks = () => {
                 </Headline>
             </div>
 
-            <div className="flex gap-8 mt-8 md:mt-0">
+            <div className="flex flex-wrap gap-4 md:gap-8 mt-8 md:mt-0">
                 {tabs.map(tab => (
                     <button 
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`text-sm font-bold uppercase tracking-widest pb-2 transition-all duration-300 ${activeTab === tab.id ? 'text-stone-900 border-b-2 border-nobel-gold' : 'text-stone-400 hover:text-stone-600 border-b-2 border-transparent'}`}
+                        className={`text-xs md:text-sm font-bold uppercase tracking-widest pb-2 transition-all duration-300 ${activeTab === tab.id ? 'text-stone-900 border-b-2 border-nobel-gold' : 'text-stone-400 hover:text-stone-600 border-b-2 border-transparent'}`}
                     >
                         {tab.label}
                     </button>
@@ -296,8 +294,8 @@ export const SelectedWorks = () => {
             </div>
         </div>
 
-        {/* Project Grid - Editorial Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
+        {/* Project Grid - 1 column until lg (1024px), then 2 columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-16 lg:gap-y-24">
             <AnimatePresence mode="popLayout">
                 {filtered.map((project) => (
                     <ProjectShowcase key={project.title} {...project} />

@@ -256,7 +256,11 @@ export const fr = {
         },
         run: "Tirage Estimé",
         specs: "Spécifications Techniques / Message",
-        submit: "Envoyer la Demande"
+        submit: "Envoyer la Demande",
+        name_placeholder: "Nom",
+        company_placeholder: "Société",
+        email_placeholder: "Email",
+        specs_placeholder: "Message ou spécifications..."
       }
     }
   }

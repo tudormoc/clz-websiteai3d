@@ -57,21 +57,21 @@ export const ContactPage: React.FC = () => {
                             <div className="space-y-10">
                                 <div className="space-y-3">
                                     <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.name')}</label>
-                                    <input type="text" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder="Name" />
+                                    <input type="text" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder={t('contact.form.name_placeholder')} />
                                 </div>
                                 <div className="space-y-3">
                                     <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.company')}</label>
-                                    <input type="text" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder="Company" />
+                                    <input type="text" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder={t('contact.form.company_placeholder')} />
                                 </div>
                                 <div className="space-y-3">
                                     <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.email')}</label>
-                                    <input type="email" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder="Email" />
+                                    <input type="email" className="w-full border-b border-stone-300 py-3 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors font-serif text-3xl bg-transparent placeholder-stone-300" placeholder={t('contact.form.email_placeholder')} />
                                 </div>
                             </div>
 
                             <div className="space-y-3 pt-6">
                                 <label className="text-xs font-bold uppercase tracking-widest text-stone-400">{t('contact.form.specs')}</label>
-                                <textarea rows={5} className="w-full border border-stone-200 p-5 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors bg-stone-50 resize-none font-sans text-lg" placeholder="Message or specifications..."></textarea>
+                                <textarea rows={5} className="w-full border border-stone-200 p-5 text-stone-900 focus:outline-none focus:border-nobel-gold transition-colors bg-stone-50 resize-none font-sans text-lg" placeholder={t('contact.form.specs_placeholder')}></textarea>
                             </div>
 
                             <div className="pt-6 flex justify-start">

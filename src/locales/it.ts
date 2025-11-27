@@ -256,7 +256,11 @@ export const it = {
         },
         run: "Tiratura Stimata",
         specs: "Specifiche Tecniche / Messaggio",
-        submit: "Invia Richiesta"
+        submit: "Invia Richiesta",
+        name_placeholder: "Nome",
+        company_placeholder: "Azienda",
+        email_placeholder: "Email",
+        specs_placeholder: "Messaggio o specifiche..."
       }
     }
   }

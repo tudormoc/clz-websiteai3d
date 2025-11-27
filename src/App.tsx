@@ -180,8 +180,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // --- MAIN APP ---
 
 const App: React.FC = () => {
+  // Use Vite's BASE_URL for both dev and production
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+  
   return (
-    <Router basename="/clz-websiteai3d">
+    <Router basename={basename}>
       <Layout>
         <Routes>
           <Route path={ROUTES.HOME} element={<HomePage />} />

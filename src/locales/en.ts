@@ -256,7 +256,11 @@ export const en = {
         },
         run: "Estimated Run",
         specs: "Technical Specifications / Message",
-        submit: "Submit Inquiry"
+        submit: "Submit Inquiry",
+        name_placeholder: "Name",
+        company_placeholder: "Company",
+        email_placeholder: "Email",
+        specs_placeholder: "Message or specifications..."
       }
     }
   }

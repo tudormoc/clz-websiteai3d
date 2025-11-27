@@ -18,8 +18,11 @@ export const CONTACT = {
     emailLink: 'mailto:info@clz.it',
 };
 
+// Base URL for assets (matches vite.config.ts base)
+const BASE_URL = import.meta.env.BASE_URL;
+
 export const ASSETS = {
     textures: {
-        stardust: '/assets/textures/stardust.png', // Localized asset
+        stardust: `${BASE_URL}assets/textures/stardust.png`, // Localized asset
     }
 };
