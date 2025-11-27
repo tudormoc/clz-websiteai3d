@@ -11,3 +11,4 @@ inclusion: always
 6. **Small Components** - One responsibility each. Extract when logic repeats.
 7. **Type Safety** - Use TypeScript types. Define shared types in `types.ts`.
 8. **Follow Patterns** - Match existing codebase conventions.
+9. **File Structure** - One component per file. Group related components in folders.

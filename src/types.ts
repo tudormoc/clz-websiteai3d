@@ -18,3 +18,18 @@ export interface Laureate {
   role: string;
   desc: string;
 }
+
+export type AnatomyPartKey = 'cover' | 'spine' | 'headband' | 'endpapers' | 'block' | 'ribbon' | 'hinge';
+
+export const bindingTypeKeys = ['perfect', 'swiss', 'bodonian', 'halfleather', 'leporello', 'octavius'] as const;
+export type BindingTypeKey = typeof bindingTypeKeys[number];
+
+export interface ProjectProps {
+  category: string;
+  title: string;
+  client: string;
+  year: string;
+  specs: { label: string, value: string }[];
+  style: string;
+  spineColor: string;
+}

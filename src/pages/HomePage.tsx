@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { HeroScene } from '../components/QuantumScene';
-import { LegacySection, SelectedWorks, GlobalReach } from '../components/Sections';
+import { LegacySection, SelectedWorks, GlobalReach } from '../components/sections';
 import { SectionLabel, Headline, Subtitle, Body, Tag, Divider } from '../components/Typography';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';

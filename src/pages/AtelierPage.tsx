@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { BindingLayersDiagram, FormatComparisonDiagram, BookAnatomyDiagram, MaxiSpecsDiagram, BindingTypesShowcase } from '../components/Diagrams';
+import { BindingLayersDiagram, FormatComparisonDiagram, BookAnatomyDiagram, MaxiSpecsDiagram, BindingTypesShowcase } from '../components/diagrams';
 import { SectionLabel, Headline, Subtitle, Body, PageLabel, SectionHeader } from '../components/Typography';
 import { ServiceCard } from '../components/ServiceCard';
 import { ASSETS } from '../config/constants';
