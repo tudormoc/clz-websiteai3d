@@ -57,7 +57,7 @@ const subtitleColors = {
 // Original: text-sm font-bold tracking-widest text-nobel-gold uppercase
 // ============================================
 export const SectionLabel: React.FC<BaseProps> = ({ children, className = '' }) => (
-  <div className={`inline-block mb-3 text-sm font-bold tracking-widest text-nobel-gold uppercase ${className}`}>
+  <div className={`inline-block mb-3 text-sm font-bold tracking-label text-nobel-gold uppercase ${className}`}>
     {children}
   </div>
 );
@@ -66,15 +66,15 @@ export const SectionLabel: React.FC<BaseProps> = ({ children, className = '' }) 
 // HEADLINE
 // Original: font-serif text-5xl text-stone-900 (varies by context)
 // ============================================
-export const Headline: React.FC<HeadlineProps> = ({ 
-  children, 
-  variant = 'dark', 
+export const Headline: React.FC<HeadlineProps> = ({
+  children,
+  variant = 'dark',
   size = 'lg',
   as: Component = 'h2',
-  className = '' 
+  className = ''
 }) => {
   const colorClass = variantColors[variant];
-  
+
   return (
     <Component className={`font-serif ${headlineSizes[size]} leading-tight ${colorClass} ${className}`}>
       {children}
@@ -91,17 +91,17 @@ interface SubtitleProps extends VariantProps {
   italic?: boolean;
 }
 
-export const Subtitle: React.FC<SubtitleProps> = ({ 
-  children, 
+export const Subtitle: React.FC<SubtitleProps> = ({
+  children,
   variant = 'dark',
   size = 'md',
   italic = false,
-  className = '' 
+  className = ''
 }) => {
   const colorClass = subtitleColors[variant];
   const sizeClass = size === 'sm' ? 'text-base' : size === 'lg' ? 'text-2xl' : 'text-xl';
   const italicClass = italic ? 'font-serif italic' : '';
-  
+
   return (
     <p className={`${sizeClass} ${colorClass} leading-relaxed ${italicClass} ${className}`}>
       {children}
@@ -117,15 +117,15 @@ interface BodyProps extends VariantProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const Body: React.FC<BodyProps> = ({ 
-  children, 
+export const Body: React.FC<BodyProps> = ({
+  children,
   variant = 'dark',
   size = 'md',
-  className = '' 
+  className = ''
 }) => {
   const colorClass = subtitleColors[variant];
   const sizeClass = size === 'sm' ? 'text-sm' : size === 'lg' ? 'text-xl' : 'text-base';
-  
+
   return (
     <p className={`${sizeClass} ${colorClass} leading-relaxed ${className}`}>
       {children}
@@ -161,15 +161,15 @@ interface SpecItemProps {
   className?: string;
 }
 
-export const SpecItem: React.FC<SpecItemProps> = ({ 
-  label, 
-  value, 
+export const SpecItem: React.FC<SpecItemProps> = ({
+  label,
+  value,
   variant = 'dark',
-  className = '' 
+  className = ''
 }) => {
   const labelColor = variant === 'dark' ? 'text-stone-400' : 'text-stone-500';
   const valueColor = variant === 'dark' ? 'text-stone-700' : 'text-white';
-  
+
   return (
     <div className={`space-y-1 ${className}`}>
       <div className={`text-xs font-bold uppercase tracking-widest ${labelColor}`}>{label}</div>
@@ -184,7 +184,7 @@ export const SpecItem: React.FC<SpecItemProps> = ({
 // Original: inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-widest text-nobel-gold shadow-lg
 // ============================================
 export const PageLabel: React.FC<BaseProps> = ({ children, className = '' }) => (
-  <div className={`inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-widest text-nobel-gold shadow-lg ${className}`}>
+  <div className={`inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-label text-nobel-gold shadow-lg ${className}`}>
     {children}
   </div>
 );
@@ -238,7 +238,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   className = ''
 }) => {
   const alignClass = centered ? 'text-center' : '';
-  
+
   return (
     <div className={`${alignClass} ${className}`}>
       <SectionLabel>{label}</SectionLabel>
@@ -274,15 +274,15 @@ export const ListItemButton: React.FC<ListItemButtonProps> = ({
   className = ''
 }) => {
   const baseClass = 'w-full text-left px-4 py-4 border-l-2 transition-all duration-300';
-  
-  const activeClass = variant === 'dark' 
-    ? 'border-nobel-gold bg-stone-50 pl-6' 
+
+  const activeClass = variant === 'dark'
+    ? 'border-nobel-gold bg-stone-50 pl-6'
     : 'border-nobel-gold bg-stone-800/50 pl-5';
-    
+
   const inactiveClass = variant === 'dark'
     ? 'border-stone-200 hover:border-stone-300 hover:bg-stone-50/50'
     : 'border-stone-700 hover:border-stone-500 hover:bg-stone-800/30';
-  
+
   return (
     <button
       onClick={onClick}

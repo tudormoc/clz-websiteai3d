@@ -1,11 +1,12 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './i18n'; // Import i18n configuration before App
+import './index.css';
 import App from './App';
 
 const rootElement = document.getElementById('root');

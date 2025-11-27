@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+
+  body {
+    @apply font-sans bg-cream text-dark antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    @apply bg-nobel-gold text-white;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY UTILITY CLASSES
+   ============================================ */
+
+@layer components {
+
+  /* Section Label - small uppercase gold text above headlines */
+  .text-label {
+    @apply text-xs font-bold uppercase tracking-label text-nobel-gold;
+  }
+
+  /* Stat numbers */
+  .text-stat {
+    @apply font-serif text-4xl leading-none text-nobel-gold;
+  }
+
+  /* ============================================
+     COMPONENT CLASSES
+     ============================================ */
+
+  /* Gold divider line */
+  .divider-gold {
+    @apply w-24 h-1 bg-nobel-gold;
+  }
+
+  .divider-gold-sm {
+    @apply w-8 h-0.5 bg-nobel-gold opacity-60;
+  }
+
+  /* Page label badge (for Atelier/Contact headers) */
+  .page-label-badge {
+    @apply inline-block mb-4 px-5 py-2 border border-stone-700/50 bg-white/5 backdrop-blur-md rounded-full text-xs uppercase tracking-label text-nobel-gold shadow-lg;
+  }
+
+  /* Tag badges */
+  .tag {
+    @apply px-5 py-3 bg-stone-50 border border-stone-200 text-sm font-bold uppercase tracking-wider text-stone-500;
+  }
+}
+
+/* ============================================
+   3D TRANSFORMS
+   ============================================ */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-90 {
+  transform: rotateY(90deg);
+}
+
+.rotate-x-12 {
+  transform: rotateX(12deg);
+}
+
+/* ============================================
+   FORM INPUTS
+   ============================================ */
+@layer utilities {
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    @apply bg-transparent cursor-pointer;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    @apply h-1 bg-stone-800 rounded-sm;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    @apply w-4 h-4 bg-nobel-gold rounded-full -mt-1.5 cursor-pointer;
+  }
+
+  input[type="range"]::-moz-range-track {
+    @apply h-1 bg-stone-800 rounded-sm;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    @apply w-4 h-4 bg-nobel-gold rounded-full border-none cursor-pointer;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+
+  nav,
+  footer,
+  button {
+    display: none !important;
+  }
+}
