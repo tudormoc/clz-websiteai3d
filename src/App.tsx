@@ -181,7 +181,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router basename="/clz-websiteai3d">
       <Layout>
         <Routes>
           <Route path={ROUTES.HOME} element={<HomePage />} />
