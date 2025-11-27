@@ -1,20 +1,14 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# CLZ Website AI 3D BY TM
 
-# Run and deploy your AI Studio app
+## Project Setup
 
-This contains everything you need to run your app locally.
+npm cache clean --force
+npm cache verify
+npm i
+npm run dev
 
-View your app in AI Studio: https://ai.studio/apps/drive/1NSaD3smejuxbNW_2cu2McDEzzYgTct4E
+## Project URL
 
-## Run Locally
+https://tudormoc.github.io/clz-websiteai3d/
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---

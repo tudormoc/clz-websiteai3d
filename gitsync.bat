@@ -1,6 +1,6 @@
 @echo off
 REM Git sync script - adds, commits, and pushes changes to main branch
-REM Usage: gitsync.bat "your commit message" (defaults to "update" if no message provided)
+REM Usage: .\gitsync.bat "your commit message" (defaults to "update" if no message provided)
 
 REM Get commit message from first argument, default to "update"
 set "message=%~1"
