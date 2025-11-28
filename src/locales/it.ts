@@ -18,7 +18,8 @@ export const it = {
       process: "Processo",
       bindings: "Rilegature",
       formats: "Fuori Formato",
-      contact: "Contatti"
+      contact: "Contatti",
+      menu: "Menu"
     },
     intro: {
       badge: "L'Arte del",

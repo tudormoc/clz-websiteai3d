@@ -12,3 +12,8 @@ inclusion: always
 7. **Type Safety** - Use TypeScript types. Define shared types in `types.ts`.
 8. **Follow Patterns** - Match existing codebase conventions.
 9. **File Structure** - One component per file. Group related components in folders.
+
+# Instructions
+
+1. Make sure to suggest if we need to improve or optimize something.
+2. And if you think we need some other essential rules, make sure to add it in this file.

@@ -18,7 +18,8 @@ export const en = {
       process: "Process",
       bindings: "Bindings",
       formats: "Maxi Formats",
-      contact: "Contact"
+      contact: "Contact",
+      menu: "Menu"
     },
     intro: {
       badge: "Art of the",

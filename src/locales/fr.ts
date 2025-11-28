@@ -18,7 +18,8 @@ export const fr = {
       process: "Processus",
       bindings: "Reliures",
       formats: "Formats Maxi",
-      contact: "Contact"
+      contact: "Contact",
+      menu: "Menu"
     },
     intro: {
       badge: "L'Art du",
