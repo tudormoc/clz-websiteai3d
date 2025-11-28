@@ -100,14 +100,32 @@ export const Header: React.FC = () => {
                     {/* --- DESKTOP NAVIGATION --- */}
                     <nav className={`hidden lg:flex items-center gap-8 text-sm font-bold tracking-widest uppercase transition-colors duration-500 ${textColor}`}>
 
-                        {/* Home Group */}
-                        <div className="relative group">
+                        {/* Brand Group (Dropdown) */}
+                        <div className="relative group"
+                            onMouseEnter={() => setActiveDropdown('brand')}
+                            onMouseLeave={() => setActiveDropdown(null)}>
                             <button
                                 onClick={() => handleNavigate(ROUTES.HOME)}
                                 className={`flex items-center gap-1 py-2 ${hoverColor} ${isActive(ROUTES.HOME) ? 'text-nobel-gold' : ''}`}
                             >
                                 {t('nav.brand')}
+                                <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                             </button>
+
+                            {/* Dropdown Menu */}
+                            <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 w-48 transition-all duration-300 ${activeDropdown === 'brand' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                                <div className="bg-white/95 backdrop-blur-xl border border-stone-100 shadow-xl rounded-sm overflow-hidden p-2 flex flex-col gap-1">
+                                    {NAVIGATION.main.slice(1).map((item) => (
+                                        <button
+                                            key={item.label}
+                                            onClick={(e) => { e.stopPropagation(); handleNavigate(item.path, item.section); }}
+                                            className="text-left px-4 py-3 text-xs text-stone-600 hover:bg-stone-50 hover:text-nobel-gold transition-colors rounded-sm uppercase tracking-widest"
+                                        >
+                                            {t(item.label)}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
 
                         {/* Atelier Group (Dropdown) */}
@@ -125,7 +143,7 @@ export const Header: React.FC = () => {
                             {/* Dropdown Menu */}
                             <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 w-48 transition-all duration-300 ${activeDropdown === 'atelier' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                 <div className="bg-white/95 backdrop-blur-xl border border-stone-100 shadow-xl rounded-sm overflow-hidden p-2 flex flex-col gap-1">
-                                    {NAVIGATION.atelier.slice(1).map((item) => ( // Skip the first one which is just 'Atelier' main link
+                                    {NAVIGATION.atelier.slice(1).map((item) => (
                                         <button
                                             key={item.label}
                                             onClick={(e) => { e.stopPropagation(); handleNavigate(item.path, item.section); }}
@@ -197,6 +215,21 @@ export const Header: React.FC = () => {
                                 <motion.button custom={1} variants={itemVariants} onClick={() => handleNavigate(ROUTES.HOME)} className="text-3xl font-serif text-stone-900 hover:text-nobel-gold transition-colors">
                                     {t('nav.brand')}
                                 </motion.button>
+
+                                {/* Sub-links for Brand */}
+                                <div className="flex flex-col gap-3 items-center mb-4">
+                                    {NAVIGATION.main.slice(1).map((item, i) => (
+                                        <motion.button
+                                            key={item.label}
+                                            custom={1.5 + (i * 0.1)}
+                                            variants={itemVariants}
+                                            onClick={() => handleNavigate(item.path, item.section)}
+                                            className="text-sm uppercase tracking-widest text-stone-500 hover:text-stone-900"
+                                        >
+                                            {t(item.label)}
+                                        </motion.button>
+                                    ))}
+                                </div>
 
                                 <motion.button custom={2} variants={itemVariants} onClick={() => handleNavigate(ROUTES.ATELIER)} className="text-3xl font-serif text-stone-900 hover:text-nobel-gold transition-colors">
                                     {t('nav.atelier')}

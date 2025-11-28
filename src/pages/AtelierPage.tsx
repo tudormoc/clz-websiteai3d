@@ -59,21 +59,19 @@ export const AtelierPage: React.FC = () => {
             {/* Anatomy Section */}
             <section id="anatomy" className="py-24 bg-white">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                        <div>
-                            <SectionLabel>{t('anatomy.label')}</SectionLabel>
-                            <Headline className="mb-6">{t('anatomy.headline')}</Headline>
-                            <BookAnatomyDiagram />
-                        </div>
-                        <div className="flex flex-col justify-center space-y-8">
-                            <Body size="lg">
-                                {t('anatomy.desc')}
-                            </Body>
-                            <div className="grid grid-cols-2 gap-8">
-                                <ServiceCard title={t('anatomy.cards.materials')} sub={t('anatomy.cards.sourcing')} delay="0s" />
-                                <ServiceCard title={t('anatomy.cards.precision')} sub={t('anatomy.cards.tolerance')} delay="0.1s" />
-                            </div>
-                        </div>
+                    <div className="mb-12 text-center max-w-3xl mx-auto">
+                        <SectionLabel>{t('anatomy.label')}</SectionLabel>
+                        <Headline className="mb-6">{t('anatomy.headline')}</Headline>
+                        <Body size="lg">{t('anatomy.desc')}</Body>
+                    </div>
+
+                    <div className="mb-16">
+                        <BookAnatomyDiagram />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <ServiceCard title={t('anatomy.cards.materials')} sub={t('anatomy.cards.sourcing')} delay="0s" />
+                        <ServiceCard title={t('anatomy.cards.precision')} sub={t('anatomy.cards.tolerance')} delay="0.1s" />
                     </div>
                 </div>
             </section>
